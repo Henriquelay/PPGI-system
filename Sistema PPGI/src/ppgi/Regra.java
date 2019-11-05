@@ -1,3 +1,5 @@
+package ppgi;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -9,11 +11,11 @@ public class Regra implements Comparable {
     private Date dataFinal;
     private Map<String,Integer> pontos;
 
+    // Comparar
     @Override public int compareTo(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.dataInicio.compareTo(((Regra)o).dataInicio);
     }
-
+    // Printar
     @Override public String toString() {
         String str = "Data Início: " + this.dataInicio.toString() + " Data final: " + this.dataFinal.toString() + "\nPontuação mínima: " + this.pontuacaoMinima + "\nMultiplicador de periódicos: " + this.multPeriodicos + "\nAnos Avaliados: " + this.anosAvaliados + "\nPontos: ";
 
