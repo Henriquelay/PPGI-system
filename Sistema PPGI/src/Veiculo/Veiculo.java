@@ -1,7 +1,6 @@
-package ppgi;
-
+package Veiculo;
 /**
- * Classe abstrata para implementação dos veículos
+ * Classe abstrata para implementação dos veículos de publicações
  */
 public abstract class Veiculo {
     protected String titulo;

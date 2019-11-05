@@ -1,5 +1,3 @@
-package ppgi;
-
 import java.util.Date;
 import java.util.Map;
 
