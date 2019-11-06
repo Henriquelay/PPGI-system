@@ -1,4 +1,4 @@
-package Veiculo;
+package meupacote.sistema;
 /**
  * Classe abstrata para implementação dos veículos de publicações
  */
