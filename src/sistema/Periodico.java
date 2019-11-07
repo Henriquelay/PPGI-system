@@ -7,7 +7,6 @@ import java.util.Objects;
 /**
  * @author Henrique Layber
  * @version 1.0
- * @category veículo
  * Classe para implementação dos veículos tipo periódicos
  */
 public class Periodico extends Veiculo implements Serializable {

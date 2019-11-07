@@ -5,10 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Classe para implementação dos veículos tipo conferência
  * @author Henrique Layber
  * @version 1.0
- * @category veículo
- * Classe para implementação dos veículos tipo conferência
  */
 public class Conferencia extends Veiculo implements Serializable {
     private String local;

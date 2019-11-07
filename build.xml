@@ -4,17 +4,25 @@
     <property name="src" location="src" />
     <property name="bin" location="bin" />
     <property name="mainClass" value="Main" />
+    <property name="doc" location="doc" />
     <!-- Inicialização. -->
     <target name="init" description="Inicializa as estruturas necessárias.">
         <tstamp/>
         <mkdir dir="${bin}" />
+    </target>
+    <!-- Javadoc. -->
+    <target name="javadoc" description="Cria os Javadoc atualizados com a compilação.">
+        <mkdir dir="${doc}" />
+        <javadoc sourcepath="${src}" destdir="${doc}">
+            <fileset dir="."/>
+        </javadoc>
     </target>
     <!-- Compilação. -->
     <target name="compile" depends="init" description="Compila o código fonte.">
         <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" />
     </target>
     <!-- Execução normal. -->
-    <target name="run" depends="compile" description="Executa o programa principal, em modo normal.">
+    <target name="run" depends="compile,javadoc" description="Executa o programa principal, em modo normal.">
         <java classname="${mainClass}">
             <arg value="-d" />
             <arg value="docentes.csv" />
@@ -66,6 +74,7 @@
     <!-- Limpeza. -->
     <target name="clean" description="Limpa o projeto, deixando apenas o código-fonte." >
         <delete dir="${bin}"/>
+        <delete dir="${doc}"/>
         <delete><fileset dir="." includes="*.txt"/></delete>
         <delete><fileset dir="." includes="*.csv"/></delete>
         <delete><fileset dir="." includes="*.dat"/></delete>

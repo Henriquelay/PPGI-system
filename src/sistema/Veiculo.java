@@ -6,7 +6,6 @@ import java.util.Objects;
 /**
  * @author Henrique Layber
  * @version 1.0
- * @category Abstract
  * Classe abstrata para implementação dos veículos de publicações
  */
 public abstract class Veiculo implements Serializable {
