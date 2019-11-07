@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Classe para implementação dos veículos tipo periódicos
  * @author Henrique Layber
  * @version 1.0
- * Classe para implementação dos veículos tipo periódicos
  */
 public class Periodico extends Veiculo implements Serializable {
     private String issn;

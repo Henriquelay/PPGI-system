@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Classe para implementação dos docentes PPGI
+ * @author Henrique Layber
+ * @version 1.0
+ */
 public class Docente implements Serializable {
     private String nome;
     private int codigo;

@@ -2,6 +2,11 @@ package sistema;
 
 import java.util.Objects;
 
+/**
+ * Classe para implementação das publicação de docentes
+ * @author Henrique Layber
+ * @version 1.0
+ */
 public class Publicacao {
     private int ano;
     private String título;

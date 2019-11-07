@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * Classe para implementação das Regras de avaliação PPGI
+ * @author Henrique Layber
+ * @version 1.0
+ */
 public class Regra implements Comparable, Serializable {
     private int anosAvaliados;
     private float multPeriodicos;

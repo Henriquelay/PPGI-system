@@ -3,6 +3,11 @@ package sistema;
 import java.io.Serializable;
 import sistema.*;
 
+/**
+ * Classe para implementação do sistema de controle PPGI
+ * @author Henrique Layber
+ * @version 1.0
+ */
 public class SistemaPPGI implements Serializable {
     // File ingest
     public void lerArquivoDocentes(String filename) {
