@@ -1,5 +1,9 @@
 package sistema;
 
+import sistema.Docente;
+import sistema.Veiculo;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Objects;
 
 /**
@@ -12,13 +16,21 @@ public class Publicacao {
     private String título;
     private int numero;
 
+    // Relations
+    Veiculo veiculo;
+    TreeMap<Integer, Docente> docentes; // código do docente, docente;
+
     // Getters e Setters
     public int getAno() {return this.ano;}
     public String getTítulo() {return this.título;}
-    public void setAno(int ano) {this.ano = ano;}
-    private int getNumero() {return this.numero;}
+    public int getNumero() {return this.numero;}
+    public Veiculo getVeiculo() {return this.veiculo;}
+    public TreeMap<Integer, Docente> getDocentes() {return this.docentes;}
+    private void setAno(int ano) {this.ano = ano;}
     private void setTítulo(String título) {this.título = título;}
     private void setNumero(int numero) {this.numero = numero;}
+    private void setVeiculo(Veiculo veiculo) {this.veiculo = veiculo;}
+    private void setDocente(int codigo, Docente docente) {this.getDocentes().put(new Integer(codigo), docente);}
 
     // To compare with standard function
     @Override
