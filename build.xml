@@ -3,14 +3,14 @@
     <!-- Propriedades do build. -->
     <property name="src" location="src" />
     <property name="bin" location="bin" />
-    <property name="mainClass" value="meupacote.MinhaClassePrincipal" />
+    <property name="mainClass" value="Main" />
     <!-- Inicialização. -->
     <target name="init" description="Inicializa as estruturas necessárias.">
         <tstamp/>
         <mkdir dir="${bin}" />
     </target>
     <!-- Compilação. -->
-    <target name="compile" depends="init" description="Compila o códigofonte.">
+    <target name="compile" depends="init" description="Compila o código fonte.">
         <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" />
     </target>
     <!-- Execução normal. -->

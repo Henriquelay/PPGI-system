@@ -1,4 +1,4 @@
-package meupacote.sistema;
+package sistema;
 
 public class Publicacao {
 
