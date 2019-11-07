@@ -1,5 +1,7 @@
 package sistema;
 
+import java.util.Objects;
+
 public class Publicacao {
     private int ano;
     private String título;
