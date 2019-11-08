@@ -1,7 +1,7 @@
 package sistema;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 /**
@@ -12,20 +12,20 @@ import java.util.Objects;
 public class Docente implements Serializable {
     private String nome;
     private int codigo;
-    private Date dataNascimento;
-    private Date dataIngresso;
+    private GregorianCalendar dataNascimento;
+    private GregorianCalendar dataIngresso;
     boolean isCoodenador;
 
     // Getters and Setters
     public String getNome() {return this.nome;}
     public int getCodigo() {return this.codigo;}
-    public Date getDataNascimento() {return this.dataNascimento;}
-    public Date getDataIngresso() {return this.dataIngresso;}
+    public GregorianCalendar getDataNascimento() {return this.dataNascimento;}
+    public GregorianCalendar getDataIngresso() {return this.dataIngresso;}
     public boolean getIsCoodenador() {return this.isCoodenador;}
     private void setNome(String nome) {this.nome = nome;}
     private void setCodigo(int codigo) {this.codigo = codigo;}
-    private void setDataNascimento(Date dataNascimento) {this.dataNascimento = dataNascimento;}
-    private void setDataIngresso(Date dataIngresso) {this.dataIngresso = dataIngresso;}
+    private void setDataNascimento(GregorianCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
+    private void setDataIngresso(GregorianCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
     private boolean isIsCoodenador() {return this.isCoodenador;}
     private void setIsCoodenador(boolean isCoodenador) {this.isCoodenador = isCoodenador;}
     
@@ -52,7 +52,7 @@ public class Docente implements Serializable {
     }
     
     // Constructor
-    public Docente(String nome, int codigo, Date dataNascimento, Date dataIngresso, boolean isCoodenador) {
+    public Docente(String nome, int codigo, GregorianCalendar dataNascimento, GregorianCalendar dataIngresso, boolean isCoodenador) {
         this.nome = nome;
         this.codigo = codigo;
         this.dataNascimento = dataNascimento;
