@@ -36,7 +36,7 @@ public class Regra implements Comparable<Regra>, Serializable {
     private void setDataInicio(GregorianCalendar dataInicio) {this.dataInicio = dataInicio;}
     /**
      * 
-     * @param dataInicio dd/mm/aaaa
+     * @param dataInicio <code>dd/mm/aaaa</code>
      */
     private void setDataInicio(String dataInicio) throws IllegalArgumentException {
         String[] datePart = dataInicio.split("/");
@@ -45,7 +45,7 @@ public class Regra implements Comparable<Regra>, Serializable {
         this.dataInicio = new GregorianCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0])) {
             @Override
             public String toString() {
-                return this.get(Calendar.DAY_OF_MONTH) + "/" + this.get(Calendar.MONTH) + "/" + this.get(Calendar.YEAR);
+                return this.get(DAY_OF_MONTH) + "/" + this.get(MONTH) + "/" + this.get(YEAR);
             }
         };
     }
@@ -56,7 +56,7 @@ public class Regra implements Comparable<Regra>, Serializable {
     private void setDataFinal(GregorianCalendar dataFinal) {this.dataFinal = dataFinal;}
     /**
      * 
-     * @param dataFinal dd/mm/aaaa
+     * @param dataFinal <code>dd/mm/aaaa</code>
      */
     private void setDataFinal(String dataFinal) throws IllegalArgumentException {
         String[] datePart = dataFinal.split("/");
@@ -65,7 +65,7 @@ public class Regra implements Comparable<Regra>, Serializable {
         this.dataFinal = new GregorianCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0])) {
             @Override
             public String toString() {
-                return this.get(Calendar.DAY_OF_MONTH) + "/" + this.get(Calendar.MONTH) + "/" + this.get(Calendar.YEAR);
+                return this.get(DAY_OF_MONTH) + "/" + this.get(MONTH) + "/" + this.get(YEAR);
             }
         };
     }
@@ -103,6 +103,11 @@ public class Regra implements Comparable<Regra>, Serializable {
         this.setMultPeriodicos(multPeriodicos);
         this.setPontuacaoMinima(pontuacaoMinima);
     }
+    /**
+     * 
+     * @param dataInicio <code>"dd/mm/aaaa"</code>
+     * @param dataFinal <code>"dd/mm/aaaa"</code>
+     */
     public Regra(String dataInicio, String dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
         this.setDataInicio(dataInicio);
         this.setDataFinal(dataFinal);
