@@ -42,11 +42,10 @@ public class Periodico extends Veiculo implements Serializable {
     @Override
     public String toString() {
         return super.toString() +
-            " issn='" + getIssn() + "'" +
-            ", pagInicial='" + getPagInicial() + "'" +
-            ", pagFinal='" + getPagFinal() + "'" +
-            ", volume='" + getVolume() + "'" +
-            "}";
+            "\nISSN: " + getIssn() + 
+            "\nPagInicial: " + getPagInicial() +
+            "\nPagFinal: " + getPagFinal() +
+            "\nVolume: " + getVolume();
     }
 
     

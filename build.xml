@@ -19,10 +19,10 @@
     </target>
     <!-- Compilação. -->
     <target name="compile" depends="init,javadoc" description="Compila o código fonte.">
-        <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" />
+        <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" debug="true" debuglevel="lines,vars,source" />
     </target>
     <!-- Execução normal. -->
-    <target name="run" depends="compile" description="Executa o programa principal, em modo normal.">
+    <target name="run" depends="clean,compile" description="Executa o programa principal, em modo normal.">
         <java classname="${mainClass}">
             <arg value="-d" />
             <arg value="docentes.csv" />

@@ -1,9 +1,7 @@
 package sistema;
 
 import java.io.Serializable;
-import sistema.*;
 import java.util.Date;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -25,16 +23,19 @@ public class SistemaPPGI implements Serializable {
     private void setVeiculos(String key,Veiculo veiculo) {this.getVeiculos().put(key, veiculo);}
     private void setDocentes(int key,Docente docente) {this.getDocentes().put(new Integer(key), docente);}
 
+    // Constructor
+    public SistemaPPGI() {}
+
     // File ingest
     public void lerArquivoDocentes(String filename) {
     }
     public void lerArquivoVeiculos(String filename) {
     }
-    public void lerArquivos(String filename) {
+    public void lerArquivoPublicacoes(String filename) {
     }
-    public void lerArquivosQualificacoes(String filename) {
+    public void lerArquivoQualis(String filename) {
     }
-    public void lerArquivosRegras(String filename) {
+    public void lerArquivoRegras(String filename) {
     }
 
     // Reports

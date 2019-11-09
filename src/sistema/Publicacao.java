@@ -2,7 +2,6 @@ package sistema;
 
 import sistema.Docente;
 import sistema.Veiculo;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.Objects;
 
