@@ -1,7 +1,7 @@
 package sistema;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
+import sistema.util.*;
 import java.util.Objects;
 
 /**
@@ -12,20 +12,20 @@ import java.util.Objects;
 public class Docente implements Serializable {
     private String nome;
     private int codigo;
-    private GregorianCalendar dataNascimento;
-    private GregorianCalendar dataIngresso;
-    boolean isCoodenador;
+    private MyCalendar dataNascimento;
+    private MyCalendar dataIngresso;
+    private boolean isCoodenador;
 
     // Getters and Setters
     public String getNome() {return this.nome;}
     public int getCodigo() {return this.codigo;}
-    public GregorianCalendar getDataNascimento() {return this.dataNascimento;}
-    public GregorianCalendar getDataIngresso() {return this.dataIngresso;}
+    public MyCalendar getDataNascimento() {return this.dataNascimento;}
+    public MyCalendar getDataIngresso() {return this.dataIngresso;}
     public boolean getIsCoodenador() {return this.isCoodenador;}
     private void setNome(String nome) {this.nome = nome;}
     private void setCodigo(int codigo) {this.codigo = codigo;}
-    private void setDataNascimento(GregorianCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
-    private void setDataIngresso(GregorianCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
+    private void setDataNascimento(MyCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
+    private void setDataIngresso(MyCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
     private boolean isIsCoodenador() {return this.isCoodenador;}
     private void setIsCoodenador(boolean isCoodenador) {this.isCoodenador = isCoodenador;}
     
@@ -52,7 +52,7 @@ public class Docente implements Serializable {
     }
     
     // Constructor
-    public Docente(String nome, int codigo, GregorianCalendar dataNascimento, GregorianCalendar dataIngresso, boolean isCoodenador) {
+    public Docente(String nome, int codigo, MyCalendar dataNascimento, MyCalendar dataIngresso, boolean isCoodenador) {
         this.nome = nome;
         this.codigo = codigo;
         this.dataNascimento = dataNascimento;

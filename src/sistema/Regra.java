@@ -29,48 +29,38 @@ public class Regra implements Comparable<Regra>, Serializable {
     private void setMultPeriodicos(float multPeriodicos) {this.multPeriodicos = multPeriodicos;}
     private void setPontuacaoMinima(float pontuacaoMinima) {this.pontuacaoMinima = pontuacaoMinima;}
     /**
-     * 
      * @deprecated
      */
     private void setDataInicio(MyCalendar dataInicio) {this.dataInicio = dataInicio;}
     /**
-     * 
      * @param dataInicio <code>dd/mm/aaaa</code>
      */
-    private void setDataInicio(String dataInicio) throws IllegalArgumentException {
-        String[] datePart = dataInicio.split("/");
-        if(datePart.length != 3)
-            throw new IllegalArgumentException(dataInicio);
-        this.dataInicio = new MyCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0]));
-    }
+    private void setDataInicio(String dataInicio) throws IllegalArgumentException {this.dataInicio = MyCalendar.toDate(dataInicio);}
     /**
-     * 
      * @deprecated
      */
     private void setDataFinal(MyCalendar dataFinal) {this.dataFinal = dataFinal;}
     /**
-     * 
      * @param dataFinal <code>dd/mm/aaaa</code>
      */
-    private void setDataFinal(String dataFinal) throws IllegalArgumentException {
-        String[] datePart = dataFinal.split("/");
-        if(datePart.length != 3)
-            throw new IllegalArgumentException(dataFinal);
-        this.dataFinal = new MyCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0]));
-    }
+    private void setDataFinal(String dataFinal) throws IllegalArgumentException {this.dataFinal = MyCalendar.toDate(dataFinal);}
     public void setPontos(String qualis, int pontos) {
         this.getPontos().put(qualis, new Integer(pontos));
     }
 
-    // To compare Regras. It returns the comparation of this dataInicio
+    /**
+     * To compare Regras. It returns the comparation of this dataInicio
+     */ 
     @Override public int compareTo(Regra r) {
         return this.getDataInicio().compareTo(r.getDataInicio());
     }
 
-    // To print with standard function
+    /**
+     *  To print with standard function
+     */
     @Override public String toString() {
-        String str = "Data Início: " + this.getDataInicio().toString() +
-        " Data final: " + this.getDataFinal().toString() +
+        String str = "Data Início: " + this.getDataInicio() +
+        " Data final: " + this.getDataFinal() +
         "\nPontuação mínima: " + this.getPontuacaoMinima() +
         "\nMultiplicador de periódicos: " + this.getMultPeriodicos() + "\nAnos Avaliados: " + this.getAnosAvaliados() + "\nPontos {\n";
 
@@ -83,9 +73,14 @@ public class Regra implements Comparable<Regra>, Serializable {
         return str;
     }
 
-    // Constructor
+    // Constructors
     /**
      * @deprecated
+     * @param dataInicio <code>MyCalendar</code>
+     * @param dataFinal <code>MyCalendar</code>
+     * @param anosAvaliados int
+     * @param multPeriodicos float
+     * @param pontuacaoMinima float
      */
     public Regra(MyCalendar dataInicio, MyCalendar dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
         this.setDataInicio(dataInicio);
