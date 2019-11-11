@@ -111,6 +111,8 @@ public class Main {
         regra.setPontos("B1", 20);
         System.out.println(regra);
 
-        // Docente docente = new Docente("Jadir", 22, )
+        Docente docente = new Docente("Jadir", 22, "22/02/2019", "21/02/2018", true);
+        System.out.println(docente);
+
     }
 }

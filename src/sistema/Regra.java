@@ -35,7 +35,7 @@ public class Regra implements Comparable<Regra>, Serializable {
     /**
      * @param dataInicio <code>dd/mm/aaaa</code>
      */
-    private void setDataInicio(String dataInicio) throws IllegalArgumentException {this.dataInicio = MyCalendar.toDate(dataInicio);}
+    private void setDataInicio(String dataInicio) throws IllegalArgumentException {this.setDataInicio(MyCalendar.toDate(dataInicio));}
     /**
      * @deprecated
      */
@@ -43,7 +43,7 @@ public class Regra implements Comparable<Regra>, Serializable {
     /**
      * @param dataFinal <code>dd/mm/aaaa</code>
      */
-    private void setDataFinal(String dataFinal) throws IllegalArgumentException {this.dataFinal = MyCalendar.toDate(dataFinal);}
+    private void setDataFinal(String dataFinal) throws IllegalArgumentException {this.setDataFinal(MyCalendar.toDate(dataFinal));}
     public void setPontos(String qualis, int pontos) {
         this.getPontos().put(qualis, new Integer(pontos));
     }
@@ -59,17 +59,17 @@ public class Regra implements Comparable<Regra>, Serializable {
      *  To print with standard function
      */
     @Override public String toString() {
-        String str = "Data Início: " + this.getDataInicio() +
-        " Data final: " + this.getDataFinal() +
-        "\nPontuação mínima: " + this.getPontuacaoMinima() +
-        "\nMultiplicador de periódicos: " + this.getMultPeriodicos() + "\nAnos Avaliados: " + this.getAnosAvaliados() + "\nPontos {\n";
-
+        String str = "Data Início: " + this.getDataInicio() + " Data final: " + this.getDataFinal() +
+        "\n╠Pontuação mínima: " + this.getPontuacaoMinima() +
+        "\n╠Multiplicador de periódicos: " + this.getMultPeriodicos() +
+        "\n╠Pontos";
         // Iterating through the Treemap
         for(Map.Entry<String,Integer> e : this.getPontos().entrySet()) {
-            str += "\t" + e.getKey() + ":" + e.getValue() + "\n";
+            str += "\n╠═" + e.getKey() + ":" + e.getValue();
         }
+        
+        str += "\n╚Anos Avaliados: " + this.getAnosAvaliados();
 
-        str += "}";
         return str;
     }
 

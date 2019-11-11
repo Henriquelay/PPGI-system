@@ -24,8 +24,10 @@ public class Docente implements Serializable {
     public boolean getIsCoodenador() {return this.isCoodenador;}
     private void setNome(String nome) {this.nome = nome;}
     private void setCodigo(int codigo) {this.codigo = codigo;}
-    private void setDataNascimento(MyCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
     private void setDataIngresso(MyCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
+    private void setDataNascimento(MyCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
+    private void setDataIngresso(String dataIngresso) throws IllegalArgumentException{this.setDataIngresso(MyCalendar.toDate(dataIngresso));}
+    private void setDataNascimento(String dataNascimento) throws IllegalArgumentException{this.setDataNascimento(MyCalendar.toDate(dataNascimento));}
     private boolean isIsCoodenador() {return this.isCoodenador;}
     private void setIsCoodenador(boolean isCoodenador) {this.isCoodenador = isCoodenador;}
     
@@ -45,18 +47,41 @@ public class Docente implements Serializable {
     @Override
     public String toString() {
         return "Nome: " + getNome() +
-            "\nCodigo: " + getCodigo() +
-            "\nData de nascimento: " + getDataNascimento() +
-            "\nData de ingresso: " + getDataIngresso() +
-            "\nCoodenador? " + isIsCoodenador();
+            "\n╠Codigo: " + getCodigo() +
+            "\n╠Data de nascimento: " + getDataNascimento() +
+            "\n╠Data de ingresso: " + getDataIngresso() +
+            "\n╚Coodenador? " + isIsCoodenador();
     }
     
     // Constructor
+    /**
+     * @deprecated
+     * @param nome string
+     * @param codigo int
+     * @param dataNascimento MyCalendar
+     * @param dataIngresso MyCalendar
+     * @param isCoodenador bool
+     */
     public Docente(String nome, int codigo, MyCalendar dataNascimento, MyCalendar dataIngresso, boolean isCoodenador) {
-        this.nome = nome;
-        this.codigo = codigo;
-        this.dataNascimento = dataNascimento;
-        this.dataIngresso = dataIngresso;
-        this.isCoodenador = isCoodenador;
+        this.setNome(nome);
+        this.setCodigo(codigo);
+        this.setDataNascimento(dataNascimento);
+        this.setDataIngresso(dataIngresso);
+        this.setIsCoodenador(isCoodenador);
+    }
+
+    /**
+     * @param nome String
+     * @param codigo int
+     * @param dataNascimento String
+     * @param dataIngresso String
+     * @param isCoodenador bool
+     */
+    public Docente(String nome, int codigo, String dataNascimento, String dataIngresso, boolean isCoodenador) {
+        this.setNome(nome);
+        this.setCodigo(codigo);
+        this.setDataNascimento(dataNascimento);
+        this.setDataIngresso(dataIngresso);
+        this.setIsCoodenador(isCoodenador);
     }
 }
