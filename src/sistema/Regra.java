@@ -1,8 +1,7 @@
 package sistema;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import sistema.util.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,16 +14,16 @@ public class Regra implements Comparable<Regra>, Serializable {
     private int anosAvaliados;
     private float multPeriodicos;
     private float pontuacaoMinima;
-    private GregorianCalendar dataInicio;
-    private GregorianCalendar dataFinal;
+    private MyCalendar dataInicio;
+    private MyCalendar dataFinal;
     private TreeMap<String,Integer> pontos;
 
 
     public int getAnosAvaliados() {return this.anosAvaliados;}
     public float getMultPeriodicos() {return this.multPeriodicos;}
     public float getPontuacaoMinima() {return this.pontuacaoMinima;}
-    public GregorianCalendar getDataInicio() {return this.dataInicio;}
-    public GregorianCalendar getDataFinal() {return this.dataFinal;}
+    public MyCalendar getDataInicio() {return this.dataInicio;}
+    public MyCalendar getDataFinal() {return this.dataFinal;}
     public TreeMap<String,Integer> getPontos() {return this.pontos;}
     private void setAnosAvaliados(int anosAvaliados) {this.anosAvaliados = anosAvaliados;}
     private void setMultPeriodicos(float multPeriodicos) {this.multPeriodicos = multPeriodicos;}
@@ -33,7 +32,7 @@ public class Regra implements Comparable<Regra>, Serializable {
      * 
      * @deprecated
      */
-    private void setDataInicio(GregorianCalendar dataInicio) {this.dataInicio = dataInicio;}
+    private void setDataInicio(MyCalendar dataInicio) {this.dataInicio = dataInicio;}
     /**
      * 
      * @param dataInicio <code>dd/mm/aaaa</code>
@@ -42,18 +41,13 @@ public class Regra implements Comparable<Regra>, Serializable {
         String[] datePart = dataInicio.split("/");
         if(datePart.length != 3)
             throw new IllegalArgumentException(dataInicio);
-        this.dataInicio = new GregorianCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0])) {
-            @Override
-            public String toString() {
-                return this.get(DAY_OF_MONTH) + "/" + this.get(MONTH) + "/" + this.get(YEAR);
-            }
-        };
+        this.dataInicio = new MyCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0]));
     }
     /**
      * 
      * @deprecated
      */
-    private void setDataFinal(GregorianCalendar dataFinal) {this.dataFinal = dataFinal;}
+    private void setDataFinal(MyCalendar dataFinal) {this.dataFinal = dataFinal;}
     /**
      * 
      * @param dataFinal <code>dd/mm/aaaa</code>
@@ -62,12 +56,7 @@ public class Regra implements Comparable<Regra>, Serializable {
         String[] datePart = dataFinal.split("/");
         if(datePart.length != 3)
             throw new IllegalArgumentException(dataFinal);
-        this.dataFinal = new GregorianCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0])) {
-            @Override
-            public String toString() {
-                return this.get(DAY_OF_MONTH) + "/" + this.get(MONTH) + "/" + this.get(YEAR);
-            }
-        };
+        this.dataFinal = new MyCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0]));
     }
     public void setPontos(String qualis, int pontos) {
         this.getPontos().put(qualis, new Integer(pontos));
@@ -98,7 +87,7 @@ public class Regra implements Comparable<Regra>, Serializable {
     /**
      * @deprecated
      */
-    public Regra(GregorianCalendar dataInicio, GregorianCalendar dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
+    public Regra(MyCalendar dataInicio, MyCalendar dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
         this.setDataInicio(dataInicio);
         this.setDataFinal(dataFinal);
         this.setAnosAvaliados(anosAvaliados);
