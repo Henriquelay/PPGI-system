@@ -69,7 +69,7 @@ public class Regra implements Comparable<Regra>, Serializable {
             }
         };
     }
-    private void setPontos(String qualis, int pontos) {
+    public void setPontos(String qualis, int pontos) {
         this.getPontos().put(qualis, new Integer(pontos));
     }
 
@@ -83,12 +83,14 @@ public class Regra implements Comparable<Regra>, Serializable {
         String str = "Data Início: " + this.getDataInicio().toString() +
         " Data final: " + this.getDataFinal().toString() +
         "\nPontuação mínima: " + this.getPontuacaoMinima() +
-        "\nMultiplicador de periódicos: " + this.getMultPeriodicos() + "\nAnos Avaliados: " + this.getAnosAvaliados() + "\nPontos: ";
+        "\nMultiplicador de periódicos: " + this.getMultPeriodicos() + "\nAnos Avaliados: " + this.getAnosAvaliados() + "\nPontos {\n";
 
         // Iterating through the Treemap
         for(Map.Entry<String,Integer> e : this.getPontos().entrySet()) {
-            str.concat(e.getKey() + ":" + e.getValue());
+            str += "\t" + e.getKey() + ":" + e.getValue() + "\n";
         }
+
+        str += "}";
         return str;
     }
 

@@ -102,6 +102,13 @@ public class Main {
         sys.lerArquivoQualis(fileQualis);
         sys.lerArquivoRegras(fileRegras);
         Regra regra = new Regra("01/02/0011", "01/01/0111", 15, (float) 1.2, 5);
+        regra.setPontos("A1", 15);
+        regra.setPontos("A2", 15);
+        regra.setPontos("A3", 15);
+        regra.setPontos("B1", 15);
+        regra.setPontos("B2", 15);
+        regra.setPontos("B3", 15);
+        regra.setPontos("B1", 20);
         System.out.println(regra);
     }
 }
