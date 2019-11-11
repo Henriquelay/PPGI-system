@@ -101,7 +101,7 @@ public class Main {
         sys.lerArquivoPublicacoes(filePublicacoes);
         sys.lerArquivoQualis(fileQualis);
         sys.lerArquivoRegras(fileRegras);
-        Regra regra = new Regra("01/02/0011", "25/05/2019", 15, (float) 1.2, 5);
+        Regra regra = new Regra("01/02/0011", "25/05/2019", 15, 1.2, 5);
         regra.setPontos("A1", 15);
         regra.setPontos("A2", 15);
         regra.setPontos("A3", 15);
@@ -113,6 +113,14 @@ public class Main {
 
         Docente docente = new Docente("Jadir", 22, "22/02/2019", "21/02/2018", true);
         System.out.println(docente);
+
+        Veiculo vei = new Periodico("O alto da compadre cida", "ADC", 1.5, "issn", 15, 17, 2);
+        System.out.println(vei);
+        vei = new Conferencia("Conferência dos maluco oido", "CoDoi", 1.2, "Na cama da sua mãe");
+        System.out.println(vei);
+
+        Publicacao pub = new Publicacao(2019, "CARALHO", 69420);
+        System.out.println(pub);
 
     }
 }

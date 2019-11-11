@@ -12,22 +12,22 @@ import java.util.TreeMap;
  */
 public class Regra implements Comparable<Regra>, Serializable {
     private int anosAvaliados;
-    private float multPeriodicos;
-    private float pontuacaoMinima;
+    private double multPeriodicos;
+    private double pontuacaoMinima;
     private MyCalendar dataInicio;
     private MyCalendar dataFinal;
     private TreeMap<String,Integer> pontos;
 
 
     public int getAnosAvaliados() {return this.anosAvaliados;}
-    public float getMultPeriodicos() {return this.multPeriodicos;}
-    public float getPontuacaoMinima() {return this.pontuacaoMinima;}
+    public double getMultPeriodicos() {return this.multPeriodicos;}
+    public double getPontuacaoMinima() {return this.pontuacaoMinima;}
     public MyCalendar getDataInicio() {return this.dataInicio;}
     public MyCalendar getDataFinal() {return this.dataFinal;}
     public TreeMap<String,Integer> getPontos() {return this.pontos;}
     private void setAnosAvaliados(int anosAvaliados) {this.anosAvaliados = anosAvaliados;}
-    private void setMultPeriodicos(float multPeriodicos) {this.multPeriodicos = multPeriodicos;}
-    private void setPontuacaoMinima(float pontuacaoMinima) {this.pontuacaoMinima = pontuacaoMinima;}
+    private void setMultPeriodicos(double multPeriodicos) {this.multPeriodicos = multPeriodicos;}
+    private void setPontuacaoMinima(double pontuacaoMinima) {this.pontuacaoMinima = pontuacaoMinima;}
     /**
      * @deprecated
      */
@@ -79,10 +79,10 @@ public class Regra implements Comparable<Regra>, Serializable {
      * @param dataInicio <code>MyCalendar</code>
      * @param dataFinal <code>MyCalendar</code>
      * @param anosAvaliados int
-     * @param multPeriodicos float
-     * @param pontuacaoMinima float
+     * @param multPeriodicos double
+     * @param pontuacaoMinima double
      */
-    public Regra(MyCalendar dataInicio, MyCalendar dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
+    public Regra(MyCalendar dataInicio, MyCalendar dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima) {
         this.setDataInicio(dataInicio);
         this.setDataFinal(dataFinal);
         this.setAnosAvaliados(anosAvaliados);
@@ -94,10 +94,10 @@ public class Regra implements Comparable<Regra>, Serializable {
      * @param String dataInicio <code>"dd/mm/aaaa"</code>
      * @param String dataFinal <code>"dd/mm/aaaa"</code>
      * @param int anosAvaliados
-     * @param float multPeriodicos
-     * @param float pontuacaoMinima
+     * @param double multPeriodicos
+     * @param double pontuacaoMinima
      */
-    public Regra(String dataInicio, String dataFinal, int anosAvaliados, float multPeriodicos, float pontuacaoMinima) {
+    public Regra(String dataInicio, String dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima) {
         this.setDataInicio(dataInicio);
         this.setDataFinal(dataFinal);
         this.setAnosAvaliados(anosAvaliados);

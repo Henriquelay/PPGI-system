@@ -13,7 +13,7 @@ import java.util.TreeMap;
 public abstract class Veiculo implements Serializable {
     protected String titulo;
     protected String sigla;
-    protected float fatorDeImpacto;
+    protected double fatorDeImpacto;
     protected TreeMap<Integer,String> Qualis;   // ano, qualis
 
     // Relation
@@ -24,10 +24,10 @@ public abstract class Veiculo implements Serializable {
     public String getSigla() {return this.sigla;}
     public TreeMap<Integer,String> getQualis() {return this.Qualis;}
     public TreeMap<Integer,Publicacao> getPublicacao() {return this.publicacao;}
-    public float getFatorDeImpacto() {return this.fatorDeImpacto;}
+    public double getFatorDeImpacto() {return this.fatorDeImpacto;}
     private void setTitulo(String titulo) {this.titulo = titulo;}
     private void setSigla(String sigla) {this.sigla = sigla;}
-    private void setFatorDeImpacto(float fatorDeImpacto) {this.fatorDeImpacto = fatorDeImpacto;}
+    private void setFatorDeImpacto(double fatorDeImpacto) {this.fatorDeImpacto = fatorDeImpacto;}
     private void setQualis(int ano, String Qualis) {this.getQualis().put(new Integer(ano), Qualis);}
     private void setPublicacao(int numero, Publicacao publicacao) {this.getPublicacao().put(new Integer(numero), publicacao);}
 
@@ -46,13 +46,13 @@ public abstract class Veiculo implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        return "Título: " + this.getTitulo() +
-        "\nSigla: " + this.getSigla() +
-        "\nFator de Impacto: " + this.fatorDeImpacto;
+        return "titulo: " + this.getTitulo() +
+        "\n╠Sigla: " + this.getSigla() +
+        "\n╚Fator de Impacto: " + this.fatorDeImpacto;
     }
     
     // Constructor
-    public Veiculo(String titulo, String sigla, float fatorDeImpacto) {
+    public Veiculo(String titulo, String sigla, double fatorDeImpacto) {
         this.setTitulo(titulo);
         this.setSigla(sigla);
         this.setFatorDeImpacto(fatorDeImpacto);

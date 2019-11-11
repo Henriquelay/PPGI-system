@@ -46,11 +46,11 @@ public class Docente implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        return "Nome: " + getNome() +
-            "\n╠Codigo: " + getCodigo() +
-            "\n╠Data de nascimento: " + getDataNascimento() +
-            "\n╠Data de ingresso: " + getDataIngresso() +
-            "\n╚Coodenador? " + isIsCoodenador();
+        return "Nome: " + this.getNome() +
+            "\n╠Codigo: " + this.getCodigo() +
+            "\n╠Data de nascimento: " + this.getDataNascimento() +
+            "\n╠Data de ingresso: " + this.getDataIngresso() +
+            "\n╚Coodenador? " + this.isIsCoodenador();
     }
     
     // Constructor

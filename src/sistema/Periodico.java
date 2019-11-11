@@ -42,14 +42,14 @@ public class Periodico extends Veiculo implements Serializable {
     @Override
     public String toString() {
         return super.toString() +
-            "\nISSN: " + getIssn() + 
-            "\nPagInicial: " + getPagInicial() +
-            "\nPagFinal: " + getPagFinal() +
-            "\nVolume: " + getVolume();
+            "\n╠ISSN: " + this.getIssn() +
+            "\n╠PagInicial: " + this.getPagInicial() +
+            "\n╠PagFinal: " + this.getPagFinal() +
+            "\n╚Volume: " + this.getVolume();
     }
 
     
-    public Periodico(String titulo, String sigla, float fatorDeImpacto, String issn, int pagInicial, int pagFinal, int volume) {
+    public Periodico(String titulo, String sigla, double fatorDeImpacto, String issn, int pagInicial, int pagFinal, int volume) {
         super(titulo, sigla, fatorDeImpacto);
         this.setIssn(issn);
         this.setPagInicial(pagInicial);

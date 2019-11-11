@@ -31,11 +31,11 @@ public class Conferencia extends Veiculo implements Serializable {
     @Override
     public String toString() {
         return super.toString() +
-        "\nLocal: " + this.getLocal();
+        "\n╚Local: " + this.getLocal();
     }
 
     // Constructor
-    public Conferencia(String titulo, String sigla, float fatorDeImpacto, String local) {
+    public Conferencia(String titulo, String sigla, double fatorDeImpacto, String local) {
         super(titulo, sigla, fatorDeImpacto);
         this.setLocal(local);
     }
