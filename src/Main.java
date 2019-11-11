@@ -110,5 +110,7 @@ public class Main {
         regra.setPontos("B3", 15);
         regra.setPontos("B1", 20);
         System.out.println(regra);
+
+        // Docente docente = new Docente("Jadir", 22, )
     }
 }
