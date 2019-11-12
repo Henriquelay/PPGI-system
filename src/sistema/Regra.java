@@ -91,11 +91,11 @@ public class Regra implements Comparable<Regra>, Serializable {
     }
     /**
      * 
-     * @param String dataInicio <code>"dd/mm/aaaa"</code>
-     * @param String dataFinal <code>"dd/mm/aaaa"</code>
-     * @param int anosAvaliados
-     * @param double multPeriodicos
-     * @param double pontuacaoMinima
+     * @param dataInicio <code>"dd/mm/aaaa"</code>
+     * @param dataFinal <code>"dd/mm/aaaa"</code>
+     * @param anosAvaliados int
+     * @param multPeriodicos double
+     * @param pontuacaoMinima double
      */
     public Regra(String dataInicio, String dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima) {
         this.setDataInicio(dataInicio);

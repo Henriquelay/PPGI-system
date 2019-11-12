@@ -46,7 +46,7 @@ public class Publicacao {
     // To print with standard function
     @Override
     public String toString() {
-        return "titulo: " + this.getTitulo() +
+        return "Título: " + this.getTitulo() +
             "\n╠Ano: " + this.getAno() +
             "\n╚Número='" + this.getNumero();
     }

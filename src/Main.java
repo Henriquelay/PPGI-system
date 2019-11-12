@@ -1,5 +1,8 @@
 import sistema.*;
 
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 public class Main {
     public static void main(String[] args) {
         SistemaPPGI sys = new SistemaPPGI();
@@ -73,14 +76,6 @@ public class Main {
                             throw new IllegalArgumentException(args[i]);
                 }
             }
-            /* 
-            System.out.println(fileDocentes);
-            System.out.println(fileVeiculos);
-            System.out.println(ano);
-            System.out.println(filePublicacoes);
-            System.out.println(fileQualis);
-            System.out.println(fileRegras);
-             */
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Exception caught!");
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
@@ -94,13 +89,30 @@ public class Main {
             System.exit(1);
         }
             // }Leitura de argumentos
-            // Lógica{
+            // Leitura de arquivos{
+        try{
+            System.out.println(fileDocentes);
+            System.out.println(fileVeiculos);
+            System.out.println(filePublicacoes);
+            System.out.println(fileQualis);
+            System.out.println(fileRegras);
+            sys.lerArquivoDocentes(fileDocentes);
+            sys.lerArquivoVeiculos(fileVeiculos);
+            sys.lerArquivoPublicacoes(filePublicacoes);
+            sys.lerArquivoQualis(fileQualis);
+            sys.lerArquivoRegras(fileRegras);
+        } catch(FileNotFoundException e) {
+            System.out.println("Exception caught!");
+            System.out.println("FILE NOT FOUND");
+            System.exit(1);
+        } catch(IOException e) {
+            System.out.println("Exception caught!");
+            System.out.println("ERRO DE I/O");
+            System.exit(1);
+        }
+            // }Leitura de arquivos
 
-        sys.lerArquivoDocentes(fileDocentes);
-        sys.lerArquivoVeiculos(fileVeiculos);
-        sys.lerArquivoPublicacoes(filePublicacoes);
-        sys.lerArquivoQualis(fileQualis);
-        sys.lerArquivoRegras(fileRegras);
+
         Regra regra = new Regra("01/02/0011", "25/05/2019", 15, 1.2, 5);
         regra.setPontos("A1", 15);
         regra.setPontos("A2", 15);

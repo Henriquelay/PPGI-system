@@ -2,9 +2,12 @@ package sistema;
 
 import java.io.Serializable;
 import sistema.util.*;
-
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Classe para implementação do sistema de controle PPGI
@@ -52,7 +55,13 @@ public class SistemaPPGI implements Serializable {
     }
 
     // File ingest
-    public void lerArquivoDocentes(String filename) {
+    public void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException {
+        FileReader fr = new FileReader(fileName);
+        Scanner scanner = new Scanner(fr);
+        while(scanner.hasNext()) {
+            System.out.println(scanner.useDelimiter(";").next());
+        }
+
     }
     public void lerArquivoVeiculos(String filename) {
     }

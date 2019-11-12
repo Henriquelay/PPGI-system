@@ -46,7 +46,7 @@ public abstract class Veiculo implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        return "titulo: " + this.getTitulo() +
+        return "Título: " + this.getTitulo() +
         "\n╠Sigla: " + this.getSigla() +
         "\n╚Fator de Impacto: " + this.fatorDeImpacto;
     }
