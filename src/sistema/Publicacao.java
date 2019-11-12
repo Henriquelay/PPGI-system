@@ -56,5 +56,13 @@ public class Publicacao {
         this.setAno(ano);
         this.setTitulo(titulo);
         this.setNumero(numero);
+        this.docentes = new TreeMap<Integer, Docente>();
+    }
+    public Publicacao(int ano, String titulo, int numero, Veiculo veiculo, TreeMap<Integer, Docente> docentes) {
+        this.setAno(ano);
+        this.setTitulo(titulo);
+        this.setNumero(numero);
+        this.setVeiculo(veiculo);
+        this.docentes = docentes;
     }
 }

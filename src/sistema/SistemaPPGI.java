@@ -80,13 +80,13 @@ public class SistemaPPGI implements Serializable {
         String str = "";
         String[] strTok;
         scanner.nextLine(); // Ignora primeira linha
-        Veiculo vei;
-
+        
         while(scanner.hasNext()) {
+            Veiculo vei = null;
             str = scanner.nextLine();
             strTok = str.split(";");
             if(strTok.length != 4 && strTok.length != 5)
-                throw new IllegalArgumentException("Sigla;Nome;Tipo;Impacto;ISSN," + strTok.length);
+                throw new IllegalArgumentException("Sigla;Nome;Tipo;Impacto;ISSN|" + strTok.length);
             strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula
             switch(strTok[2]) {
                 case "c":
@@ -104,7 +104,25 @@ public class SistemaPPGI implements Serializable {
         }
         scanner.close();
     }
-    private void lerArquivoPublicacoes(String fileName) {
+    private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+        FileReader fr = new FileReader(fileName);
+        Scanner scanner = new Scanner(fr);
+        String str = "";
+        String[] strTok;
+        scanner.nextLine(); // Ignora primeira linha
+        Publicacao pub;
+
+        while(scanner.hasNext()) {
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 4 && strTok.length != 5)
+                throw new IllegalArgumentException("Sigla;Nome;Tipo;Impacto;ISSN|" + strTok.length);
+            strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula
+            
+            
+            this.setVeiculos(strTok[0], vei);
+        }
+        scanner.close();
     }
     private void lerArquivoQualis(String fileName) {
     }
