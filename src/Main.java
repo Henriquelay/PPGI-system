@@ -91,16 +91,18 @@ public class Main {
             // }Leitura de argumentos
             // Leitura de arquivos{
         try{
+            String inputFolder  = "in/";
+            fileDocentes = inputFolder + fileDocentes;
+            fileVeiculos = inputFolder + fileVeiculos;
+            filePublicacoes = inputFolder + filePublicacoes;
+            fileQualis = inputFolder + fileQualis;
+            fileRegras = inputFolder + fileRegras;
             System.out.println(fileDocentes);
             System.out.println(fileVeiculos);
             System.out.println(filePublicacoes);
             System.out.println(fileQualis);
             System.out.println(fileRegras);
-            sys.lerArquivoDocentes(fileDocentes);
-            sys.lerArquivoVeiculos(fileVeiculos);
-            sys.lerArquivoPublicacoes(filePublicacoes);
-            sys.lerArquivoQualis(fileQualis);
-            sys.lerArquivoRegras(fileRegras);
+            sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras);
         } catch(FileNotFoundException e) {
             System.out.println("Exception caught!");
             System.out.println("FILE NOT FOUND");
@@ -122,17 +124,8 @@ public class Main {
         regra.setPontos("B3", 15);
         regra.setPontos("B1", 20);
         // System.out.println(regra);
-        
-        Docente docente = new Docente("Jadir", 22, "22/02/2019", "21/02/2018", true);
-        sys.setDocentes(22, docente);
-        Veiculo vei = new Periodico("O alto da compadre cida", "ADC", 1.5, "issn", 15, 17, 2);
-        sys.setVeiculos("ADC", vei);
-        vei = new Conferencia("Conferência dos maluco oido", "CoDoi", 1.2, "Na cama da sua mãe");
-        sys.setVeiculos("CoDoi", vei);
-        Publicacao pub = new Publicacao(2019, "CARALHO", 69420);
-        sys.setPublicacoes(69420, pub);
 
-        System.out.println(sys);
+        System.out.print(sys);
 
     }
 }

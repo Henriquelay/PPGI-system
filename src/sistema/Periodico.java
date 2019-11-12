@@ -16,6 +16,7 @@ public class Periodico extends Veiculo implements Serializable {
     private int volume;
 
     // Getters and Setters
+    public char getTipo() {return 'P';}
     public String getIssn() {return this.issn;}
     public int getPagInicial() {return this.pagInicial;}
     public int getPagFinal() {return this.pagFinal;}

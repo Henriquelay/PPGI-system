@@ -13,6 +13,7 @@ public class Conferencia extends Veiculo implements Serializable {
     private String local;
 
     // Getter and Setter
+    public char getTipo() {return 'C';}
     public String getLocal() {return this.local;}
     private void setLocal(String local) {this.local = local;}
 

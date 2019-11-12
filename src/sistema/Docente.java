@@ -11,19 +11,19 @@ import java.util.Objects;
  */
 public class Docente implements Serializable {
     private String nome;
-    private int codigo;
+    private long codigo;
     private MyCalendar dataNascimento;
     private MyCalendar dataIngresso;
     private boolean isCoodenador;
 
     // Getters and Setters
     public String getNome() {return this.nome;}
-    public int getCodigo() {return this.codigo;}
+    public long getCodigo() {return this.codigo;}
     public MyCalendar getDataNascimento() {return this.dataNascimento;}
     public MyCalendar getDataIngresso() {return this.dataIngresso;}
     public boolean getIsCoodenador() {return this.isCoodenador;}
     private void setNome(String nome) {this.nome = nome;}
-    private void setCodigo(int codigo) {this.codigo = codigo;}
+    private void setCodigo(long codigo) {this.codigo = codigo;}
     private void setDataIngresso(MyCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
     private void setDataNascimento(MyCalendar dataNascimento) {this.dataNascimento = dataNascimento;}
     private void setDataIngresso(String dataIngresso) throws IllegalArgumentException{this.setDataIngresso(MyCalendar.toDate(dataIngresso));}
@@ -57,12 +57,12 @@ public class Docente implements Serializable {
     /**
      * @deprecated
      * @param nome string
-     * @param codigo int
+     * @param codigo long
      * @param dataNascimento MyCalendar
      * @param dataIngresso MyCalendar
      * @param isCoodenador bool
      */
-    public Docente(String nome, int codigo, MyCalendar dataNascimento, MyCalendar dataIngresso, boolean isCoodenador) {
+    public Docente(String nome, long codigo, MyCalendar dataNascimento, MyCalendar dataIngresso, boolean isCoodenador) {
         this.setNome(nome);
         this.setCodigo(codigo);
         this.setDataNascimento(dataNascimento);
@@ -72,12 +72,12 @@ public class Docente implements Serializable {
 
     /**
      * @param nome String
-     * @param codigo int
+     * @param codigo long
      * @param dataNascimento String
      * @param dataIngresso String
      * @param isCoodenador bool
      */
-    public Docente(String nome, int codigo, String dataNascimento, String dataIngresso, boolean isCoodenador) {
+    public Docente(String nome, long codigo, String dataNascimento, String dataIngresso, boolean isCoodenador) {
         this.setNome(nome);
         this.setCodigo(codigo);
         this.setDataNascimento(dataNascimento);

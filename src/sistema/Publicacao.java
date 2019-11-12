@@ -48,7 +48,7 @@ public class Publicacao {
     public String toString() {
         return "Título: " + this.getTitulo() +
             "\n╠Ano: " + this.getAno() +
-            "\n╚Número='" + this.getNumero();
+            "\n╚Número: " + this.getNumero();
     }
 
     // Constructor
