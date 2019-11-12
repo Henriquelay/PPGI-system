@@ -109,18 +109,18 @@ public class Main {
         regra.setPontos("B2", 15);
         regra.setPontos("B3", 15);
         regra.setPontos("B1", 20);
-        System.out.println(regra);
-
+        // System.out.println(regra);
+        
         Docente docente = new Docente("Jadir", 22, "22/02/2019", "21/02/2018", true);
-        System.out.println(docente);
-
+        sys.setDocentes(22, docente);
         Veiculo vei = new Periodico("O alto da compadre cida", "ADC", 1.5, "issn", 15, 17, 2);
-        System.out.println(vei);
+        sys.setVeiculos("ADC", vei);
         vei = new Conferencia("Conferência dos maluco oido", "CoDoi", 1.2, "Na cama da sua mãe");
-        System.out.println(vei);
-
+        sys.setVeiculos("CoDoi", vei);
         Publicacao pub = new Publicacao(2019, "CARALHO", 69420);
-        System.out.println(pub);
+        sys.setPublicacoes(69420, pub);
+
+        System.out.println(sys);
 
     }
 }
