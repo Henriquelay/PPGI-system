@@ -46,7 +46,7 @@ public class Docente implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        return "Nome: " + this.getNome() +
+        return "╔Nome: " + this.getNome() +
             "\n╠Codigo: " + this.getCodigo() +
             "\n╠Data de nascimento: " + this.getDataNascimento() +
             "\n╠Data de ingresso: " + this.getDataIngresso() +

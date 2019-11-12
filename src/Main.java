@@ -21,8 +21,8 @@ public class Main {
                 /* for(String arg : args) {
                     System.out.print(arg + " ");
                 }
-                System.out.println("");
-                */
+                System.out.println(""); */
+
             // Ensures input are on the correct length
             if(args.length != 12 && args.length != 13)
                 throw new ArrayIndexOutOfBoundsException();
@@ -94,39 +94,26 @@ public class Main {
             // }Leitura de argumentos
             // Leitura de arquivos{
         try{
+            // Add input subfolder to file path {
+            // WARN REVIEW  REMOVE THIS BEFORE TURNING IN YOUR ASSIGNMENT YOU FISH-BRAINED DUMFUCK
             String inputFolder  = "in/";
             fileDocentes = inputFolder + fileDocentes;
             fileVeiculos = inputFolder + fileVeiculos;
             filePublicacoes = inputFolder + filePublicacoes;
             fileQualis = inputFolder + fileQualis;
             fileRegras = inputFolder + fileRegras;
-            System.out.println(fileDocentes);
-            System.out.println(fileVeiculos);
-            System.out.println(filePublicacoes);
-            System.out.println(fileQualis);
-            System.out.println(fileRegras);
+            // }
             sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras);
         } catch(FileNotFoundException e) {
             System.out.println("Exception caught!");
-            System.out.println("FILE NOT FOUND");
+            System.out.println("FILE NOT FOUND " + e.getMessage());
             System.exit(1);
         } catch(IOException e) {
             System.out.println("Exception caught!");
-            System.out.println("ERRO DE I/O");
+            System.out.println("ERRO DE I/O " + e.getMessage());
             System.exit(1);
         }
             // }Leitura de arquivos
-
-
-        Regra regra = new Regra("01/02/0011", "25/05/2019", 15, 1.2, 5);
-        regra.setPontos("A1", 15);
-        regra.setPontos("A2", 15);
-        regra.setPontos("A3", 15);
-        regra.setPontos("B1", 15);
-        regra.setPontos("B2", 15);
-        regra.setPontos("B3", 15);
-        regra.setPontos("B1", 20);
-        // System.out.println(regra);
 
         System.out.print(sys);
 

@@ -51,14 +51,16 @@ public class Regra implements Comparable<Regra>, Serializable {
     /**
      * To compare Regras. It returns the comparation of this dataInicio
      */ 
-    @Override public int compareTo(Regra r) {
+    @Override
+    public int compareTo(Regra r) {
         return this.getDataInicio().compareTo(r.getDataInicio());
     }
 
     /**
      *  To print with standard function
      */
-    @Override public String toString() {
+    @Override
+    public String toString() {
         String str = "Data Início: " + this.getDataInicio() + " Data final: " + this.getDataFinal() +
         "\n╠Pontuação mínima: " + this.getPontuacaoMinima() +
         "\n╠Multiplicador de periódicos: " + this.getMultPeriodicos() +

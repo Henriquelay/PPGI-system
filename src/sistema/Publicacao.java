@@ -3,6 +3,8 @@ package sistema;
 import sistema.Docente;
 import sistema.Veiculo;
 import java.util.TreeMap;
+import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -10,58 +12,70 @@ import java.util.Objects;
  * @author Henrique Layber
  * @version 1.0
  */
-public class Publicacao {
+public abstract class Publicacao implements Serializable {
     private int ano;
     private String titulo;
     private int numero;
+    private int pagInicial;
+    private int pagFinal;
+    private String local;
 
     // Relations
     Veiculo veiculo;
-    TreeMap<Integer, Docente> docentes; // código do docente, docente;
+    TreeMap<Long, Docente> docentes; // código do docente, docente;
 
     // Getters e Setters
     public int getAno() {return this.ano;}
     public String getTitulo() {return this.titulo;}
     public int getNumero() {return this.numero;}
+    public int getPagInicial() {return this.pagInicial;}
+    public int getPagFinal() {return this.pagFinal;}
     public Veiculo getVeiculo() {return this.veiculo;}
-    public TreeMap<Integer, Docente> getDocentes() {return this.docentes;}
+    public String getLocal() {return this.local;}
+    public TreeMap<Long, Docente> getDocentes() {return this.docentes;}
     private void setAno(int ano) {this.ano = ano;}
     private void setTitulo(String titulo) {this.titulo = titulo;}
     private void setNumero(int numero) {this.numero = numero;}
     private void setVeiculo(Veiculo veiculo) {this.veiculo = veiculo;}
-    private void setDocente(int codigo, Docente docente) {this.getDocentes().put(new Integer(codigo), docente);}
-
-    // To compare with standard function
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Publicacao)) {
-            return false;
-        }
-        Publicacao publicacao = (Publicacao) o;
-        return ano == publicacao.ano && Objects.equals(titulo, publicacao.titulo) && numero == publicacao.numero;
-    }
+    private void setPagInicial(int pagInicial) {this.pagInicial = pagInicial;}
+    private void setPagFinal(int pagFinal) {this.pagFinal = pagFinal;}
+    private void setLocal(String local) {this.local = local;}
+    private void setDocente(int codigo, Docente docente) {this.getDocentes().put(new Long(codigo), docente);}
 
     // To print with standard function
     @Override
     public String toString() {
-        return "Título: " + this.getTitulo() +
+        String str = "╔Título: " + this.getTitulo() +
             "\n╠Ano: " + this.getAno() +
-            "\n╚Número: " + this.getNumero();
+            "\n╠PagInicial: " + this.getPagInicial() +
+            "\n╠PagFinal: " + this.getPagFinal() +
+            "\n╠Número: " + this.getNumero() +
+            "\n╠Autores: ";
+        for(Map.Entry<Long, Docente> e : this.getDocentes().entrySet()) {
+            str += e.getValue().getNome();
+            if(e.getKey() != this.getDocentes().lastEntry().getKey())
+                str += ",";
+        }
+            str += "\n╠Veículo: " + this.getVeiculo().getSigla();
+            return str;
     }
 
     // Constructor
-    public Publicacao(int ano, String titulo, int numero) {
+    public Publicacao(int ano, Veiculo veiculo, String titulo, int numero, int pagInicial, int pagFinal) {
         this.setAno(ano);
         this.setTitulo(titulo);
         this.setNumero(numero);
-        this.docentes = new TreeMap<Integer, Docente>();
+        this.setPagInicial(pagInicial);
+        this.setPagFinal(pagFinal);
+        this.setVeiculo(veiculo);
+        this.docentes = new TreeMap<Long, Docente>();
     }
-    public Publicacao(int ano, String titulo, int numero, Veiculo veiculo, TreeMap<Integer, Docente> docentes) {
+    public Publicacao(int ano, Veiculo veiculo, String titulo, TreeMap<Long, Docente> docentes, int numero, int pagInicial, int pagFinal) {
         this.setAno(ano);
         this.setTitulo(titulo);
         this.setNumero(numero);
+        this.setPagInicial(pagInicial);
+        this.setPagFinal(pagFinal);
         this.setVeiculo(veiculo);
         this.docentes = docentes;
     }
