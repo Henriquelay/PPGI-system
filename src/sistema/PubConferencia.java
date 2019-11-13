@@ -14,7 +14,7 @@ public class PubConferencia extends Publicacao {
     @Override
     public String toString() {
         return super.toString() + 
-            "\n╚Local: " + this.getLocal();
+            "\n╚Local:\t" + this.getLocal();
     }
 
     public PubConferencia(int ano, Veiculo veiculo, String titulo, int numero, String local, int pagInicial, int pagFinal) {

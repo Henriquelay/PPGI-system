@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author Henrique Layber
  * @version 1.0
  */
-public class Conferencia extends Veiculo implements Serializable {
+public class Conferencia extends Veiculo {
 
     // Getter and Setter
     public char getTipo() {return 'C';}

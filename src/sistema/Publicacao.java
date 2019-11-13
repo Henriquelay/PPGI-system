@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author Henrique Layber
  * @version 1.0
  */
-public abstract class Publicacao implements Serializable {
+public abstract class Publicacao {
     private int ano;
     private String titulo;
     private int numero;
@@ -45,18 +45,18 @@ public abstract class Publicacao implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        String str = "╔Título: " + this.getTitulo() +
-            "\n╠Ano: " + this.getAno() +
-            "\n╠PagInicial: " + this.getPagInicial() +
-            "\n╠PagFinal: " + this.getPagFinal() +
-            "\n╠Número: " + this.getNumero() +
-            "\n╠Autores: ";
+        String str = "╔Título:\t" + this.getTitulo() +
+            "\n╠Ano:\t" + this.getAno() +
+            "\n╠PagInicial:" + this.getPagInicial() +
+            "\n╠PagFinal:\t" + this.getPagFinal() +
+            "\n╠Número:\t" + this.getNumero() +
+            "\n╠Autores:\t";
         for(Map.Entry<Long, Docente> e : this.getDocentes().entrySet()) {
             str += e.getValue().getNome();
             if(e.getKey() != this.getDocentes().lastEntry().getKey())
                 str += ",";
         }
-            str += "\n╠Veículo: " + this.getVeiculo().getSigla();
+            str += "\n╠Veículo:\t" + this.getVeiculo().getSigla();
             return str;
     }
 

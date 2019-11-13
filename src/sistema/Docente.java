@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author Henrique Layber
  * @version 1.0
  */
-public class Docente implements Serializable {
+public class Docente {
     private String nome;
     private long codigo;
     private MyCalendar dataNascimento;
@@ -46,11 +46,11 @@ public class Docente implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        return "╔Nome: " + this.getNome() +
-            "\n╠Codigo: " + this.getCodigo() +
-            "\n╠Data de nascimento: " + this.getDataNascimento() +
-            "\n╠Data de ingresso: " + this.getDataIngresso() +
-            "\n╚Coodenador? " + this.isIsCoodenador();
+        return "╔Nome:\t\t" + this.getNome() +
+            "\n╠Codigo:\t\t" + this.getCodigo() +
+            "\n╠Data de nascimento:" + this.getDataNascimento() +
+            "\n╠Data de ingresso:\t" + this.getDataIngresso() +
+            "\n╚Coodenador?\t" + this.isIsCoodenador();
     }
     
     // Constructor

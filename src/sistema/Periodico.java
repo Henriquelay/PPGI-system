@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author Henrique Layber
  * @version 1.0
  */
-public class Periodico extends Veiculo implements Serializable {
+public class Periodico extends Veiculo {
     private String issn;
 
     // Getters and Setters
@@ -22,7 +22,7 @@ public class Periodico extends Veiculo implements Serializable {
     @Override
     public String toString() {
         return super.toString() +
-            "\n╚ISSN: " + this.getIssn();
+            "\n╚ISSN:\t\t" + this.getIssn();
     }
 
     

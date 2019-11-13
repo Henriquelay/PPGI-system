@@ -10,7 +10,7 @@ import java.util.TreeMap;
  * @author Henrique Layber
  * @version 1.0
  */
-public class Regra implements Comparable<Regra>, Serializable {
+public class Regra {
     private int anosAvaliados;
     private double multPeriodicos;
     private double pontuacaoMinima;
@@ -49,28 +49,20 @@ public class Regra implements Comparable<Regra>, Serializable {
     }
 
     /**
-     * To compare Regras. It returns the comparation of this dataInicio
-     */ 
-    @Override
-    public int compareTo(Regra r) {
-        return this.getDataInicio().compareTo(r.getDataInicio());
-    }
-
-    /**
      *  To print with standard function
      */
     @Override
     public String toString() {
-        String str = "Data Início: " + this.getDataInicio() + " Data final: " + this.getDataFinal() +
-        "\n╠Pontuação mínima: " + this.getPontuacaoMinima() +
-        "\n╠Multiplicador de periódicos: " + this.getMultPeriodicos() +
+        String str = "Data Início:\t\t" + this.getDataInicio() + " Data final: " + this.getDataFinal() +
+        "\n╠Pontuação mínima:\t\t" + this.getPontuacaoMinima() +
+        "\n╠Multiplicador de periódicos:\t" + this.getMultPeriodicos() +
         "\n╠Pontos";
         // Iterating through the Treemap
         for(Map.Entry<String,Integer> e : this.getPontos().entrySet()) {
             str += "\n╠═" + e.getKey() + ":" + e.getValue();
         }
         
-        str += "\n╚Anos Avaliados: " + this.getAnosAvaliados();
+        str += "\n╚Anos Avaliados:\t" + this.getAnosAvaliados();
 
         return str;
     }

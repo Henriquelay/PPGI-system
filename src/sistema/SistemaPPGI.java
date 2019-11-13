@@ -71,6 +71,8 @@ public class SistemaPPGI implements Serializable {
             strTok = str.split(";");
             if(strTok.length != 4 && strTok.length != 5)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 4 or 5");
+            for(String s : strTok)
+                s.trim();
 
             long key = Long.parseLong(strTok[0]);
             Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
@@ -91,6 +93,9 @@ public class SistemaPPGI implements Serializable {
             strTok = str.split(";");
             if(strTok.length != 4 && strTok.length != 5)
                 throw new IllegalArgumentException("Sigla;Nome;Tipo;Impacto;ISSN|" + strTok.length);
+            for(String s : strTok)
+                s.trim();
+
             strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula
             switch(strTok[2]) {
                 case "c":
@@ -124,29 +129,26 @@ public class SistemaPPGI implements Serializable {
             strTok = str.split(";");
             if(strTok.length != 9)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
+            for(String s : strTok)
+                s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+
+            docentes = new TreeMap<Long, Docente>();
+            vei = this.getVeiculos().get(strTok[1]);
+            for(String s : strTok[3].split(",")) {
+                s.trim();
+                long key = Long.parseLong(s);
+                docentes.put(key, this.getDocentes().get(key));
+            }
+            numero = Integer.parseInt(strTok[4]);
             switch(strTok[6]) {
                 case "":
-                    vei = this.getVeiculos().get(strTok[1]);
-                    docentes = new TreeMap<Long, Docente>();
-                    for(String s : strTok[3].split(",")) {
-                        s = s.replace(" ", "");
-                        long key = Long.parseLong(s);
-                        docentes.put(key, this.getDocentes().get(key));
-                    }
-                    pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
                 break;
                 default:
-                    vei = this.getVeiculos().get(strTok[1]);
-                    docentes = new TreeMap<Long, Docente>();
-                    for(String s : strTok[3].split(",")) {
-                        long key = Long.parseLong(s);
-                        docentes.put(key, this.getDocentes().get(key));
-                    }
-                    numero = Integer.parseInt(strTok[4]);
                     pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
             }
             this.setPublicacoes(numero, pub);
-            vei.setPublicacao(numero.intValue(), pub);
+            vei.setPublicacao(numero, pub);
         }
         scanner.close();
     }
@@ -163,6 +165,9 @@ public class SistemaPPGI implements Serializable {
             strTok = str.split(";");
             if(strTok.length != 3)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
+            for(String s : strTok)
+                s.trim();
+
             if(veiculos.get(strTok[1]) != null)
                 veiculos.get(strTok[1]).setQualis(Integer.parseInt(strTok[0]), strTok[2]);
         }

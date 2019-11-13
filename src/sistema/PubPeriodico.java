@@ -14,7 +14,7 @@ public class PubPeriodico extends Publicacao {
     @Override
     public String toString() {
         return super.toString() + 
-            "\n╚Volume: " + this.getVolume();
+            "\n╚Volume:\t" + this.getVolume();
     }
 
     public PubPeriodico(int ano, Veiculo veiculo, String titulo, int numero, int volume, int pagInicial, int pagFinal) {

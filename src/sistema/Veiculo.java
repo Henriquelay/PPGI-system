@@ -36,9 +36,9 @@ public abstract class Veiculo implements Serializable {
     // To print with standard function
     @Override
     public String toString() {
-        String str = "╔Título veículo: " + this.getTitulo() +
-        "\n╠Sigla: " + this.getSigla() +
-        "\n╠Fator de Impacto: " + this.fatorDeImpacto +
+        String str = "╔Título veículo:\t" + this.getTitulo() +
+        "\n╠Sigla:\t\t" + this.getSigla() +
+        "\n╠Fator de Impacto:\t" + this.fatorDeImpacto +
         "\n║Qualificação";
         for(Map.Entry<Integer,String> e : this.getQualis().entrySet())
             str += "\n╠═"  + e.getKey() + ":" + e.getValue();
