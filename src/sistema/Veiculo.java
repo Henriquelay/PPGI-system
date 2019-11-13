@@ -1,9 +1,7 @@
 package sistema;
 
 import sistema.Publicacao;
-import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 
 /**
@@ -11,7 +9,7 @@ import java.util.TreeMap;
  * @author Henrique Layber
  * @version 1.0
  */
-public abstract class Veiculo implements Serializable {
+public abstract class Veiculo {
     protected String titulo;
     protected String sigla;
     protected double fatorDeImpacto;
@@ -29,9 +27,6 @@ public abstract class Veiculo implements Serializable {
     private void setTitulo(String titulo) {this.titulo = titulo;}
     private void setSigla(String sigla) {this.sigla = sigla;}
     private void setFatorDeImpacto(double fatorDeImpacto) {this.fatorDeImpacto = fatorDeImpacto;}
-    // empty means package-private
-    void setQualis(int ano, String Qualis) {this.getQualis().put(new Integer(ano), Qualis);}
-    void setPublicacao(int numero, Publicacao publicacao) {this.getPublicacoes().put(new Integer(numero), publicacao);}
 
     // To print with standard function
     @Override

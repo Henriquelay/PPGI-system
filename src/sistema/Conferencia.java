@@ -1,8 +1,6 @@
 package sistema;
 
 import sistema.Veiculo;
-import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Classe para implementação dos veículos tipo conferência

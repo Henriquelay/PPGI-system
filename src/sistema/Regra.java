@@ -1,6 +1,5 @@
 package sistema;
 
-import java.io.Serializable;
 import sistema.util.*;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,9 +52,9 @@ public class Regra {
      */
     @Override
     public String toString() {
-        String str = "Data Início:\t\t" + this.getDataInicio() + " Data final: " + this.getDataFinal() +
-        "\n╠Pontuação mínima:\t\t" + this.getPontuacaoMinima() +
-        "\n╠Multiplicador de periódicos:\t" + this.getMultPeriodicos() +
+        String str = "Data Início:\t" + this.getDataInicio() + " Data final: " + this.getDataFinal() +
+        "\n╠Pontuação mínima:\t" + this.getPontuacaoMinima() +
+        "\n╠Mult. periódicos:\t" + this.getMultPeriodicos() +
         "\n╠Pontos";
         // Iterating through the Treemap
         for(Map.Entry<String,Integer> e : this.getPontos().entrySet()) {
@@ -90,13 +89,14 @@ public class Regra {
      * @param anosAvaliados int
      * @param multPeriodicos double
      * @param pontuacaoMinima double
+     * @param pontos TreeMap<String, Integer>
      */
-    public Regra(String dataInicio, String dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima) {
+    public Regra(String dataInicio, String dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima, TreeMap<String, Integer> pontos) {
         this.setDataInicio(dataInicio);
         this.setDataFinal(dataFinal);
         this.setAnosAvaliados(anosAvaliados);
         this.setMultPeriodicos(multPeriodicos);
         this.setPontuacaoMinima(pontuacaoMinima);
-        this.pontos = new TreeMap<String,Integer>();
+        this.pontos = pontos;
     }
 }

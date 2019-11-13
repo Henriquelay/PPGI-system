@@ -1,8 +1,6 @@
 package sistema;
 
-import java.io.Serializable;
 import sistema.util.*;
-import java.util.Objects;
 
 /**
  * Classe para implementação dos docentes PPGI
@@ -30,18 +28,6 @@ public class Docente {
     private void setDataNascimento(String dataNascimento) throws IllegalArgumentException{this.setDataNascimento(MyCalendar.toDate(dataNascimento));}
     private boolean isIsCoodenador() {return this.isCoodenador;}
     private void setIsCoodenador(boolean isCoodenador) {this.isCoodenador = isCoodenador;}
-    
-    // To compare with standard function
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-            if (!(o instanceof Docente)) {
-            return false;
-        }
-        Docente docente = (Docente) o;
-        return Objects.equals(nome, docente.nome) && codigo == docente.codigo && Objects.equals(dataNascimento, docente.dataNascimento) && Objects.equals(dataIngresso, docente.dataIngresso) && isCoodenador == docente.isCoodenador;
-    }
 
     // To print with standard function
     @Override

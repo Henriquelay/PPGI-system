@@ -4,7 +4,7 @@ import sistema.Publicacao;
 import java.util.TreeMap;
 
 public class PubConferencia extends Publicacao {
-    String local;
+    private String local;
 
     // Getter e setter
     public String getLocal() {return this.local;}

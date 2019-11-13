@@ -3,9 +3,7 @@ package sistema;
 import sistema.Docente;
 import sistema.Veiculo;
 import java.util.TreeMap;
-import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Classe para implementação das publicação de docentes
@@ -18,7 +16,6 @@ public abstract class Publicacao {
     private int numero;
     private int pagInicial;
     private int pagFinal;
-    private String local;
 
     // Relations
     Veiculo veiculo;
@@ -31,7 +28,6 @@ public abstract class Publicacao {
     public int getPagInicial() {return this.pagInicial;}
     public int getPagFinal() {return this.pagFinal;}
     public Veiculo getVeiculo() {return this.veiculo;}
-    public String getLocal() {return this.local;}
     public TreeMap<Long, Docente> getDocentes() {return this.docentes;}
     private void setAno(int ano) {this.ano = ano;}
     private void setTitulo(String titulo) {this.titulo = titulo;}
@@ -39,7 +35,6 @@ public abstract class Publicacao {
     private void setVeiculo(Veiculo veiculo) {this.veiculo = veiculo;}
     private void setPagInicial(int pagInicial) {this.pagInicial = pagInicial;}
     private void setPagFinal(int pagFinal) {this.pagFinal = pagFinal;}
-    private void setLocal(String local) {this.local = local;}
     private void setDocente(int codigo, Docente docente) {this.getDocentes().put(new Long(codigo), docente);}
 
     // To print with standard function

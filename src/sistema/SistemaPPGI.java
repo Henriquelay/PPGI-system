@@ -26,10 +26,6 @@ public class SistemaPPGI implements Serializable {
     public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
     public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
     public TreeMap<Integer,Publicacao> getPublicacoes() {return this.publicacoes;}
-    public void setRegras(MyCalendar key,Regra regra) {this.getRegras().put(key, regra);}
-    public void setVeiculos(String key,Veiculo veiculo) {this.getVeiculos().put(key, veiculo);}
-    public void setDocentes(Long key,Docente docente) {this.getDocentes().put(key, docente);}
-    public void setPublicacoes(int key,Publicacao publicacao) {this.getPublicacoes().put(new Integer(key), publicacao);}
 
     // To print with standard function
     @Override
@@ -72,11 +68,11 @@ public class SistemaPPGI implements Serializable {
             if(strTok.length != 4 && strTok.length != 5)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 4 or 5");
             for(String s : strTok)
-                s.trim();
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
 
             long key = Long.parseLong(strTok[0]);
             Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
-            this.setDocentes(new Long(key), docente);
+            this.getDocentes().put(new Long(key), docente);
         }
         scanner.close();
     }
@@ -94,7 +90,7 @@ public class SistemaPPGI implements Serializable {
             if(strTok.length != 4 && strTok.length != 5)
                 throw new IllegalArgumentException("Sigla;Nome;Tipo;Impacto;ISSN|" + strTok.length);
             for(String s : strTok)
-                s.trim();
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
 
             strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula
             switch(strTok[2]) {
@@ -109,7 +105,7 @@ public class SistemaPPGI implements Serializable {
                 default:
                     throw new IllegalArgumentException(strTok[2] + " unrecognized on " + fileName);
             }
-            this.setVeiculos(strTok[0], vei);
+            this.getVeiculos().put(strTok[0], vei);
         }
         scanner.close();
     }
@@ -130,7 +126,7 @@ public class SistemaPPGI implements Serializable {
             if(strTok.length != 9)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
             for(String s : strTok)
-                s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
 
             docentes = new TreeMap<Long, Docente>();
             vei = this.getVeiculos().get(strTok[1]);
@@ -147,8 +143,8 @@ public class SistemaPPGI implements Serializable {
                 default:
                     pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
             }
-            this.setPublicacoes(numero, pub);
-            vei.setPublicacao(numero, pub);
+            this.getPublicacoes().put(numero, pub);
+            vei.getPublicacoes().put(numero, pub);
         }
         scanner.close();
     }
@@ -166,14 +162,42 @@ public class SistemaPPGI implements Serializable {
             if(strTok.length != 3)
                 throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
             for(String s : strTok)
-                s.trim();
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
 
             if(veiculos.get(strTok[1]) != null)
-                veiculos.get(strTok[1]).setQualis(Integer.parseInt(strTok[0]), strTok[2]);
+                veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
         }
         scanner.close();
     }
     private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+        FileReader fr = new FileReader(fileName);
+        Scanner scanner = new Scanner(fr);
+        String str = "";
+        String[] strTok;
+        scanner.nextLine(); // Ignora primeira linha
+
+        while(scanner.hasNext()) {
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 7)
+                throw new IllegalArgumentException("Length '" + strTok.length + "'' not 7");
+            for(String s : strTok)
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            strTok[4] = strTok[4].replace(",", ".");    // To read as double
+            TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
+            String[] qualis = strTok[2].split(",");
+            String[] valorPontos = strTok[3].split(",");
+            if(qualis.length != valorPontos.length)
+                throw new IllegalArgumentException("Qualis length does not equals valorPontos length");
+            for(String s : qualis)
+                s = s.trim();
+            for(String s : valorPontos)
+                s = s.trim();
+            for(int i = 0; i < qualis.length; i++)
+                pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
+            this.getRegras().put(MyCalendar.toDate(strTok[0]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
+        }
+        scanner.close();
     }
 
     // Força a chamada das leituras na ordem correta.
@@ -182,6 +206,7 @@ public class SistemaPPGI implements Serializable {
         this.lerArquivoVeiculos(fileVeiculos);
         this.lerArquivoPublicacoes(filePublicacoes);
         this.lerArquivoQualis(fileQualis);
+        this.lerArquivoRegras(fileRegras);
     }
 
     // Reports

@@ -14,6 +14,8 @@ public class MyCalendar extends GregorianCalendar {
 
     public static MyCalendar toDate(String str) throws IllegalArgumentException {
         String[] datePart = str.split("/");
+        for(String s : datePart)
+            s.trim();
         if(datePart.length != 3)
             throw new IllegalArgumentException(str);
         return new MyCalendar(Integer.parseInt(datePart[2]), Integer.parseInt(datePart[1]), Integer.parseInt(datePart[0]));
