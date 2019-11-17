@@ -11,8 +11,8 @@ public class InconsistenciaCodigo extends IOException {
         return "Código repetido para " + this.objeto + ": " + this.codigo + ".";
     }
 
-    public InconsistenciaCodigo(Object o, Number codigo) {
-        this.objeto = o.getClass().getName();
-        this.codigo = codigo.toString();        
+    public InconsistenciaCodigo(String object, String codigo) {
+        this.objeto = object;
+        this.codigo = codigo;        
     }
 }

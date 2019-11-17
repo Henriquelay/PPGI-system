@@ -3,7 +3,7 @@ package sistema.util;
 import java.io.IOException;
 
 public class InconsistenciaTipo extends IOException {
-    private char tipo;
+    private String tipo;
     private String sigla;
 
     @Override
@@ -11,7 +11,7 @@ public class InconsistenciaTipo extends IOException {
         return "Tipo de veículo desconhecido para veículo " + this.sigla + "”: " + this.tipo + ".";
     }
 
-    public InconsistenciaTipo(String sigla, char tipo) {
+    public InconsistenciaTipo(String sigla, String tipo) {
         this.tipo = tipo;
         this.sigla = sigla;       
     }

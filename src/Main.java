@@ -116,7 +116,7 @@ public class Main {
         }
             // }Leitura de arquivos
 
-        // System.out.print(sys);
+        System.out.print(sys);
 
     }
 }
