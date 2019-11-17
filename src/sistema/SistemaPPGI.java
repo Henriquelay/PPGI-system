@@ -146,7 +146,7 @@ public class SistemaPPGI implements Serializable {
                 docentes = new TreeMap<Long, Docente>();
                 vei = this.getVeiculos().get(strTok[1]);
                 if(vei == null)
-                throw new InconsistenciaSiglaVeiculo(strTok[2], strTok[1]);
+                throw new InconsistenciaSiglaVeiculoPublicacao(strTok[2], strTok[1]);
                 for(String s : strTok[3].split(",")) {
                     s.trim();
                     long key = Long.parseLong(s);
@@ -162,7 +162,7 @@ public class SistemaPPGI implements Serializable {
                 }
                 this.getPublicacoes().put(numero, pub);
                 vei.getPublicacoes().put(numero, pub);
-            } catch (InconsistenciaSiglaVeiculo e) {
+            } catch (InconsistenciaSiglaVeiculoPublicacao e) {
                 System.out.println(e);
             }
         }
@@ -177,15 +177,24 @@ public class SistemaPPGI implements Serializable {
         scanner.nextLine(); // Ignora primeira linha
         
         while(scanner.hasNext()) {
-            str = scanner.nextLine();
-            strTok = str.split(";");
-            if(strTok.length != 3)
-            throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
-            for(String s : strTok)
-            s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-            
-            if(veiculos.get(strTok[1]) != null)
-            veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
+            try{
+                str = scanner.nextLine();
+                strTok = str.split(";");
+                if(strTok.length != 3)
+                    throw new IllegalArgumentException("Erro de formatação");
+                for(String s : strTok)
+                    s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+                
+                if(!this.getVeiculos().containsKey(strTok[1]))
+                    throw new InconsistenciaSiglaVeiculoQualis(strTok[0], strTok[1]);
+                if(!isValidQualis(strTok[2]))
+                    throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
+                veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
+            } catch (InconsistenciaSiglaVeiculoQualis e) {
+                System.out.println(e);
+            } catch (InconsistenciaQualisVeiculo e) {
+                System.out.println(e);
+            }
         }
         scanner.close();
     }
@@ -197,25 +206,32 @@ public class SistemaPPGI implements Serializable {
         scanner.nextLine(); // Ignora primeira linha
         
         while(scanner.hasNext()) {
-            str = scanner.nextLine();
-            strTok = str.split(";");
-            if(strTok.length != 7)
-            throw new IllegalArgumentException("Length '" + strTok.length + "'' not 7");
-            for(String s : strTok)
-            s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-            strTok[4] = strTok[4].replace(",", ".");    // To read as double
-            TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
-            String[] qualis = strTok[2].split(",");
-            String[] valorPontos = strTok[3].split(",");
-            if(qualis.length != valorPontos.length)
-            throw new IllegalArgumentException("Qualis length does not equals valorPontos length");
-            for(String s : qualis)
-            s = s.trim();
-            for(String s : valorPontos)
-            s = s.trim();
-            for(int i = 0; i < qualis.length; i++)
-            pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
-            this.getRegras().put(MyCalendar.toDate(strTok[0]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
+            try {
+                str = scanner.nextLine();
+                strTok = str.split(";");
+                if(strTok.length != 7)
+                    throw new IllegalArgumentException("Erro de formatação");
+                for(String s : strTok)
+                    s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+                strTok[4] = strTok[4].replace(",", ".");    // To read as double
+                TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
+                String[] qualis = strTok[2].split(",");
+                String[] valorPontos = strTok[3].split(",");
+                if(qualis.length != valorPontos.length)
+                    throw new IllegalArgumentException("Erro de formatação");
+                for(String s : qualis)
+                    s = s.trim();
+                for(String s : valorPontos)
+                    s = s.trim();
+                for(int i = 0; i < qualis.length; i++) {
+                    if(!isValidQualis(qualis[i]))
+                        throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
+                    pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
+                }
+                this.getRegras().put(MyCalendar.toDate(strTok[0]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
+            } catch (InconsistenciaQualisRegra e) {
+                System.out.println(e);
+            }
         }
         scanner.close();
     }
@@ -235,5 +251,21 @@ public class SistemaPPGI implements Serializable {
     public void printarRelatorioPublicacoes(String filename) {
     }
     public void printarEstatisticas(String filename) {
+    }
+
+    private static boolean isValidQualis(String s) {
+        switch(s){
+            case "A1":
+            case "A2":
+            case "B1":
+            case "B2":
+            case "B3":
+            case "B4":
+            case "B5":
+            case "C":
+                return true;
+            default:
+                return false;
+        }
     }
 }
