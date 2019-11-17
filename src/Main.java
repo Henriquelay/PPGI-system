@@ -93,6 +93,7 @@ public class Main {
         }
             // }Leitura de argumentos
             // Leitura de arquivos{
+        boolean dirty = false;
         try{
             // Add input subfolder to file path {
             // WARN REVIEW  REMOVE THIS BEFORE TURNING IN YOUR ASSIGNMENT YOU FISH-BRAINED DUMFUCK
@@ -106,16 +107,16 @@ public class Main {
             sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras);
         } catch(FileNotFoundException e) {
             System.out.println("Exception caught!");
+            dirty = true;
             System.out.println("FILE NOT FOUND " + e.getMessage());
             System.exit(1);
         } catch(IOException e) {
-            System.out.println("Exception caught!");
-            System.out.println("ERRO DE I/O " + e.getMessage());
-            System.exit(1);
+            dirty = true;
+            System.out.println("ERRO DE I/O");
         }
             // }Leitura de arquivos
 
-        System.out.print(sys);
+        // System.out.print(sys);
 
     }
 }

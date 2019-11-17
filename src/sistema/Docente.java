@@ -1,6 +1,6 @@
 package sistema;
 
-import sistema.util.*;
+import sistema.util.MyCalendar;
 
 /**
  * Classe para implementação dos docentes PPGI

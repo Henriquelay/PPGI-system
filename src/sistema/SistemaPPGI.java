@@ -121,30 +121,36 @@ public class SistemaPPGI implements Serializable {
         Integer numero = null;
 
         while(scanner.hasNext()) {
-            str = scanner.nextLine();
-            strTok = str.split(";");
-            if(strTok.length != 9)
-                throw new IllegalArgumentException("Length '" + strTok.length + "'' not 9");
-            for(String s : strTok)
+            try {
+                str = scanner.nextLine();
+                strTok = str.split(";");
+                if(strTok.length != 9)
+                    throw new IllegalArgumentException("Erro de formatação");
+                for(String s : strTok)
                 s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-
-            docentes = new TreeMap<Long, Docente>();
-            vei = this.getVeiculos().get(strTok[1]);
-            for(String s : strTok[3].split(",")) {
-                s.trim();
-                long key = Long.parseLong(s);
-                docentes.put(key, this.getDocentes().get(key));
-            }
-            numero = Integer.parseInt(strTok[4]);
-            switch(strTok[6]) {
-                case "":
-                pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
-                break;
-                default:
+                
+                docentes = new TreeMap<Long, Docente>();
+                vei = this.getVeiculos().get(strTok[1]);
+                if(vei == null)
+                    throw new InconsistenciaSiglaVeiculo(strTok[2], strTok[1]);
+                for(String s : strTok[3].split(",")) {
+                    s.trim();
+                    long key = Long.parseLong(s);
+                    docentes.put(key, this.getDocentes().get(key));
+                }
+                numero = Integer.parseInt(strTok[4]);
+                switch(strTok[6]) {
+                    case "":
+                    pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                    break;
+                    default:
                     pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                }
+                this.getPublicacoes().put(numero, pub);
+                vei.getPublicacoes().put(numero, pub);
+            } catch (InconsistenciaSiglaVeiculo e) {
+                System.out.println(e);
             }
-            this.getPublicacoes().put(numero, pub);
-            vei.getPublicacoes().put(numero, pub);
         }
         scanner.close();
     }
