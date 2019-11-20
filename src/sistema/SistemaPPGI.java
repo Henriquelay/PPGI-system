@@ -21,13 +21,13 @@ public class SistemaPPGI implements Serializable {
     private TreeMap<MyCalendar, Regra> regras;    // Data início, Regras
     private TreeMap<String, Veiculo> veiculos;  // Sigla, Veiculos
     private TreeMap<Long, Docente> docentes; // Código docente, Docentes
-    private TreeMap<Integer, Publicacao> publicacoes; // Código docente, Docentes
+    private TreeMap<String, Publicacao> publicacoes; // Título, Publicacao
     
     // Getters e Setters
     public TreeMap<MyCalendar,Regra> getRegras() {return this.regras;}
     public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
     public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
-    public TreeMap<Integer,Publicacao> getPublicacoes() {return this.publicacoes;}
+    public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
     
     // To print with standard function
     @Override
@@ -40,7 +40,7 @@ public class SistemaPPGI implements Serializable {
         for(Map.Entry<String, Veiculo> e : this.getVeiculos().entrySet())
         str += e.getValue().toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<Integer, Publicacao> e : this.getPublicacoes().entrySet())
+        for(Map.Entry<String, Publicacao> e : this.getPublicacoes().entrySet())
         str += e.getValue().toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
         for(Map.Entry<MyCalendar, Regra> e : this.getRegras().entrySet())
@@ -53,7 +53,7 @@ public class SistemaPPGI implements Serializable {
         this.regras = new TreeMap<MyCalendar, Regra>();
         this.veiculos = new TreeMap<String, Veiculo>();
         this.docentes = new TreeMap<Long, Docente>();
-        this.publicacoes = new TreeMap<Integer, Publicacao>();
+        this.publicacoes = new TreeMap<String, Publicacao>();
     }
     
     // File ingest
@@ -79,7 +79,7 @@ public class SistemaPPGI implements Serializable {
                 Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
                 this.getDocentes().put(new Long(key), docente);
             } catch (InconsistenciaCodigo e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         scanner.close();
@@ -118,9 +118,9 @@ public class SistemaPPGI implements Serializable {
             }
             this.getVeiculos().put(strTok[0], vei);
             } catch (InconsistenciaCodigo e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             } catch (InconsistenciaTipo e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         scanner.close();
@@ -134,7 +134,6 @@ public class SistemaPPGI implements Serializable {
         Publicacao pub;
         Veiculo vei;
         TreeMap<Long, Docente> docentes;
-        Integer numero = null;
         
         while(scanner.hasNext()) {
             try {
@@ -154,18 +153,18 @@ public class SistemaPPGI implements Serializable {
                     long key = Long.parseLong(s);
                     docentes.put(key, this.getDocentes().get(key));
                 }
-                numero = Integer.parseInt(strTok[4]);
                 switch(strTok[6]) {
                     case "":
-                    pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                        pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
                     break;
                     default:
-                    pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, numero, strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                        pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
                 }
-                this.getPublicacoes().put(numero, pub);
-                vei.getPublicacoes().put(numero, pub);
+                this.getPublicacoes().put(strTok[2], pub);
+                vei.getPublicacoes().put(strTok[2], pub);
+                strTok = null;
             } catch (InconsistenciaSiglaVeiculoPublicacao e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         scanner.close();
@@ -193,9 +192,9 @@ public class SistemaPPGI implements Serializable {
                     throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
                 veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
             } catch (InconsistenciaSiglaVeiculoQualis e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             } catch (InconsistenciaQualisVeiculo e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         scanner.close();
@@ -232,7 +231,7 @@ public class SistemaPPGI implements Serializable {
                 }
                 this.getRegras().put(MyCalendar.toDate(strTok[0]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
             } catch (InconsistenciaQualisRegra e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         scanner.close();
@@ -261,22 +260,23 @@ public class SistemaPPGI implements Serializable {
         FileWriter fw = new FileWriter(fileName);
         LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
 
-        for(Map.Entry<Integer,Publicacao> e : this.getPublicacoes().entrySet())
+        for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet())
             ll.add(e.getValue());
 
         ll.sort(Publicacao.ComparadorPublicacao);
-        for(Publicacao p : ll) {
+
+        for(Publicacao p : ll)
             fw.append(p.toCSV(ano));
-        }
+
         fw.close();
     }
 
     public void printarEstatisticas(String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
 
-        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
+        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet())
             fw.append((e.getValue()).toString() + "\n");
-        }
+
         fw.close();
     }
 

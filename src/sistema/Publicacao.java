@@ -5,6 +5,7 @@ import sistema.Veiculo;
 import java.util.TreeMap;
 import java.util.Map;
 import java.util.Comparator;
+import java.text.DecimalFormat;
 
 /**
  * Classe para implementação das publicação de docentes
@@ -56,8 +57,11 @@ public abstract class Publicacao implements Comparable<Publicacao> {
             return str;
     }
 
+    private static DecimalFormat df3 = new DecimalFormat("#.###");
+
     public String toCSV(int ano) {
-        String str = this.getAno() + ";" + this.getVeiculo().getSigla() + ";" + this.getVeiculo().getTitulo() + ";" + this.getVeiculo().selectQualis(ano) + ";" + this.getVeiculo().getFatorDeImpacto() + ";" + this.getTitulo();
+        String fatorImpacto = String.format("%.3f", this.getVeiculo().getFatorDeImpacto());
+        String str = this.getAno() + ";" + this.getVeiculo().getSigla() + ";" + this.getVeiculo().getTitulo() + ";" + this.getVeiculo().selectQualis(ano) + ";" + fatorImpacto + ";" + this.getTitulo();
         for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
             str += ";" + e.getValue().getNome();
         }

@@ -16,14 +16,14 @@ public abstract class Veiculo {
     protected TreeMap<Integer,String> Qualis;   // ano, qualis
 
     // Relation
-    TreeMap<Integer,Publicacao> publicacao;     // numero da publicação, publicação
+    TreeMap<String,Publicacao> publicacao;     // numero da publicação, publicação
 
     // Setters and Getters
     public String getTitulo() {return this.titulo;}
     public String getSigla() {return this.sigla;}
     public double getFatorDeImpacto() {return this.fatorDeImpacto;}
     public TreeMap<Integer,String> getQualis() {return this.Qualis;}
-    public TreeMap<Integer,Publicacao> getPublicacoes() {return this.publicacao;}
+    public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacao;}
     private void setTitulo(String titulo) {this.titulo = titulo;}
     private void setSigla(String sigla) {this.sigla = sigla;}
     private void setFatorDeImpacto(double fatorDeImpacto) {this.fatorDeImpacto = fatorDeImpacto;}
@@ -39,7 +39,7 @@ public abstract class Veiculo {
             str += "\n╠═"  + e.getKey() + ":" + e.getValue();
         if(!this.getPublicacoes().isEmpty()) {
             str += "\n║Publicações:\n╠═";
-            for(Map.Entry<Integer, Publicacao> e : this.getPublicacoes().entrySet()) {
+            for(Map.Entry<String, Publicacao> e : this.getPublicacoes().entrySet()) {
                 str += e.getValue().getNumero();
                 if(e.getKey() != this.getPublicacoes().lastEntry().getKey())
                     str += ",";
@@ -48,6 +48,7 @@ public abstract class Veiculo {
         return str;
     }
 
+    // REVIEW
     public String selectQualis(int ano) {
         String qualis = "";
         for(Map.Entry<Integer,String> e : this.getQualis().entrySet())
@@ -62,6 +63,6 @@ public abstract class Veiculo {
         this.setSigla(sigla);
         this.setFatorDeImpacto(fatorDeImpacto);
         this.Qualis = new TreeMap<Integer,String>();
-        this.publicacao = new TreeMap<Integer,Publicacao>();
+        this.publicacao = new TreeMap<String,Publicacao>();
     }
 }
