@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Set;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -274,8 +275,31 @@ public class SistemaPPGI implements Serializable {
     public void printarEstatisticas(String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
 
-        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet())
-            fw.append((e.getValue()).toString() + "\n");
+        TreeMap<String,LinkedList<Publicacao>> data = new TreeMap<String,LinkedList<Publicacao>>();
+
+        // Data structure filling
+        for(Map.Entry<String,Veiculo> eV : this.getVeiculos().entrySet()) {
+            for(Map.Entry<Integer,String> eQ : eV.getValue().getQualis().entrySet()) {
+                if(data.containsKey(eQ.getValue())) {
+                    for(Map.Entry<String,Publicacao> eP : eV.getValue().getPublicacoes().entrySet()) {
+                        data.get(eQ.getValue()).add(eP.getValue());
+                    }
+                } else {
+                    LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+                    for(Map.Entry<String,Publicacao> eP : eV.getValue().getPublicacoes().entrySet()) {
+                        ll.add(eP.getValue());
+                    }
+                    data.put(eQ.getValue(), ll);
+                }
+            }
+        }
+
+        // Docente counting
+        
+
+        for(Map.Entry<String,LinkedList<Publicacao>> e : data.entrySet()) {
+            fw.append(e.getKey() + ";" + e.getValue().size() + ";");
+        }
 
         fw.close();
     }
