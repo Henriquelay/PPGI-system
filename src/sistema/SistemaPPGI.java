@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Set;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -280,25 +280,29 @@ public class SistemaPPGI implements Serializable {
         // Data structure filling
         for(Map.Entry<String,Veiculo> eV : this.getVeiculos().entrySet()) {
             for(Map.Entry<Integer,String> eQ : eV.getValue().getQualis().entrySet()) {
+                LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+                ll.addAll(eV.getValue().getPublicacoes().values());
                 if(data.containsKey(eQ.getValue())) {
-                    for(Map.Entry<String,Publicacao> eP : eV.getValue().getPublicacoes().entrySet()) {
-                        data.get(eQ.getValue()).add(eP.getValue());
-                    }
+                    data.get(eQ.getValue()).addAll(ll);
                 } else {
-                    LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
-                    for(Map.Entry<String,Publicacao> eP : eV.getValue().getPublicacoes().entrySet()) {
-                        ll.add(eP.getValue());
-                    }
                     data.put(eQ.getValue(), ll);
                 }
             }
         }
 
-        // Docente counting
         
-
+        // Print
         for(Map.Entry<String,LinkedList<Publicacao>> e : data.entrySet()) {
-            fw.append(e.getKey() + ";" + e.getValue().size() + ";");
+            // Contagem de docentes
+            HashSet<Docente> s = new HashSet<Docente>();
+            for(Publicacao p : e.getValue())
+                s.addAll(p.getDocentes().values());
+            int nDocente = s.size();
+
+            int nArtigos = e.getValue().size();
+            double artigosPorDocente = (double) nArtigos / (double) nDocente;
+            String aPD = String.format("%.2f", artigosPorDocente);
+            fw.append(e.getKey() + ";" + nArtigos + ";" + aPD + "\n");
         }
 
         fw.close();
