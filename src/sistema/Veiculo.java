@@ -47,6 +47,14 @@ public abstract class Veiculo {
         }
         return str;
     }
+
+    public String selectQualis(int ano) {
+        String qualis = "";
+        for(Map.Entry<Integer,String> e : this.getQualis().entrySet())
+            if(e.getKey().intValue() <= ano)
+                qualis = e.getValue();
+        return qualis;
+    }
     
     // Constructor
     public Veiculo(String titulo, String sigla, double fatorDeImpacto) {

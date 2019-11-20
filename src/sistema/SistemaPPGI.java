@@ -2,11 +2,13 @@ package sistema;
 
 import sistema.util.*;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -246,11 +248,46 @@ public class SistemaPPGI implements Serializable {
     }
     
     // Reports
-    public void printarRelatorioRecredenciamento(String filename) {
+    public void printarRelatorioRecredenciamento(String fileName, int ano) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+
+        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
+            fw.append((e.getValue()).toString() + "\n");
+        }
+        fw.close();
     }
-    public void printarRelatorioPublicacoes(String filename) {
+
+    public void printarRelatorioPublicacoes(String fileName, int ano) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+        LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+
+        for(Map.Entry<Integer,Publicacao> e : this.getPublicacoes().entrySet())
+            ll.add(e.getValue());
+
+        ll.sort(Publicacao.ComparadorPublicacao);
+        for(Publicacao p : ll) {
+            fw.append(p.toCSV(ano));
+        }
+        fw.close();
     }
-    public void printarEstatisticas(String filename) {
+
+    public void printarEstatisticas(String fileName) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+
+        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
+            fw.append((e.getValue()).toString() + "\n");
+        }
+        fw.close();
+    }
+
+    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano) throws IOException {
+        this.printarRelatorioRecredenciamento(fileNameRecred, ano);
+        this.printarRelatorioPublicacoes(fileNamePub, ano);
+        this.printarEstatisticas(fileNameEst);
+    }
+
+    public void printarTodosArquivos(int ano) throws IOException {
+        this.printarTodosArquivos("1-recredenciamento.csv", "2-publicacoes.csv", "3-estatisticas.csv", ano);
     }
 
     private static boolean isValidQualis(String s) {

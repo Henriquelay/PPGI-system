@@ -4,13 +4,14 @@ import sistema.Docente;
 import sistema.Veiculo;
 import java.util.TreeMap;
 import java.util.Map;
+import java.util.Comparator;
 
 /**
  * Classe para implementação das publicação de docentes
  * @author Henrique Layber
  * @version 1.0
  */
-public abstract class Publicacao {
+public abstract class Publicacao implements Comparable<Publicacao> {
     private int ano;
     private String titulo;
     private int numero;
@@ -54,6 +55,39 @@ public abstract class Publicacao {
             str += "\n╠Veículo:\t" + this.getVeiculo().getSigla();
             return str;
     }
+
+    public String toCSV(int ano) {
+        String str = this.getAno() + ";" + this.getVeiculo().getSigla() + ";" + this.getVeiculo().getTitulo() + ";" + this.getVeiculo().selectQualis(ano) + ";" + this.getVeiculo().getFatorDeImpacto() + ";" + this.getTitulo();
+        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
+            str += ";" + e.getValue().getNome();
+        }
+        str += "\n";
+        return str;
+    }
+
+    public int compareTo(Publicacao p) {
+        int compQualis = this.getVeiculo().selectQualis(this.getAno()).compareTo(p.getVeiculo().selectQualis(p.getAno()));
+        if(compQualis == 0) {
+            Integer pAno = new Integer(p.getAno());
+            int compAno = pAno.compareTo(this.getAno());
+            if(compAno == 0) {
+                int compVeiculo = this.getVeiculo().getSigla().compareToIgnoreCase(p.getVeiculo().getSigla());
+                if(compVeiculo == 0) {
+                    int compTitulo = this.getTitulo().compareTo(p.getTitulo());
+                    return compTitulo;
+                }
+                return compVeiculo;
+            }
+            return compAno;
+        }
+        return compQualis;
+    }
+
+    public static Comparator<Publicacao> ComparadorPublicacao = new Comparator<Publicacao>() {
+        public int compare(Publicacao p1, Publicacao p2) {
+            return p1.compareTo(p2);
+        }
+    };
 
     // Constructor
     public Publicacao(int ano, Veiculo veiculo, String titulo, int numero, int pagInicial, int pagFinal) {
