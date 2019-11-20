@@ -13,9 +13,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
-* Classe para implementação do sistema de controle PPGI
+* Classe para implementação do sistema de controle PPGI.
+* É aqui que o pau quebra, o espaguete acontece, o compilador chora e mãe não vê.
 * @author Henrique Layber
-* @version 1.0
+* @version 1.8a rev3
 */
 public class SistemaPPGI implements Serializable {
     // Relations

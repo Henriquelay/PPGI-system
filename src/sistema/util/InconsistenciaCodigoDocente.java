@@ -3,10 +3,10 @@ package sistema.util;
 import sistema.Publicacao;
 
 /**
- * @author Henrique Coutinho Layber
- * @version 1.0
- * Exception customizada para o Sistema PPGI.
+  * Exception customizada para o Sistema PPGI.
  * (Basicamente um macro de mensagem, sim.)
+ * @author Henrique Layber
+ * @version 1.0
  */
 public class InconsistenciaCodigoDocente extends Exception {
     public InconsistenciaCodigoDocente(Publicacao pub, String sigla) {

@@ -3,6 +3,11 @@ package sistema;
 import sistema.Publicacao;
 import java.util.TreeMap;
 
+/**
+ * Classe para implementação das publicação em periódicos de docentes
+ * @author Henrique Layber
+ * @version 1.0
+ */
 public class PubPeriodico extends Publicacao {
     int volume;
 

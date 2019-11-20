@@ -11,10 +11,9 @@
         <mkdir dir="${bin}" />
     </target>
     <!-- Javadoc. -->
-    <target name="javadoc" description="Cria os Javadoc atualizados com a compilação.">
+    <target name="javadoc" description="Cria os Javadoc atualizados.">
         <mkdir dir="${doc}" />
         <javadoc sourcepath="${src}" destdir="${doc}">
-            <fileset dir="."/>
         </javadoc>
     </target>
     <!-- Compilação. -->

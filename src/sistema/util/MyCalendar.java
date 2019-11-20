@@ -3,7 +3,7 @@ package sistema.util;
 import java.util.GregorianCalendar;
 
 /**
- * @author  Henrique Coutinho Layber
+ * @author  Henrique Layber
  * @version 1.5v
  * Formatação do calendário gregoriano para utilização mais fácil, legível e direta para o Sistema PPGI
  */
