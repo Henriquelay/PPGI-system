@@ -268,6 +268,8 @@ public class SistemaPPGI implements Serializable {
             Regra regra = this.selectRegra(anoRegra);
             if(regra != null) {
                 for(Publicacao pub : doc.getPublicacoes().values()) {
+                    if(pub.getAno() < anoRegra - regra.getAnosAvaliados() || pub.getAno() > anoRegra)
+                        continue;
                     String qualis = pub.getVeiculo().getQualis().floorEntry(anoRegra).getValue();
                     double pontospub = regra.getPontos().floorEntry(qualis).getValue();
                     if(pub.getTipo() == 'P')
