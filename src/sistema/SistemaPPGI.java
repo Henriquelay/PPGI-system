@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
 * Classe para implementação do sistema de controle PPGI.
@@ -245,12 +247,25 @@ public class SistemaPPGI implements Serializable {
     }
     
     // Força a chamada das leituras na ordem correta.
-    public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException {
+    public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, boolean serialize) throws IOException, FileNotFoundException, IllegalArgumentException {
         this.lerArquivoDocentes(fileDocentes);
         this.lerArquivoVeiculos(fileVeiculos);
         this.lerArquivoPublicacoes(filePublicacoes);
         this.lerArquivoQualis(fileQualis);
         this.lerArquivoRegras(fileRegras);
+        
+        // Serialization
+        if(serialize) {
+            try {
+                FileWriter fw = new FileWriter("SistemaPPGI.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fw);
+                out.writeObject(this);
+                out.close();
+                fw.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
     
     // Reports
@@ -341,7 +356,6 @@ public class SistemaPPGI implements Serializable {
             }
         }
 
-        
         // Print
         for(Map.Entry<String,LinkedList<Publicacao>> e : data.entrySet()) {
             LinkedList<Publicacao> llP = e.getValue();
@@ -357,10 +371,12 @@ public class SistemaPPGI implements Serializable {
         fw.close();
     }
 
-    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano) throws IOException {
+    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano, boolean unserialize) throws IOException {
         this.printarRelatorioRecredenciamento(fileNameRecred, ano);
         this.printarRelatorioPublicacoes(fileNamePub, ano);
         this.printarEstatisticas(fileNameEst);
+
+        FileInputStream fileIn = new FileInputStream();
     }
 
     public void printarTodosArquivos(int ano) throws IOException {
