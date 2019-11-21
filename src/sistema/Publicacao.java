@@ -75,7 +75,7 @@ public abstract class Publicacao implements Comparable<Publicacao> {
             Integer pAno = new Integer(p.getAno());
             int compAno = pAno.compareTo(this.getAno());
             if(compAno == 0) {
-                int compVeiculo = this.getVeiculo().getSigla().compareToIgnoreCase(p.getVeiculo().getSigla());
+                int compVeiculo = this.getVeiculo().getSigla().compareTo(p.getVeiculo().getSigla());
                 if(compVeiculo == 0) {
                     int compTitulo = this.getTitulo().compareTo(p.getTitulo());
                     return compTitulo;

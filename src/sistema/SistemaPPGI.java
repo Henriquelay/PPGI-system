@@ -260,6 +260,8 @@ public class SistemaPPGI implements Serializable {
         LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         lld.sort(Docente.ComparadorDocente);
 
+        fw.append("Docente;Pontuação;Recredenciado?\n");
+
         for(Docente doc : lld) {
             fw.append(doc.getNome() + ";");
 
@@ -323,6 +325,7 @@ public class SistemaPPGI implements Serializable {
         FileWriter fw = new FileWriter(fileName);
 
         TreeMap<String,LinkedList<Publicacao>> data = new TreeMap<String,LinkedList<Publicacao>>();
+        // <Qualis,<Publicacao>>
 
         fw.append("Qualis;Qtd. Artigos;Média Artigos / Docente\n");
         // Data structure filling
@@ -341,16 +344,14 @@ public class SistemaPPGI implements Serializable {
         
         // Print
         for(Map.Entry<String,LinkedList<Publicacao>> e : data.entrySet()) {
-            // Contagem de docentes
-            HashSet<Docente> s = new HashSet<Docente>();
-            for(Publicacao p : e.getValue())
-                s.addAll(p.getDocentes().values());
-            int nDocente = s.size();
-
-            int nArtigos = e.getValue().size();
-            double artigosPorDocente = (double) nArtigos / (double) nDocente;
-            String aPD = String.format("%.2f", artigosPorDocente);
-            fw.append(e.getKey() + ";" + nArtigos + ";" + aPD.replace(".", ",") + "\n");
+            LinkedList<Publicacao> llP = e.getValue();
+            int qtdArtigos = llP.size();
+            fw.append(e.getKey() + ";" + qtdArtigos + ";");
+            double artigosPorDocente = 0;
+            for(Publicacao p : llP) {
+                artigosPorDocente += (double) 1 / (double) p.getDocentes().size();
+            }
+            fw.append(String.format("%.2f", artigosPorDocente).replace(".", ",") + "\n");
         }
 
         fw.close();
