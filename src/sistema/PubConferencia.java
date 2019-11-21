@@ -6,13 +6,15 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das publicação em conferência de docentes
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public class PubConferencia extends Publicacao {
     private String local;
 
     // Getter e setter
     public String getLocal() {return this.local;}
+    @Override
+    public char getTipo() {return 'C';}
     private void setLocal(String local) {this.local = local;}
 
     // Pra printar com função padrão

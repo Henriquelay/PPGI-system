@@ -5,7 +5,7 @@ import sistema.Veiculo;
 /**
  * Classe para implementação dos veículos tipo conferência
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public class Conferencia extends Veiculo {
 

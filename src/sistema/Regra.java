@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das Regras de avaliação PPGI
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public class Regra {
     private int anosAvaliados;

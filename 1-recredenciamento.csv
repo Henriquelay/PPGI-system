@@ -1,65 +1,13 @@
-╔Nome:		Amy Poehler
-╠Codigo:		1688136556728644
-╠Data de nascimento:24/5/1974
-╠Data de ingresso:	21/9/2009
-╚Coodenador?	false
-╔Nome:		Kenan Thompson
-╠Codigo:		2762374760685577
-╠Data de nascimento:21/9/1981
-╠Data de ingresso:	6/8/2014
-╚Coodenador?	true
-╔Nome:		Fred Armisen
-╠Codigo:		4332944687727590
-╠Data de nascimento:22/4/1977
-╠Data de ingresso:	1/7/2007
-╚Coodenador?	false
-╔Nome:		Will Forte
-╠Codigo:		4695002674556067
-╠Data de nascimento:9/7/1969
-╠Data de ingresso:	1/9/2000
-╚Coodenador?	false
-╔Nome:		Jay Pharoah
-╠Codigo:		4894515763733502
-╠Data de nascimento:24/11/1981
-╠Data de ingresso:	4/1/2017
-╚Coodenador?	false
-╔Nome:		Seth Meyers
-╠Codigo:		5297252436860003
-╠Data de nascimento:21/5/1975
-╠Data de ingresso:	1/3/2006
-╚Coodenador?	false
-╔Nome:		Kristen Wiig
-╠Codigo:		5454484334693909
-╠Data de nascimento:15/6/1952
-╠Data de ingresso:	18/0/2014
-╚Coodenador?	false
-╔Nome:		Tina Fey
-╠Codigo:		5998785809434157
-╠Data de nascimento:20/11/1956
-╠Data de ingresso:	12/3/2008
-╚Coodenador?	false
-╔Nome:		Bobby Moynihan
-╠Codigo:		8265854560095874
-╠Data de nascimento:22/3/1959
-╠Data de ingresso:	15/3/1993
-╚Coodenador?	false
-╔Nome:		Andy Samberg
-╠Codigo:		8323084944042061
-╠Data de nascimento:18/1/1972
-╠Data de ingresso:	2/1/2017
-╚Coodenador?	false
-╔Nome:		Maya Rudolph
-╠Codigo:		8826584877205264
-╠Data de nascimento:18/7/1976
-╠Data de ingresso:	12/11/2010
-╚Coodenador?	false
-╔Nome:		Bill Hader
-╠Codigo:		9264617752964635
-╠Data de nascimento:19/11/1964
-╠Data de ingresso:	1/1/1999
-╚Coodenador?	false
-╔Nome:		Jason Sudeikis
-╠Codigo:		9575037824966283
-╠Data de nascimento:15/2/1949
-╠Data de ingresso:	10/3/1999
-╚Coodenador?	false
+Amy Poehler;60,0;Sim
+Andy Samberg;2,0;PPJ
+Bill Hader;134,0;Sim
+Bobby Moynihan;0,0;Não
+Fred Armisen;186,0;Sim
+Jason Sudeikis;41,0;PPS
+Jay Pharoah;10,0;PPJ
+Kenan Thompson;35,0;Coordenador
+Kristen Wiig;86,0;PPS
+Maya Rudolph;104,0;Sim
+Seth Meyers;245,0;Sim
+Tina Fey;25,0;PPS
+Will Forte;9,0;Não

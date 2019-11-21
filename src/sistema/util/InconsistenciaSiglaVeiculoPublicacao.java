@@ -4,7 +4,7 @@ package sistema.util;
   * Exception customizada para o Sistema PPGI.
  * (Basicamente um macro de mensagem, sim.)
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public class InconsistenciaSiglaVeiculoPublicacao extends Exception {
     public InconsistenciaSiglaVeiculoPublicacao(String titulo, String sigla) {

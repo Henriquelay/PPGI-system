@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /**
  * Classe abstrata para implementação dos veículos de publicações
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public abstract class Veiculo {
     protected String titulo;

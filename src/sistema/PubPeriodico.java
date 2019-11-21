@@ -6,13 +6,15 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das publicação em periódicos de docentes
  * @author Henrique Layber
- * @version 1.0
+ *
  */
 public class PubPeriodico extends Publicacao {
     int volume;
 
     // Getter e setter
     public int getVolume() {return this.volume;}
+    @Override
+    public char getTipo() {return 'P';}
     private void setVolume(int volume) {this.volume = volume;}
 
     // Pra printar com função padrão

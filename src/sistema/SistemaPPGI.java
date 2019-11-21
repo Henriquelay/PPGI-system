@@ -1,7 +1,9 @@
 package sistema;
 
 import sistema.util.*;
+
 import java.io.Serializable;
+import java.time.Year;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,17 +18,17 @@ import java.io.IOException;
 * Classe para implementação do sistema de controle PPGI.
 * É aqui que o pau quebra, o espaguete acontece, o compilador chora e mãe não vê.
 * @author Henrique Layber
-* @version 1.8a rev3
+* 
 */
 public class SistemaPPGI implements Serializable {
     // Relations
-    private TreeMap<MyCalendar, Regra> regras;    // Data início, Regras
+    private TreeMap<Integer, Regra> regras;    // Ano início, Regras
     private TreeMap<String, Veiculo> veiculos;  // Sigla, Veiculos
     private TreeMap<Long, Docente> docentes; // Código docente, Docentes
     private TreeMap<String, Publicacao> publicacoes; // Título, Publicacao
     
     // Getters e Setters
-    public TreeMap<MyCalendar,Regra> getRegras() {return this.regras;}
+    public TreeMap<Integer,Regra> getRegras() {return this.regras;}
     public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
     public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
     public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
@@ -45,14 +47,14 @@ public class SistemaPPGI implements Serializable {
         for(Map.Entry<String, Publicacao> e : this.getPublicacoes().entrySet())
         str += e.getValue().toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<MyCalendar, Regra> e : this.getRegras().entrySet())
+        for(Map.Entry<Integer, Regra> e : this.getRegras().entrySet())
         str += e.getValue().toString() + "\n";
         return str;
     }
     
     // Constructor
     public SistemaPPGI() {
-        this.regras = new TreeMap<MyCalendar, Regra>();
+        this.regras = new TreeMap<Integer, Regra>();
         this.veiculos = new TreeMap<String, Veiculo>();
         this.docentes = new TreeMap<Long, Docente>();
         this.publicacoes = new TreeMap<String, Publicacao>();
@@ -164,6 +166,9 @@ public class SistemaPPGI implements Serializable {
                 }
                 this.getPublicacoes().put(strTok[2], pub);
                 vei.getPublicacoes().put(strTok[2], pub);
+                for(Map.Entry<Long,Docente> e : docentes.entrySet()) {
+                    e.getValue().getPublicacoes().put(strTok[2], pub);
+                }
                 strTok = null;
             } catch (InconsistenciaSiglaVeiculoPublicacao e) {
                 System.out.println(e.getMessage());
@@ -231,7 +236,7 @@ public class SistemaPPGI implements Serializable {
                         throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
                     pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
                 }
-                this.getRegras().put(MyCalendar.toDate(strTok[0]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
+                this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
             } catch (InconsistenciaQualisRegra e) {
                 System.out.println(e.getMessage());
             }
@@ -249,11 +254,49 @@ public class SistemaPPGI implements Serializable {
     }
     
     // Reports
-    public void printarRelatorioRecredenciamento(String fileName, int ano) throws IOException {
+    public void printarRelatorioRecredenciamento(String fileName, int anoRegra) throws IOException {
         FileWriter fw = new FileWriter(fileName);
 
-        for(Map.Entry<Long,Docente> e : this.getDocentes().entrySet()) {
-            fw.append((e.getValue()).toString() + "\n");
+        LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
+        lld.sort(Docente.ComparadorDocente);
+
+        for(Docente doc : lld) {
+            fw.append(doc.getNome() + ";");
+
+            // Pontos {
+            double pontosdoc = 0;
+            Regra regra = this.selectRegra(anoRegra);
+            if(regra != null) {
+                for(Publicacao pub : doc.getPublicacoes().values()) {
+                    String qualis = pub.getVeiculo().getQualis().floorEntry(anoRegra).getValue();
+                    double pontospub = regra.getPontos().floorEntry(qualis).getValue();
+                    if(pub.getTipo() == 'P')
+                        pontospub *= regra.getMultPeriodicos();
+                    pontosdoc += pontospub;
+                }
+                String pontos = String.format("%.1f", pontosdoc);
+                fw.append(pontos.replace(".", ",") + ";");
+            }
+            // } Pontos
+            // Resultado {
+            if(doc.getIsCoodenador()) {
+                fw.append("Coordenador\n");
+            } else {
+                if(anoRegra - doc.getDataIngresso().get(MyCalendar.YEAR) < 3) {
+                    fw.append("PPJ\n");
+                } else {
+                    if(anoRegra - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {
+                        fw.append("PPS\n");
+                    } else {
+                        if(pontosdoc >= regra.getPontuacaoMinima())
+                            fw.append("Sim\n");
+                        else
+                            fw.append("Não\n");
+                    }
+                }
+            }
+
+
         }
         fw.close();
     }
@@ -303,7 +346,7 @@ public class SistemaPPGI implements Serializable {
             int nArtigos = e.getValue().size();
             double artigosPorDocente = (double) nArtigos / (double) nDocente;
             String aPD = String.format("%.2f", artigosPorDocente);
-            fw.append(e.getKey() + ";" + nArtigos + ";" + aPD + "\n");
+            fw.append(e.getKey() + ";" + nArtigos + ";" + aPD.replace(".", ",") + "\n");
         }
 
         fw.close();
@@ -334,4 +377,22 @@ public class SistemaPPGI implements Serializable {
                 return false;
         }
     }
+
+    /**
+     * Seleciona a Regra em vigência para o ano passado.
+     * Considerações:
+     * As datas de início e fim da regra são o início e o fim do ano;
+     * @author Henrique Layber
+     * @param anoInt
+     * @return
+     */
+    private Regra selectRegra(int anoInt) {
+        Map.Entry<Integer,Regra> selected = this.getRegras().floorEntry(anoInt);
+        if(selected == null)
+            return null;
+        if(selected.getValue().getDataFinal().get(MyCalendar.YEAR) >= anoInt)
+            return selected.getValue();
+        return null;
+    }
+
 }

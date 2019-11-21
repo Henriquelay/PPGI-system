@@ -10,11 +10,11 @@ import java.util.GregorianCalendar;
 public class MyCalendar extends GregorianCalendar {
     @Override
     public String toString() {
-        return this.get(DAY_OF_MONTH) + "/" + this.get(MONTH) + "/" + this.get(YEAR);
+        return this.get(DAY_OF_MONTH) + "/" + (this.get(MONTH)+1) + "/" + this.get(YEAR);
     }
 
-    public MyCalendar(int day, int month, int year) {
-        super(day, month, year);
+    public MyCalendar(int year, int month, int day) {
+        super(year, month-1, day);
     }
 
     public static MyCalendar toDate(String str) throws IllegalArgumentException {

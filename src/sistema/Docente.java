@@ -1,18 +1,26 @@
 package sistema;
 
 import sistema.util.MyCalendar;
+import sistema.Publicacao;
+
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Comparator;
 
 /**
  * Classe para implementação dos docentes PPGI
  * @author Henrique Layber
- * @version 1.0
+ *
  */
-public class Docente {
+public class Docente implements Comparable<Docente> {
     private String nome;
     private long codigo;
     private MyCalendar dataNascimento;
     private MyCalendar dataIngresso;
     private boolean isCoodenador;
+
+    // Relation
+    TreeMap<String,Publicacao> publicacoes;
 
     // Getters and Setters
     public String getNome() {return this.nome;}
@@ -20,6 +28,7 @@ public class Docente {
     public MyCalendar getDataNascimento() {return this.dataNascimento;}
     public MyCalendar getDataIngresso() {return this.dataIngresso;}
     public boolean getIsCoodenador() {return this.isCoodenador;}
+    public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
     private void setNome(String nome) {this.nome = nome;}
     private void setCodigo(long codigo) {this.codigo = codigo;}
     private void setDataIngresso(MyCalendar dataIngresso) {this.dataIngresso = dataIngresso;}
@@ -32,13 +41,28 @@ public class Docente {
     // To print with standard function
     @Override
     public String toString() {
-        return "╔Nome:\t\t" + this.getNome() +
+        String str = "╔Nome:\t\t" + this.getNome() +
             "\n╠Codigo:\t\t" + this.getCodigo() +
             "\n╠Data de nascimento:" + this.getDataNascimento() +
             "\n╠Data de ingresso:\t" + this.getDataIngresso() +
-            "\n╚Coodenador?\t" + this.isIsCoodenador();
+            "\n╠╚Coodenador?\t" + this.isIsCoodenador() + 
+            "\n╚Publicacoes = ";
+            for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet()) {
+                str += e.getValue().getNumero() + ";";
+            }
+        return str;
     }
-    
+
+    public int compareTo(Docente d) {
+        return this.getNome().compareTo(d.getNome());
+    }
+
+    public static Comparator<Docente> ComparadorDocente = new Comparator<Docente>() {
+        public int compare(Docente p1, Docente p2) {
+            return p1.compareTo(p2);
+        }
+    };
+
     // Constructor
     /**
      * @deprecated
@@ -54,6 +78,7 @@ public class Docente {
         this.setDataNascimento(dataNascimento);
         this.setDataIngresso(dataIngresso);
         this.setIsCoodenador(isCoodenador);
+        this.publicacoes = new TreeMap<String,Publicacao>();
     }
 
     /**
@@ -69,5 +94,6 @@ public class Docente {
         this.setDataNascimento(dataNascimento);
         this.setDataIngresso(dataIngresso);
         this.setIsCoodenador(isCoodenador);
+        this.publicacoes = new TreeMap<String,Publicacao>();
     }
 }
