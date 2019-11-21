@@ -39,40 +39,32 @@ public class Main {
                 switch(args[i]) {
                     case "-d":
                         i++;
-                        // System.out.println(args[i]);
                         fileDocentes = args[i];
                     break;
                     case "-v":
                         i++;
-                        // System.out.println(args[i]);
                         fileVeiculos = args[i];
                     break;
                     case "-a":
                         i++;
-                        // System.out.println(args[i]);
                         ano = Integer.parseInt(args[i]);
                     break;
                     case "-p":
                         i++;
-                        // System.out.println(args[i]);
                         filePublicacoes = args[i];
                     break;
                     case "-q":
                         i++;
-                        // System.out.println(args[i]);
                         fileQualis = args[i];
                     break;
                     case "-r":
                         i++;
-                        // System.out.println(args[i]);
                         fileRegras = args[i];
                     break;
                     case "--write-only":
-                        // System.out.println(args[i]);
                         opMode = 2;
                     break;
                     case "--read-only":
-                        // System.out.println(args[i]);
                         opMode = 1;
                     break;
                     default:

@@ -306,6 +306,7 @@ public class SistemaPPGI implements Serializable {
     public void printarRelatorioPublicacoes(String fileName, int ano) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+        fw.append("Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n");
 
         for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet())
             ll.add(e.getValue());
@@ -323,6 +324,7 @@ public class SistemaPPGI implements Serializable {
 
         TreeMap<String,LinkedList<Publicacao>> data = new TreeMap<String,LinkedList<Publicacao>>();
 
+        fw.append("Qualis;Qtd. Artigos;Média Artigos / Docente\n");
         // Data structure filling
         for(Map.Entry<String,Veiculo> eV : this.getVeiculos().entrySet()) {
             for(Map.Entry<Integer,String> eQ : eV.getValue().getQualis().entrySet()) {
