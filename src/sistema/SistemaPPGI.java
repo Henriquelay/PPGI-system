@@ -400,6 +400,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
 
     public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano, int opMode) throws IOException {
         if(opMode == 1) return;
+
         SistemaPPGI sys = this;
 
         // Serialization
