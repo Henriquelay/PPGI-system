@@ -85,15 +85,14 @@ public class Main {
             // }Leitura de argumentos
             // Leitura de arquivos{
         try{
-            // Add input subfolder to file path {
-            // WARN REVIEW  REMOVE THIS BEFORE TURNING IN YOUR ASSIGNMENT YOU FISH-BRAINED DUMFUCK
+            /* // Add input subfolder to file path {
             String inputFolder  = "in/";
             fileDocentes = inputFolder + fileDocentes;
             fileVeiculos = inputFolder + fileVeiculos;
             filePublicacoes = inputFolder + filePublicacoes;
             fileQualis = inputFolder + fileQualis;
             fileRegras = inputFolder + fileRegras;
-            // }
+            // } */
             sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras, opMode);
 
             // }Leitura de arquivos

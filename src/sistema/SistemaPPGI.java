@@ -40,17 +40,17 @@ public class SistemaPPGI implements Serializable {
     public String toString() {
         String str = "";
         str += "\n=-=-=-=-=-=-=- Imprimindo Docentes =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<Long, Docente> e : this.getDocentes().entrySet())
-        str += e.getValue().toString() + "\n";
+        for(Docente e : this.getDocentes().values())
+        str += e.toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Veículos =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<String, Veiculo> e : this.getVeiculos().entrySet())
-        str += e.getValue().toString() + "\n";
+        for(Veiculo e : this.getVeiculos().values())
+        str += e.toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<String, Publicacao> e : this.getPublicacoes().entrySet())
-        str += e.getValue().toString() + "\n";
+        for(Publicacao e : this.getPublicacoes().values())
+        str += e.toString() + "\n";
         str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
-        for(Map.Entry<Integer, Regra> e : this.getRegras().entrySet())
-        str += e.getValue().toString() + "\n";
+        for(Regra e : this.getRegras().values())
+        str += e.toString() + "\n";
         return str;
     }
     

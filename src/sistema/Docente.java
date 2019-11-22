@@ -48,8 +48,8 @@ public class Docente implements Comparable<Docente>, Serializable {
             "\n╠Data de ingresso:\t" + this.getDataIngresso() +
             "\n╠╚Coodenador?\t" + this.isIsCoodenador() + 
             "\n╚Publicacoes = ";
-            for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet()) {
-                str += e.getValue().getNumero() + ";";
+            for(Publicacao d : this.getPublicacoes().values()) {
+                str += d.getNumero() + ";";
             }
         return str;
     }

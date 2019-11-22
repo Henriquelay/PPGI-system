@@ -8,12 +8,21 @@ BASE_DIR=$TEMP_DIR/prog3-2016-1-tests-$(whoami)
 SUBDIR_INPUT=in
 SUBDIR_OUTPUT=out
 
+# Procedure to clean outputs and serializing file
+cleanup() {
+	rm -f 1-recredenciamento.csv
+	rm -f 2-publicacoes.csv
+	rm -f 3-estatisticas.csv
+	rm -f SistemaPPGI.ser
+}
+
 # Procedure that tests one assignment.
 test() {
+
 	# Argument definition.
 	dir=$1
 
-	# Check if it's a directory, but not the teste directory.
+	# Check if it's a directory, but not the test directory.
 	if [ -d $dir ] && [ "$dir" != "$TEST_DIR" ]; then
 		echo "[I] Testando $dir..."
 
@@ -62,10 +71,13 @@ test() {
 ## SCRIPT BEGINS HERE: ##
 #########################
 
+
 echo "Script de teste Prog3 2017/1 - Trabalho 1"
 echo
 
-# Creates the base folder.
+cleanup
+
+# # Creates the base folder.
 mkdir -p $BASE_DIR
 
 # Checks if a specific folder was specified, otherwise test all assignments.

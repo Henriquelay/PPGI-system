@@ -38,7 +38,7 @@ if [ $exitcode = 0 ]; then
 				echo ""
 			else
 				# Prints an OK message.
-				echo "[I] Testando $dir: teste ${testId}, taoQuei em $output"
+				echo "[I] Testando $dir: teste ${testId}, tudo OK em $output"
 			fi
 		
 			# Cleanup (deletes the output file and the diff output file).

@@ -50,7 +50,6 @@ public abstract class Veiculo implements Serializable {
         return str;
     }
 
-    // REVIEW
     public String selectQualis(int ano) {
         String qualis = "";
         for(Map.Entry<Integer,String> e : this.getQualis().entrySet())
