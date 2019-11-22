@@ -5,6 +5,8 @@
     <property name="bin" location="bin" />
     <property name="mainClass" value="Main" />
     <property name="doc" location="doc" />
+    <property name="out" location="out" />
+    <property name="in" location="." />
     <!-- Inicialização. -->
     <target name="init" description="Inicializa as estruturas necessárias.">
         <tstamp/>
@@ -24,15 +26,15 @@
     <target name="run" depends="clean,compile" description="Executa o programa principal, em modo normal.">
         <java classname="${mainClass}">
             <arg value="-d" />
-            <arg value="docentes.csv" />
+            <arg value="${in}/docentes.csv" />
             <arg value="-v" />
-            <arg value="veiculos.csv" />
+            <arg value="${in}/veiculos.csv" />
             <arg value="-p" />
-            <arg value="publicacoes.csv" />
+            <arg value="${in}/publicacoes.csv" />
             <arg value="-q" />
-            <arg value="qualis.csv" />
+            <arg value="${in}/qualis.csv" />
             <arg value="-r" />
-            <arg value="regras.csv" />
+            <arg value="${in}/regras.csv" />
             <arg value="-a" />
             <arg value="2017" />
             <classpath>
@@ -74,8 +76,13 @@
     <target name="clean" description="Limpa o projeto, deixando apenas o código-fonte." >
         <delete dir="${bin}"/>
         <delete dir="${doc}"/>
-        <delete><fileset dir="." includes="*.txt"/></delete>
-        <delete><fileset dir="." includes="*.csv"/></delete>
-        <delete><fileset dir="." includes="*.dat"/></delete>
+        <delete file="${out}/*"/>
+        <delete file="SistemaPPGI.ser"/>
+        <delete file="out/1-recredenciamento.csv"/>
+        <delete file="out/2-publicacoes.csv"/>
+        <delete file="out/3-estatisticas.csv"/>
+        <!-- <delete><fileset dir="." includes="*.txt"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.csv"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.dat"/></delete> -->
     </target>
 </project>

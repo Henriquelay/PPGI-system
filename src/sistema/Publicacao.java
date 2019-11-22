@@ -38,7 +38,6 @@ public abstract class Publicacao implements Comparable<Publicacao>, Serializable
     private void setVeiculo(Veiculo veiculo) {this.veiculo = veiculo;}
     private void setPagInicial(int pagInicial) {this.pagInicial = pagInicial;}
     private void setPagFinal(int pagFinal) {this.pagFinal = pagFinal;}
-    private void setDocente(int codigo, Docente docente) {this.getDocentes().put(new Long(codigo), docente);}
     
     // To print with standard function
     @Override

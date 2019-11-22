@@ -8,6 +8,11 @@ public class Main {
      * @version 7.O
      */
     public static void main(String[] args) {
+            /* for(String s : args) {
+                System.out.print(s + " ");
+            }
+            System.out.print("\n"); */
+
         SistemaPPGI sys = new SistemaPPGI();
         
         String  fileDocentes = "";
@@ -71,13 +76,11 @@ public class Main {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Exception caught!");
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
-            System.out.println("Nº argumentos:" + args.length + " Esperado:12 ou 13");
+            System.out.println("Nº argumentos:" + args.length + " | Esperado:12 ou 13");
             System.out.println(e);
             System.exit(1);
         } catch (IllegalArgumentException e) {
-            System.out.println("Exception caught!");
             System.out.println("Argumento não identificado:" + e.getMessage());
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
             System.exit(1);
@@ -100,12 +103,17 @@ public class Main {
 
             sys.printarTodosArquivos(ano, opMode);
 
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         } catch(FileNotFoundException e) {
-            System.out.println("Exception caught!");
-            System.out.println("FILE NOT FOUND " + e.getMessage());
+            System.out.println("ERRO DE I/O");
+            // System.out.println(e.getMessage());
             System.exit(1);
         } catch(IOException e) {
             System.out.println("ERRO DE I/O");
+            // System.out.println(e.getMessage());
+            System.exit(1);
         }
 
         // System.out.print(sys);

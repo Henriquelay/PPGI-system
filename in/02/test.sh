@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constant definitions.
-DAT_FILE=recredenciamento.dat
+DAT_FILE=SistemaPPGI.ser
 
 # Parameters:
 testId=$1
@@ -31,7 +31,7 @@ if [ $exitcode = 0 ]; then
 
 	# Checks if the CSV files were not created.
 	for output in `ls $testDir/$subOut`; do
-		if [ -f $srcDir/$output ]; then
+		if [ -f  $srcDir/$subOut/$output ]; then
 			echo "[E] Testando $dir: teste ${testId}, relatório criado em modo --read-only: ${output}"
 		fi
 	done

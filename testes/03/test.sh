@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constant definitions.
-DAT_FILE=recredenciamento.dat
+DAT_FILE=SistemaPPGI.ser
 
 # Parameters:
 testId=$1
@@ -34,9 +34,9 @@ if [ $exitcode = 0 ]; then
 			tempfile=$tempDir/${USER}_${dir}_test${testId}_${output}
 
 			# Checks if the output file was even generated.
-			if [ -f $srcDir/$output ]; then
+			if [ -f  $srcDir/$subOut/$output ]; then
 				# Calculates the diff between the files.
-				${diffCmd} $testDir/$subOut/$output $srcDir/$output > $tempfile
+				${diffCmd} $testDir/$subOut/$output $srcDir/$subOut/$output > $tempfile
 
 				# Checks if there has been error.
 				if [ $? != 0 ]; then

@@ -23,282 +23,310 @@ import java.io.ObjectInputStream;
 * 
 */
 public class SistemaPPGI implements Serializable {
-    // Relations
-    private TreeMap<Integer, Regra> regras;    // Ano início, Regras
-    private TreeMap<String, Veiculo> veiculos;  // Sigla, Veiculos
-    private TreeMap<Long, Docente> docentes; // Código docente, Docentes
-    private TreeMap<String, Publicacao> publicacoes; // Título, Publicacao
-    
-    // Getters e Setters
-    public TreeMap<Integer,Regra> getRegras() {return this.regras;}
-    public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
-    public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
-    public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
-    
-    // To print with standard function
-    @Override
-    public String toString() {
-        String str = "";
-        str += "\n=-=-=-=-=-=-=- Imprimindo Docentes =-=-=-=-=-=-=-\n\n";
-        for(Docente e : this.getDocentes().values())
-        str += e.toString() + "\n";
-        str += "\n=-=-=-=-=-=-=- Imprimindo Veículos =-=-=-=-=-=-=-\n\n";
-        for(Veiculo e : this.getVeiculos().values())
-        str += e.toString() + "\n";
-        str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
-        for(Publicacao e : this.getPublicacoes().values())
-        str += e.toString() + "\n";
-        str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
-        for(Regra e : this.getRegras().values())
-        str += e.toString() + "\n";
-        return str;
-    }
-    
-    // Constructor
-    public SistemaPPGI() {
-        this.regras = new TreeMap<Integer, Regra>();
-        this.veiculos = new TreeMap<String, Veiculo>();
-        this.docentes = new TreeMap<Long, Docente>();
-        this.publicacoes = new TreeMap<String, Publicacao>();
-    }
-    
-    // File ingest
-    private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
-        FileReader fr = new FileReader(fileName);
-        Scanner scanner = new Scanner(fr);
-        String str = "";
-        String[] strTok;
-        scanner.nextLine(); // Ignora primeira linha
-        
-        while(scanner.hasNext()) {
-            try{
-                str = scanner.nextLine();
-                strTok = str.split(";");
-                if(strTok.length != 4 && strTok.length != 5)
-                    throw new IllegalArgumentException("Erro de formatação");
-                for(String s : strTok)
-                    s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+// Relations
+private TreeMap<Integer, Regra> regras;    // Ano início, Regras
+private TreeMap<String, Veiculo> veiculos;  // Sigla, Veiculos
+private TreeMap<Long, Docente> docentes; // Código docente, Docentes
+private TreeMap<String, Publicacao> publicacoes; // Título, Publicacao
 
-                long key = Long.parseLong(strTok[0]);
-                if(this.getDocentes().containsKey(key))    // If key is already inserted
-                    throw new InconsistenciaCodigo("Docente", Long.toString(key));
-                Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
-                this.getDocentes().put(new Long(key), docente);
-            } catch (InconsistenciaCodigo e) {
-                System.out.println(e.getMessage());
+// Getters e Setters
+public TreeMap<Integer,Regra> getRegras() {return this.regras;}
+public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
+public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
+public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
+
+// To print with standard function
+@Override
+public String toString() {
+    String str = "";
+    str += "\n=-=-=-=-=-=-=- Imprimindo Docentes =-=-=-=-=-=-=-\n\n";
+    for(Docente e : this.getDocentes().values())
+    str += e.toString() + "\n";
+    str += "\n=-=-=-=-=-=-=- Imprimindo Veículos =-=-=-=-=-=-=-\n\n";
+    for(Veiculo e : this.getVeiculos().values())
+    str += e.toString() + "\n";
+    str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
+    for(Publicacao e : this.getPublicacoes().values())
+    str += e.toString() + "\n";
+    str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
+    for(Regra e : this.getRegras().values())
+    str += e.toString() + "\n";
+    return str;
+}
+
+// Constructor
+public SistemaPPGI() {
+    this.regras = new TreeMap<Integer, Regra>();
+    this.veiculos = new TreeMap<String, Veiculo>();
+    this.docentes = new TreeMap<Long, Docente>();
+    this.publicacoes = new TreeMap<String, Publicacao>();
+}
+
+// File ingest
+private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+    FileReader fr = new FileReader(fileName);
+    Scanner scanner = new Scanner(fr);
+    String str = "";
+    String[] strTok;
+    scanner.nextLine(); // Ignora primeira linha
+
+    while(scanner.hasNext()) {
+        try{
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 4 && strTok.length != 5) {
+                throw new IllegalArgumentException("Erro de formatação");
             }
+            for(int i = 0; i < strTok.length; i++) {
+                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            }
+
+            long key = Long.parseLong(strTok[0]);
+            if(this.getDocentes().containsKey(key)) {    // If key is already inserted
+                throw new InconsistenciaCodigo("docente", Long.toString(key));
+            }
+
+            Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
+
+            this.getDocentes().put(new Long(key), docente);
+        } catch (InconsistenciaCodigo e) {
+            System.out.println(e.getMessage());
         }
-        scanner.close();
     }
-    private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
-        FileReader fr = new FileReader(fileName);
-        Scanner scanner = new Scanner(fr);
-        String str = "";
-        String[] strTok;
-        scanner.nextLine(); // Ignora primeira linha
-        
-        while(scanner.hasNext()) {
-            try{
-                Veiculo vei = null;
-                str = scanner.nextLine();
-                strTok = str.split(";");
-                if(strTok.length != 4 && strTok.length != 5)
-                    throw new IllegalArgumentException("Erro de formatação");
-            for(String s : strTok)
-                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-            
-                if(this.getVeiculos().containsKey(strTok[0]))
-                    throw new InconsistenciaCodigo("Veículo", strTok[0]);
-            strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula
+    scanner.close();
+}
+private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+    FileReader fr = new FileReader(fileName);
+    Scanner scanner = new Scanner(fr);
+    String str = "";
+    String[] strTok;
+    scanner.nextLine(); // Ignora primeira linha
+
+    while(scanner.hasNext()) {
+        try{
+            Veiculo vei = null;
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 4 && strTok.length != 5) {
+                throw new IllegalArgumentException("Erro de formatação");
+            }
+
+            for(int i = 0; i < strTok.length; i++) {
+                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            }
+            strTok[0] = strTok[0].trim(); // N sei pq mas isso funciona
+
+            if(this.getVeiculos().containsKey(strTok[0])) {
+                throw new InconsistenciaCodigo("veículo", strTok[0]);
+            }
+            strTok[3] = strTok[3].replace(',', '.');    // Trata a vírgula do impacto
+
             switch(strTok[2]) {
                 case "c":
                 case "C":
-                    vei = new Conferencia(strTok[1], strTok[0], Double.parseDouble(strTok[3]));
+                vei = new Conferencia(strTok[1], strTok[0], Double.parseDouble(strTok[3]));
                 break;
                 case "p":
                 case "P":
-                    vei = new Periodico(strTok[1], strTok[0], Double.parseDouble(strTok[3]), strTok[4]);
+                vei = new Periodico(strTok[1], strTok[0], Double.parseDouble(strTok[3]), strTok[4]);
                 break;
                 default:
-                    throw new InconsistenciaTipo(strTok[0], strTok[2]);
+                throw new InconsistenciaTipo(strTok[0], strTok[2]);
             }
+
             this.getVeiculos().put(strTok[0], vei);
-            } catch (InconsistenciaCodigo e) {
-                System.out.println(e.getMessage());
-            } catch (InconsistenciaTipo e) {
-                System.out.println(e.getMessage());
-            }
+        } catch (InconsistenciaCodigo e) {
+            System.out.println(e.getMessage());
+        } catch (InconsistenciaTipo e) {
+            System.out.println(e.getMessage());
         }
-        scanner.close();
     }
-    private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
-        FileReader fr = new FileReader(fileName);
-        Scanner scanner = new Scanner(fr);
-        String str = "";
-        String[] strTok;
-        scanner.nextLine(); // Ignora primeira linha
-        Publicacao pub;
-        Veiculo vei;
-        TreeMap<Long, Docente> docentes;
-        
-        while(scanner.hasNext()) {
-            try {
-                str = scanner.nextLine();
-                strTok = str.split(";");
-                if(strTok.length != 9)
+    scanner.close();
+}
+private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+    FileReader fr = new FileReader(fileName);
+    Scanner scanner = new Scanner(fr);
+    String str = "";
+    String[] strTok;
+    scanner.nextLine(); // Ignora primeira linha
+    Publicacao pub;
+    Veiculo vei;
+    TreeMap<Long, Docente> docentes;
+
+    while(scanner.hasNext()) {
+        try {
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 9) {
                 throw new IllegalArgumentException("Erro de formatação");
-                for(String s : strTok)
-                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-                
-                docentes = new TreeMap<Long, Docente>();
-                vei = this.getVeiculos().get(strTok[1]);
-                if(vei == null)
+            }
+
+            for(int i = 0; i < strTok.length; i++) {
+                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            }
+
+            docentes = new TreeMap<Long, Docente>();
+            vei = this.getVeiculos().get(strTok[1]);
+            if(vei == null) {
                 throw new InconsistenciaSiglaVeiculoPublicacao(strTok[2], strTok[1]);
-                for(String s : strTok[3].split(",")) {
-                    s.trim();
-                    long key = Long.parseLong(s);
-                    docentes.put(key, this.getDocentes().get(key));
-                }
-                switch(strTok[6]) {
-                    case "":
-                        pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
-                    break;
-                    default:
-                        pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
-                }
-                this.getPublicacoes().put(strTok[2], pub);
-                vei.getPublicacoes().put(strTok[2], pub);
-                for(Map.Entry<Long,Docente> e : docentes.entrySet()) {
-                    e.getValue().getPublicacoes().put(strTok[2], pub);
-                }
-                strTok = null;
-            } catch (InconsistenciaSiglaVeiculoPublicacao e) {
-                System.out.println(e.getMessage());
             }
-        }
-        scanner.close();
-    }
-    private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
-        FileReader fr = new FileReader(fileName);
-        Scanner scanner = new Scanner(fr);
-        TreeMap<String, Veiculo> veiculos = this.getVeiculos();
-        String str = "";
-        String[] strTok;
-        scanner.nextLine(); // Ignora primeira linha
-        
-        while(scanner.hasNext()) {
-            try{
-                str = scanner.nextLine();
-                strTok = str.split(";");
-                if(strTok.length != 3)
-                    throw new IllegalArgumentException("Erro de formatação");
-                for(String s : strTok)
-                    s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-                
-                if(!this.getVeiculos().containsKey(strTok[1]))
-                    throw new InconsistenciaSiglaVeiculoQualis(strTok[0], strTok[1]);
-                if(!isValidQualis(strTok[2]))
-                    throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
-                veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
-            } catch (InconsistenciaSiglaVeiculoQualis e) {
-                System.out.println(e.getMessage());
-            } catch (InconsistenciaQualisVeiculo e) {
-                System.out.println(e.getMessage());
+
+            for(String s : strTok[3].split(",")) {
+                s = s.trim();
+                long key = Long.parseLong(s);
+                docentes.put(key, this.getDocentes().get(key));
             }
-        }
-        scanner.close();
-    }
-    private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
-        FileReader fr = new FileReader(fileName);
-        Scanner scanner = new Scanner(fr);
-        String str = "";
-        String[] strTok;
-        scanner.nextLine(); // Ignora primeira linha
-        
-        while(scanner.hasNext()) {
-            try {
-                str = scanner.nextLine();
-                strTok = str.split(";");
-                if(strTok.length != 7)
-                    throw new IllegalArgumentException("Erro de formatação");
-                for(String s : strTok)
-                    s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-                strTok[4] = strTok[4].replace(",", ".");    // To read as double
-                TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
-                String[] qualis = strTok[2].split(",");
-                String[] valorPontos = strTok[3].split(",");
-                if(qualis.length != valorPontos.length)
-                    throw new IllegalArgumentException("Erro de formatação");
-                for(String s : qualis)
-                    s = s.trim();
-                for(String s : valorPontos)
-                    s = s.trim();
-                for(int i = 0; i < qualis.length; i++) {
-                    if(!isValidQualis(qualis[i]))
-                        throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
-                    pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
-                }
-                this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
-            } catch (InconsistenciaQualisRegra e) {
-                System.out.println(e.getMessage());
+            
+            switch(strTok[6]) {
+                case "":
+                pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                break;
+                default:
+                pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
             }
-        }
-        scanner.close();
-    }
-    
-    // Força a chamada das leituras na ordem correta.
-    public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, int opMode) throws IOException, FileNotFoundException, IllegalArgumentException {
-        if(opMode == 2) return;
-        this.lerArquivoDocentes(fileDocentes);
-        this.lerArquivoVeiculos(fileVeiculos);
-        this.lerArquivoPublicacoes(filePublicacoes);
-        this.lerArquivoQualis(fileQualis);
-        this.lerArquivoRegras(fileRegras);
-        
-        // Serialization
-        if(opMode == 1) {
-            try {
-                FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
-                ObjectOutputStream out = new ObjectOutputStream(fos);
-                out.writeObject(this);
-                out.close();
-                fos.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+
+            this.getPublicacoes().put(strTok[2], pub);
+            vei.getPublicacoes().put(strTok[2], pub);
+            for(Map.Entry<Long,Docente> e : docentes.entrySet()) {
+                e.getValue().getPublicacoes().put(strTok[2], pub);
             }
+
+            strTok = null;
+        } catch (InconsistenciaSiglaVeiculoPublicacao e) {
+            System.out.println(e.getMessage());
         }
     }
-    
-    // Reports
-    public void printarRelatorioRecredenciamento(String fileName, int anoRegra) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+    scanner.close();
+}
+private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+    FileReader fr = new FileReader(fileName);
+    Scanner scanner = new Scanner(fr);
+    TreeMap<String, Veiculo> veiculos = this.getVeiculos();
+    String str = "";
+    String[] strTok;
+    scanner.nextLine(); // Ignora primeira linha
 
-        LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
-        lld.sort(Docente.ComparadorDocente);
-
-        fw.append("Docente;Pontuação;Recredenciado?\n");
-
-        for(Docente doc : lld) {
-            fw.append(doc.getNome() + ";");
-
-            // Pontos {
-            double pontosdoc = 0;
-            Regra regra = this.selectRegra(anoRegra);
-            if(regra != null) {
-                for(Publicacao pub : doc.getPublicacoes().values()) {
-                    if(pub.getAno() < anoRegra - regra.getAnosAvaliados() || pub.getAno() > anoRegra)
-                        continue;
-                    String qualis = pub.getVeiculo().getQualis().floorEntry(anoRegra).getValue();
-                    double pontospub = regra.getPontos().floorEntry(qualis).getValue();
-                    if(pub.getTipo() == 'P')
-                        pontospub *= regra.getMultPeriodicos();
-                    pontosdoc += pontospub;
-                }
-                String pontos = String.format("%.1f", pontosdoc);
-                fw.append(pontos.replace(".", ",") + ";");
+    while(scanner.hasNext()) {
+        try{
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 3) {
+                throw new IllegalArgumentException("Erro de formatação");
             }
-            // } Pontos
-            // Resultado {
+
+            for(int i = 0; i < strTok.length; i++) {
+                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            }
+
+            if(!this.getVeiculos().containsKey(strTok[1])) {
+                throw new InconsistenciaSiglaVeiculoQualis(strTok[0], strTok[1]);
+            } if(!isValidQualis(strTok[2])) {
+                throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
+            }
+            veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
+        } catch (InconsistenciaSiglaVeiculoQualis e) {
+            System.out.println(e.getMessage());
+        } catch (InconsistenciaQualisVeiculo e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    scanner.close();
+}
+private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+    FileReader fr = new FileReader(fileName);
+    Scanner scanner = new Scanner(fr);
+    String str = "";
+    String[] strTok;
+    scanner.nextLine(); // Ignora primeira linha
+
+    while(scanner.hasNext()) {
+        try {
+            str = scanner.nextLine();
+            strTok = str.split(";");
+            if(strTok.length != 7)
+            throw new IllegalArgumentException("Erro de formatação");
+            for(String s : strTok)
+            s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            strTok[4] = strTok[4].replace(",", ".");    // To read as double
+            TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
+            String[] qualis = strTok[2].split(",");
+            String[] valorPontos = strTok[3].split(",");
+            if(qualis.length != valorPontos.length)
+            throw new IllegalArgumentException("Erro de formatação");
+            for(String s : qualis)
+            s = s.trim();
+            for(String s : valorPontos)
+            s = s.trim();
+            for(int i = 0; i < qualis.length; i++) {
+                if(!isValidQualis(qualis[i]))
+                throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
+                pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
+            }
+            this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
+        } catch (InconsistenciaQualisRegra e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    scanner.close();
+}
+
+// Força a chamada das leituras na ordem correta.
+public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, int opMode) throws IOException, FileNotFoundException, IllegalArgumentException {
+    if(opMode == 2) return;
+
+    this.lerArquivoDocentes(fileDocentes);
+    this.lerArquivoVeiculos(fileVeiculos);
+    this.lerArquivoPublicacoes(filePublicacoes);
+    this.lerArquivoQualis(fileQualis);
+    this.lerArquivoRegras(fileRegras);
+
+    // Serialization
+    if(opMode == 1) {
+        try {
+            FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(this);
+            out.close();
+            fos.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+// Reports
+public void printarRelatorioRecredenciamento(String fileName, int anoRegra) throws IOException {
+    FileWriter fw = new FileWriter(fileName);
+
+LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
+    lld.sort(Docente.ComparadorDocente);
+
+    fw.append("Docente;Pontuação;Recredenciado?\n");
+    for(Docente doc : lld) {
+        fw.append(doc.getNome() + ";");
+
+        // Pontos {
+        double pontosdoc = 0;
+        Regra regra = this.selectRegra(anoRegra);
+        if(regra != null) {
+            for(Publicacao pub : doc.getPublicacoes().values()) {
+                if(pub.getAno() < anoRegra - 1 - regra.getAnosAvaliados() || pub.getAno() > anoRegra - 1) continue;
+
+                Map.Entry<Integer,String> entradaQualis = pub.getVeiculo().getQualis().floorEntry(anoRegra);
+                if(entradaQualis == null) continue;
+                String qualis = entradaQualis.getValue();
+                double pontospub = regra.getPontos().floorEntry(qualis).getValue();
+
+                if(pub.getTipo() == 'P') {
+                    pontospub *= regra.getMultPeriodicos();
+                }
+                pontosdoc += pontospub;
+            }
+            String pontos = String.format("%.1f", pontosdoc);
+            fw.append(pontos.replace(".", ",") + ";");
+        }
+        // } Pontos
+        // Resultado {
             if(doc.getIsCoodenador()) {
                 fw.append("Coordenador\n");
             } else {
@@ -309,14 +337,12 @@ public class SistemaPPGI implements Serializable {
                         fw.append("PPS\n");
                     } else {
                         if(pontosdoc >= regra.getPontuacaoMinima())
-                            fw.append("Sim\n");
+                        fw.append("Sim\n");
                         else
-                            fw.append("Não\n");
+                        fw.append("Não\n");
                     }
                 }
             }
-
-
         }
         fw.close();
     }
@@ -326,13 +352,15 @@ public class SistemaPPGI implements Serializable {
         LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
         fw.append("Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n");
 
-        for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet())
+        for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet()) {
             ll.add(e.getValue());
+        }
 
         ll.sort(Publicacao.ComparadorPublicacao);
-
-        for(Publicacao p : ll)
+        
+        for(Publicacao p : ll) {
             fw.append(p.toCSV(ano));
+        }
 
         fw.close();
     }
@@ -368,7 +396,7 @@ public class SistemaPPGI implements Serializable {
             }
             fw.append(String.format("%.2f", artigosPorDocente).replace(".", ",") + "\n");
         }
-
+        
         fw.close();
     }
 
@@ -386,9 +414,11 @@ public class SistemaPPGI implements Serializable {
                 in.close();
                 fis.close();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("ERRO DE I/O");
+                System.exit(1);
             } catch (ClassNotFoundException c) {
                 System.out.println("SistemaPPGI não encontrado em " + filepath);
+                System.exit(1);
                 return;
             }
         }
@@ -398,11 +428,23 @@ public class SistemaPPGI implements Serializable {
         sys.printarEstatisticas(fileNameEst);
     }
 
+    /**
+     * 
+     * @param ano Ano que deve ser calculado
+     * @param opMode
+     * @throws IOException
+     */
     public void printarTodosArquivos(int ano, int opMode) throws IOException {
         if(opMode == 1) return;
-        this.printarTodosArquivos("1-recredenciamento.csv", "2-publicacoes.csv", "3-estatisticas.csv", ano, opMode);
+        String outFolder = "out";
+        this.printarTodosArquivos(outFolder + "/1-recredenciamento.csv", outFolder + "/2-publicacoes.csv", outFolder + "/3-estatisticas.csv", ano, opMode);
     }
 
+    /**
+     * Acabou que nem reutilizei muito essa função né
+     * @param s Qualis
+     * @return Se o Qualis 's' é um dos tipos de Qualis reconhecido
+     */
     private static boolean isValidQualis(String s) {
         switch(s){
             case "A1":
@@ -413,26 +455,26 @@ public class SistemaPPGI implements Serializable {
             case "B4":
             case "B5":
             case "C":
-                return true;
+            return true;
             default:
-                return false;
+            return false;
         }
     }
 
     /**
-     * Seleciona a Regra em vigência para o ano passado.
-     * Considerações:
-     * As datas de início e fim da regra são o início e o fim do ano;
-     * @author Henrique Layber
-     * @param anoInt
-     * @return
-     */
+    * Seleciona a Regra em vigência para o ano passado.
+    * Considerações:
+    * As datas de início e fim da regra são o início e o fim do ano;
+    * @author Henrique Layber
+    * @param anoInt
+    * @return
+    */
     private Regra selectRegra(int anoInt) {
         Map.Entry<Integer,Regra> selected = this.getRegras().floorEntry(anoInt);
-        if(selected == null)
-            return null;
-        if(selected.getValue().getDataFinal().get(MyCalendar.YEAR) >= anoInt)
+        if(selected == null) return null;
+        if(selected.getValue().getDataFinal().get(MyCalendar.YEAR) >= anoInt) {
             return selected.getValue();
+        }
         return null;
     }
 
