@@ -76,11 +76,10 @@
     <target name="clean" description="Limpa o projeto, deixando apenas o código-fonte." >
         <delete dir="${bin}"/>
         <delete dir="${doc}"/>
-        <delete file="${out}/*"/>
         <delete file="SistemaPPGI.ser"/>
-        <delete file="out/1-recredenciamento.csv"/>
-        <delete file="out/2-publicacoes.csv"/>
-        <delete file="out/3-estatisticas.csv"/>
+        <delete file="${out}/1-recredenciamento.csv"/>
+        <delete file="${out}/2-publicacoes.csv"/>
+        <delete file="${out}/3-estatisticas.csv"/>
         <!-- <delete><fileset dir="." includes="*.txt"/></delete> -->
         <!-- <delete><fileset dir="." includes="*.csv"/></delete> -->
         <!-- <delete><fileset dir="." includes="*.dat"/></delete> -->

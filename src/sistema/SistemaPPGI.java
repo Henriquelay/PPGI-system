@@ -281,16 +281,14 @@ public void lerArquivos(String fileDocentes, String fileVeiculos, String filePub
     this.lerArquivoRegras(fileRegras);
 
     // Serialization
-    if(opMode == 1) {
-        try {
-            FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-            out.writeObject(this);
-            out.close();
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    try {
+        FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
+        ObjectOutputStream out = new ObjectOutputStream(fos);
+        out.writeObject(this);
+        out.close();
+        fos.close();
+    } catch (IOException e) {
+        System.out.println(e.getMessage());
     }
 }
 
@@ -467,7 +465,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
     * As datas de início e fim da regra são o início e o fim do ano;
     * @author Henrique Layber
     * @param anoInt
-    * @return
+    * @return Regra selecionada para o ano em questão
     */
     private Regra selectRegra(int anoInt) {
         Map.Entry<Integer,Regra> selected = this.getRegras().floorEntry(anoInt);
