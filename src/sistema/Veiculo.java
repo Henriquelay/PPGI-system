@@ -1,6 +1,8 @@
 package sistema;
 
 import sistema.Publicacao;
+
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,7 +11,7 @@ import java.util.TreeMap;
  * @author Henrique Layber
  *
  */
-public abstract class Veiculo {
+public abstract class Veiculo implements Serializable {
     protected String titulo;
     protected String sigla;
     protected double fatorDeImpacto;

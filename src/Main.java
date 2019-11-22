@@ -16,6 +16,12 @@ public class Main {
         String  filePublicacoes = "";
         String  fileQualis = "";
         String  fileRegras = "";
+        /**
+         * 0 = normal
+         * 1 = read-only
+         * 2 = write-only
+         */
+        int opMode = 0;
         // Leitura de argumentos{
         try {   // Prints arguments
                 /* for(String arg : args) {
@@ -24,15 +30,8 @@ public class Main {
                 System.out.println(""); */
 
             // Ensures input are on the correct length
-            if(args.length != 12 && args.length != 13)
+            if(args.length != 12 && args.length != 13 && args.length != 1)
                 throw new ArrayIndexOutOfBoundsException();
-
-            /**
-             * 0 = normal
-             * 1 = read-only
-             * 2 = write-only
-             */
-            int opMode = 0;
             
             // Leitura das flags de entrada;
             for(int i = 0; i < args.length; i++) {
@@ -95,12 +94,12 @@ public class Main {
             fileQualis = inputFolder + fileQualis;
             fileRegras = inputFolder + fileRegras;
             // }
-            sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras);
+            sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras, opMode);
 
             // }Leitura de arquivos
             // Print de relatórios {
 
-            sys.printarTodosArquivos(ano);
+            sys.printarTodosArquivos(ano, opMode);
 
         } catch(FileNotFoundException e) {
             System.out.println("Exception caught!");

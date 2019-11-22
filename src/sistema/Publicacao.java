@@ -4,6 +4,7 @@ import sistema.Docente;
 import sistema.Veiculo;
 import java.util.TreeMap;
 import java.util.Map;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Comparator;
  * @author Henrique Layber
  *
  */
-public abstract class Publicacao implements Comparable<Publicacao> {
+public abstract class Publicacao implements Comparable<Publicacao>, Serializable {
     private int ano;
     private String titulo;
     private int numero;

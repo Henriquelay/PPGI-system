@@ -3,18 +3,18 @@ package sistema;
 import sistema.util.*;
 
 import java.io.Serializable;
-import java.time.Year;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 
 /**
 * Classe para implementação do sistema de controle PPGI.
@@ -247,7 +247,8 @@ public class SistemaPPGI implements Serializable {
     }
     
     // Força a chamada das leituras na ordem correta.
-    public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, boolean serialize) throws IOException, FileNotFoundException, IllegalArgumentException {
+    public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, int opMode) throws IOException, FileNotFoundException, IllegalArgumentException {
+        if(opMode == 2) return;
         this.lerArquivoDocentes(fileDocentes);
         this.lerArquivoVeiculos(fileVeiculos);
         this.lerArquivoPublicacoes(filePublicacoes);
@@ -255,13 +256,13 @@ public class SistemaPPGI implements Serializable {
         this.lerArquivoRegras(fileRegras);
         
         // Serialization
-        if(serialize) {
+        if(opMode == 1) {
             try {
-                FileWriter fw = new FileWriter("SistemaPPGI.ser");
-                ObjectOutputStream out = new ObjectOutputStream(fw);
+                FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fos);
                 out.writeObject(this);
                 out.close();
-                fw.close();
+                fos.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
@@ -371,16 +372,35 @@ public class SistemaPPGI implements Serializable {
         fw.close();
     }
 
-    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano, boolean unserialize) throws IOException {
-        this.printarRelatorioRecredenciamento(fileNameRecred, ano);
-        this.printarRelatorioPublicacoes(fileNamePub, ano);
-        this.printarEstatisticas(fileNameEst);
+    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano, int opMode) throws IOException {
+        if(opMode == 1) return;
+        SistemaPPGI sys = this;
 
-        FileInputStream fileIn = new FileInputStream();
+        // Serialization
+        if(opMode == 2) {
+            String filepath = "SistemaPPGI.ser";
+            try {
+                FileInputStream fis = new FileInputStream(filepath);
+                ObjectInputStream in = new ObjectInputStream(fis);
+                sys = (SistemaPPGI) in.readObject();
+                in.close();
+                fis.close();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } catch (ClassNotFoundException c) {
+                System.out.println("SistemaPPGI não encontrado em " + filepath);
+                return;
+            }
+        }
+
+        sys.printarRelatorioRecredenciamento(fileNameRecred, ano);
+        sys.printarRelatorioPublicacoes(fileNamePub, ano);
+        sys.printarEstatisticas(fileNameEst);
     }
 
-    public void printarTodosArquivos(int ano) throws IOException {
-        this.printarTodosArquivos("1-recredenciamento.csv", "2-publicacoes.csv", "3-estatisticas.csv", ano);
+    public void printarTodosArquivos(int ano, int opMode) throws IOException {
+        if(opMode == 1) return;
+        this.printarTodosArquivos("1-recredenciamento.csv", "2-publicacoes.csv", "3-estatisticas.csv", ano, opMode);
     }
 
     private static boolean isValidQualis(String s) {

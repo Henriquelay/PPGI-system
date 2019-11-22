@@ -5,6 +5,7 @@ import sistema.Publicacao;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Comparator;
  * @author Henrique Layber
  *
  */
-public class Docente implements Comparable<Docente> {
+public class Docente implements Comparable<Docente>, Serializable {
     private String nome;
     private long codigo;
     private MyCalendar dataNascimento;

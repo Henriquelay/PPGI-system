@@ -1,6 +1,8 @@
 package sistema;
 
 import sistema.util.MyCalendar;
+
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,7 +11,7 @@ import java.util.TreeMap;
  * @author Henrique Layber
  *
  */
-public class Regra {
+public class Regra implements Serializable {
     private int anosAvaliados;
     private double multPeriodicos;
     private double pontuacaoMinima;
