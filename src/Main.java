@@ -81,7 +81,6 @@ public class Main {
         }
         // }Leitura de argumentos
 
-        System.out.println("ANO da entrada: " + ano);
         SistemaPPGI sys = new SistemaPPGI(ano);
         try{
             String arqSerialize = "recredenciamento.dat";
