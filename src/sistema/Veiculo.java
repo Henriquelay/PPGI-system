@@ -66,4 +66,5 @@ public abstract class Veiculo implements Serializable {
         this.Qualis = new TreeMap<Integer,String>();
         this.publicacao = new TreeMap<String,Publicacao>();
     }
+
 }

@@ -101,4 +101,5 @@ public class Regra implements Serializable {
         this.setPontuacaoMinima(pontuacaoMinima);
         this.pontos = pontos;
     }
+
 }

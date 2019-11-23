@@ -8,12 +8,6 @@ public class Main {
      * @version 7.O
      */
     public static void main(String[] args) {
-            /* for(String s : args) {
-                System.out.print(s + " ");
-            }
-            System.out.print("\n"); */
-
-        SistemaPPGI sys = new SistemaPPGI();
         
         String  fileDocentes = "";
         String  fileVeiculos = "";
@@ -85,23 +79,31 @@ public class Main {
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
             System.exit(1);
         }
-            // }Leitura de argumentos
-            // Leitura de arquivos{
+        // }Leitura de argumentos
+
+        System.out.println("ANO da entrada: " + ano);
+        SistemaPPGI sys = new SistemaPPGI(ano);
         try{
-            /* // Add input subfolder to file path {
-            String inputFolder  = "in/";
-            fileDocentes = inputFolder + fileDocentes;
-            fileVeiculos = inputFolder + fileVeiculos;
-            filePublicacoes = inputFolder + filePublicacoes;
-            fileQualis = inputFolder + fileQualis;
-            fileRegras = inputFolder + fileRegras;
-            // } */
-            sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras, opMode);
+            String arqSerialize = "recredenciamento.dat";
+            // Leitura de arquivos{
+            if(opMode != 2) {
+                sys.lerArquivos(fileDocentes, fileVeiculos, filePublicacoes, fileQualis, fileRegras);
+            }
+            if(opMode == 1) {
+                sys.serialize(arqSerialize);
+            }
 
-            // }Leitura de arquivos
-            // Print de relatórios {
-
-            sys.printarTodosArquivos(ano, opMode);
+            // }Leitura de arquivos 
+            // Print de relatórios { 
+            // Desserialization
+            if(opMode == 2) {
+                sys = sys.desserialize(arqSerialize);
+            }
+            System.out.println("ANO DESSERIALIZADO:" + sys.getAno());
+            if(opMode != 1) {
+                sys.printarTodosArquivos();
+            }
+            System.out.println("Ano do obj: " + sys.getAno());
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -115,7 +117,5 @@ public class Main {
             // System.out.println(e.getMessage());
             System.exit(1);
         }
-
-        // System.out.print(sys);
     }
 }
