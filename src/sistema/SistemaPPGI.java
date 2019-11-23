@@ -51,14 +51,14 @@ public String toString() {
         str += e.toString() + "\n";
     str += "\n=-=-=-=-=-=-=- Imprimindo Veículos =-=-=-=-=-=-=-\n\n";
     for(Veiculo e : this.getVeiculos().values())
-    str += e.toString() + "\n";
-    // str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
-    // for(Publicacao e : this.getPublicacoes().values())
-    // str += e.toString() + "\n";
+        str += e.toString() + "\n";
+    str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
+    for(Publicacao e : this.getPublicacoes().values())
+        str += e.toString() + "\n";
     str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
     for(Regra e : this.getRegras().values())
         str += e.toString() + "\n";
-    str += "ANO: " + this.getAno();
+    str += "=-=- ANO: " + this.getAno() + "-=-=-=";
     return str;
 }
 
@@ -454,14 +454,11 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         
         //NOTE Tentei o usar o TreeMap.floorEntry(ano) mas tava bugando pra desserializar
         for(Regra r : this.getRegras().values()) {
-            // System.out.println(ano);
-            // System.out.println(r.getDataInicio() + " ~ " + r.getDataFinal());
             if(r.getDataInicio().compareTo(ano) <= 0 && r.getDataFinal().compareTo(ano) >= 0) {
                 selected = r;
             }
         }
         if(selected == null) { 
-                System.out.println("Selecionei nulo porra");
             return null;
         }
         return selected;
@@ -493,7 +490,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             System.out.println("ERRO DE I/O");
             System.exit(1);
         } catch (ClassNotFoundException c) {
-            System.out.println("Algum arquivo de objeto não foi encontrado na raíz do projeto.");
+            System.out.println("Provavelmente \'recredenciameto.dat\' não foi encontrado na raíz do projeto.");
             System.exit(1);
         }
 
