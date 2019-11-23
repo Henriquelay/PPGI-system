@@ -490,7 +490,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             System.out.println("ERRO DE I/O");
             System.exit(1);
         } catch (ClassNotFoundException c) {
-            System.out.println("Provavelmente \'recredenciameto.dat\' não foi encontrado na raíz do projeto.");
+            System.out.println("Classe não encontada em 'recredenciamento.dat'. Fiz alguma merda muito feia.");
             System.exit(1);
         }
 
