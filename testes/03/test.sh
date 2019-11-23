@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Constant definitions.
-DAT_FILE=SistemaPPGI.ser
+DAT_FILE=recredenciamento.dat
 
 # Parameters:
 testId=$1

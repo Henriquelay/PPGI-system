@@ -28,12 +28,19 @@ private TreeMap<Integer, Regra> regras;    // Ano início, Regras
 private TreeMap<String, Veiculo> veiculos;  // Sigla, Veiculos
 private TreeMap<Long, Docente> docentes; // Código docente, Docentes
 private TreeMap<String, Publicacao> publicacoes; // Título, Publicacao
+private int ano;
 
 // Getters e Setters
 public TreeMap<Integer,Regra> getRegras() {return this.regras;}
 public TreeMap<String,Veiculo> getVeiculos() {return this.veiculos;}
 public TreeMap<Long,Docente> getDocentes() {return this.docentes;}
 public TreeMap<String,Publicacao> getPublicacoes() {return this.publicacoes;}
+public int getAno() {return this.ano;}
+private void setAno(int ano) {this.ano = ano;}
+// private void setRegras(TreeMap<Integer, Regra> regras) {this.regras = regras;}
+// private void setVeiculos(TreeMap<String, Veiculo> veiculos) {this.veiculos = veiculos;}
+// private void setDocentes(TreeMap<Long, Docente> docentes) {this.docentes = docentes;}
+// private void setPublicacoes(TreeMap<String, Publicacao> publicacoes) {this.publicacoes = publicacoes;}
 
 // To print with standard function
 @Override
@@ -41,25 +48,27 @@ public String toString() {
     String str = "";
     str += "\n=-=-=-=-=-=-=- Imprimindo Docentes =-=-=-=-=-=-=-\n\n";
     for(Docente e : this.getDocentes().values())
-    str += e.toString() + "\n";
+        str += e.toString() + "\n";
     str += "\n=-=-=-=-=-=-=- Imprimindo Veículos =-=-=-=-=-=-=-\n\n";
     for(Veiculo e : this.getVeiculos().values())
     str += e.toString() + "\n";
-    str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
-    for(Publicacao e : this.getPublicacoes().values())
-    str += e.toString() + "\n";
+    // str += "\n=-=-=-=-=-=-=- Imprimindo Publicações =-=-=-=-=-=-=-\n\n";
+    // for(Publicacao e : this.getPublicacoes().values())
+    // str += e.toString() + "\n";
     str += "\n=-=-=-=-=-=-=- Imprimindo Regras =-=-=-=-=-=-=-\n\n";
     for(Regra e : this.getRegras().values())
-    str += e.toString() + "\n";
+        str += e.toString() + "\n";
+    str += "ANO: " + this.getAno();
     return str;
 }
 
 // Constructor
-public SistemaPPGI() {
+public SistemaPPGI(int ano) {
     this.regras = new TreeMap<Integer, Regra>();
     this.veiculos = new TreeMap<String, Veiculo>();
     this.docentes = new TreeMap<Long, Docente>();
     this.publicacoes = new TreeMap<String, Publicacao>();
+    this.setAno(ano);
 }
 
 // File ingest
@@ -124,14 +133,14 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
             switch(strTok[2]) {
                 case "c":
                 case "C":
-                vei = new Conferencia(strTok[1], strTok[0], Double.parseDouble(strTok[3]));
+                    vei = new Conferencia(strTok[1], strTok[0], Double.parseDouble(strTok[3]));
                 break;
                 case "p":
                 case "P":
-                vei = new Periodico(strTok[1], strTok[0], Double.parseDouble(strTok[3]), strTok[4]);
+                    vei = new Periodico(strTok[1], strTok[0], Double.parseDouble(strTok[3]), strTok[4]);
                 break;
                 default:
-                throw new InconsistenciaTipo(strTok[0], strTok[2]);
+                    throw new InconsistenciaTipo(strTok[0], strTok[2]);
             }
 
             this.getVeiculos().put(strTok[0], vei);
@@ -179,10 +188,10 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
             
             switch(strTok[6]) {
                 case "":
-                pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                    pub = new PubPeriodico(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), Integer.parseInt(strTok[5]), Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
                 break;
                 default:
-                pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
+                    pub = new PubConferencia(Integer.parseInt(strTok[0]), vei, strTok[2], docentes, Integer.parseInt(strTok[4]), strTok[6], Integer.parseInt(strTok[7]), Integer.parseInt(strTok[8]));
             }
 
             this.getPublicacoes().put(strTok[2], pub);
@@ -243,20 +252,25 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
         try {
             str = scanner.nextLine();
             strTok = str.split(";");
-            if(strTok.length != 7)
-            throw new IllegalArgumentException("Erro de formatação");
-            for(String s : strTok)
-            s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            if(strTok.length != 7) {
+                throw new IllegalArgumentException("Erro de formatação");
+            }
+            for(String s : strTok) {
+                s = s.trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+            }
             strTok[4] = strTok[4].replace(",", ".");    // To read as double
             TreeMap<String, Integer> pontos = new TreeMap<String,Integer>();
             String[] qualis = strTok[2].split(",");
             String[] valorPontos = strTok[3].split(",");
-            if(qualis.length != valorPontos.length)
-            throw new IllegalArgumentException("Erro de formatação");
-            for(String s : qualis)
-            s = s.trim();
-            for(String s : valorPontos)
-            s = s.trim();
+            if(qualis.length != valorPontos.length) {
+                throw new IllegalArgumentException("Erro de formatação");
+            }
+            for(String s : qualis) {
+                s = s.trim();
+            }
+            for(String s : valorPontos) {
+                s = s.trim();
+            }
             for(int i = 0; i < qualis.length; i++) {
                 if(!isValidQualis(qualis[i]))
                 throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
@@ -271,29 +285,16 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
 }
 
 // Força a chamada das leituras na ordem correta.
-public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras, int opMode) throws IOException, FileNotFoundException, IllegalArgumentException {
-    if(opMode == 2) return;
-
+public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException {
     this.lerArquivoDocentes(fileDocentes);
     this.lerArquivoVeiculos(fileVeiculos);
     this.lerArquivoPublicacoes(filePublicacoes);
     this.lerArquivoQualis(fileQualis);
     this.lerArquivoRegras(fileRegras);
-
-    // Serialization
-    try {
-        FileOutputStream fos = new FileOutputStream("SistemaPPGI.ser");
-        ObjectOutputStream out = new ObjectOutputStream(fos);
-        out.writeObject(this);
-        out.close();
-        fos.close();
-    } catch (IOException e) {
-        System.out.println(e.getMessage());
-    }
 }
 
 // Reports
-public void printarRelatorioRecredenciamento(String fileName, int anoRegra) throws IOException {
+public void printarRelatorioRecredenciamento(String fileName) throws IOException {
     FileWriter fw = new FileWriter(fileName);
 
 LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
@@ -305,12 +306,12 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
 
         // Pontos {
         double pontosdoc = 0;
-        Regra regra = this.selectRegra(anoRegra);
+        Regra regra = this.selectRegra(this.getAno());
         if(regra != null) {
             for(Publicacao pub : doc.getPublicacoes().values()) {
-                if(pub.getAno() < anoRegra - 1 - regra.getAnosAvaliados() || pub.getAno() > anoRegra - 1) continue;
+                if(pub.getAno() < this.getAno() - 1 - regra.getAnosAvaliados() || pub.getAno() > this.getAno() - 1) continue;
 
-                Map.Entry<Integer,String> entradaQualis = pub.getVeiculo().getQualis().floorEntry(anoRegra);
+                Map.Entry<Integer,String> entradaQualis = pub.getVeiculo().getQualis().floorEntry(this.getAno());
                 if(entradaQualis == null) continue;
                 String qualis = entradaQualis.getValue();
                 double pontospub = regra.getPontos().floorEntry(qualis).getValue();
@@ -322,30 +323,33 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             }
             String pontos = String.format("%.1f", pontosdoc);
             fw.append(pontos.replace(".", ",") + ";");
-        }
-        // } Pontos
-        // Resultado {
-            if(doc.getIsCoodenador()) {
-                fw.append("Coordenador\n");
-            } else {
-                if(anoRegra - doc.getDataIngresso().get(MyCalendar.YEAR) < 3) {
-                    fw.append("PPJ\n");
+        
+            // } Pontos
+            // Resultado {
+                if(doc.getIsCoodenador()) {
+                    fw.append("Coordenador\n");
                 } else {
-                    if(anoRegra - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {
-                        fw.append("PPS\n");
+                    if(this.getAno() - doc.getDataIngresso().get(MyCalendar.YEAR) < 3) {
+                        fw.append("PPJ\n");
                     } else {
-                        if(pontosdoc >= regra.getPontuacaoMinima())
-                        fw.append("Sim\n");
-                        else
-                        fw.append("Não\n");
+                        if(this.getAno() - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {
+                            fw.append("PPS\n");
+                        } else {
+                            if(pontosdoc >= regra.getPontuacaoMinima()) {
+                                fw.append("Sim\n");
+                            } else {
+                            fw.append("Não\n");
+                            }
+                        }
                     }
                 }
+            // }Resultado;
             }
         }
         fw.close();
     }
 
-    public void printarRelatorioPublicacoes(String fileName, int ano) throws IOException {
+    public void printarRelatorioPublicacoes(String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
         fw.append("Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n");
@@ -357,7 +361,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         ll.sort(Publicacao.ComparadorPublicacao);
         
         for(Publicacao p : ll) {
-            fw.append(p.toCSV(ano));
+            fw.append(p.toCSV(this.getAno()));
         }
 
         fw.close();
@@ -398,33 +402,10 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         fw.close();
     }
 
-    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst, int ano, int opMode) throws IOException {
-        if(opMode == 1) return;
-
-        SistemaPPGI sys = this;
-
-        // Serialization
-        if(opMode == 2) {
-            String filepath = "SistemaPPGI.ser";
-            try {
-                FileInputStream fis = new FileInputStream(filepath);
-                ObjectInputStream in = new ObjectInputStream(fis);
-                sys = (SistemaPPGI) in.readObject();
-                in.close();
-                fis.close();
-            } catch (IOException e) {
-                System.out.println("ERRO DE I/O");
-                System.exit(1);
-            } catch (ClassNotFoundException c) {
-                System.out.println("SistemaPPGI não encontrado em " + filepath);
-                System.exit(1);
-                return;
-            }
-        }
-
-        sys.printarRelatorioRecredenciamento(fileNameRecred, ano);
-        sys.printarRelatorioPublicacoes(fileNamePub, ano);
-        sys.printarEstatisticas(fileNameEst);
+    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst) throws IOException {
+        this.printarRelatorioRecredenciamento(fileNameRecred);
+        this.printarRelatorioPublicacoes(fileNamePub);
+        this.printarEstatisticas(fileNameEst);
     }
 
     /**
@@ -433,10 +414,9 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
      * @param opMode
      * @throws IOException
      */
-    public void printarTodosArquivos(int ano, int opMode) throws IOException {
-        if(opMode == 1) return;
+    public void printarTodosArquivos () throws IOException {
         String outFolder = "out";
-        this.printarTodosArquivos(outFolder + "/1-recredenciamento.csv", outFolder + "/2-publicacoes.csv", outFolder + "/3-estatisticas.csv", ano, opMode);
+        this.printarTodosArquivos(outFolder + "/1-recredenciamento.csv", outFolder + "/2-publicacoes.csv", outFolder + "/3-estatisticas.csv");
     }
 
     /**
@@ -469,12 +449,55 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
     * @return Regra selecionada para o ano em questão
     */
     private Regra selectRegra(int anoInt) {
-        Map.Entry<Integer,Regra> selected = this.getRegras().floorEntry(anoInt);
-        if(selected == null) return null;
-        if(selected.getValue().getDataFinal().get(MyCalendar.YEAR) >= anoInt) {
-            return selected.getValue();
+        Regra selected = null;
+        MyCalendar ano = new MyCalendar(anoInt, 1, 1);
+        
+        //NOTE Tentei o usar o TreeMap.floorEntry(ano) mas tava bugando pra desserializar
+        for(Regra r : this.getRegras().values()) {
+            // System.out.println(ano);
+            // System.out.println(r.getDataInicio() + " ~ " + r.getDataFinal());
+            if(r.getDataInicio().compareTo(ano) <= 0 && r.getDataFinal().compareTo(ano) >= 0) {
+                selected = r;
+            }
         }
-        return null;
+        if(selected == null) { 
+                System.out.println("Selecionei nulo porra");
+            return null;
+        }
+        return selected;
+    }
+
+    public void serialize(String fileName) {
+        try {
+            // SistemaPPGI;
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(this);
+            out.close();
+            fos.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public SistemaPPGI desserialize(String fileName) {
+        SistemaPPGI sys = null;
+        try {
+            // SistemaPPGI
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(fis);
+            sys = (SistemaPPGI) in.readObject();
+            in.close();
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("ERRO DE I/O");
+            System.exit(1);
+        } catch (ClassNotFoundException c) {
+            System.out.println("Algum arquivo de objeto não foi encontrado na raíz do projeto.");
+            System.exit(1);
+        }
+
+        return sys;
     }
 
 }

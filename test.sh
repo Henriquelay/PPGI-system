@@ -13,7 +13,7 @@ cleanup() {
 	rm -f ${1}/out/1-recredenciamento.csv
 	rm -f ${1}/out/2-publicacoes.csv
 	rm -f ${1}/out/3-estatisticas.csv
-	rm -f ${1}/SistemaPPGI.ser
+	rm -f ${1}/recredenciamento.dat
 }
 
 # Procedure that tests one assignment.
