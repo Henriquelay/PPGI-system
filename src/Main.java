@@ -92,18 +92,17 @@ public class Main {
             if(opMode == 1) {
                 sys.serialize(arqSerialize);
             }
-
             // }Leitura de arquivos 
+
             // Print de relatórios { 
             // Desserialization
             if(opMode == 2) {
                 sys = sys.desserialize(arqSerialize);
             }
-            System.out.println("ANO DESSERIALIZADO:" + sys.getAno());
             if(opMode != 1) {
                 sys.printarTodosArquivos();
             }
-            System.out.println("Ano do obj: " + sys.getAno());
+            // }Print de relatórios
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
