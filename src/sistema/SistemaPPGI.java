@@ -383,11 +383,16 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             }
         }
 
+        String[] qualises = {"A1", "A2", "B1", "B2", "B3", "B4", "B5", "C"};
         // Print
-        for(Map.Entry<String,LinkedList<Publicacao>> e : data.entrySet()) {
-            LinkedList<Publicacao> llP = e.getValue();
+        for(String q : qualises) {
+            if(!data.containsKey(q)) {
+                fw.append(q + ";0;0,00\n"); // Sempre vai ser igual quando n tiver publicações com o qualis analizado
+                continue;
+            }
+            LinkedList<Publicacao> llP = data.get(q);
             int qtdArtigos = llP.size();
-            fw.append(e.getKey() + ";" + qtdArtigos + ";");
+            fw.append(q + ";" + qtdArtigos + ";");
             double artigosPorDocente = 0;
             for(Publicacao p : llP) {
                 artigosPorDocente += (double) 1 / (double) p.getDocentes().size();
