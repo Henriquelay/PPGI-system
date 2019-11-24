@@ -41,7 +41,7 @@ rm $outFile 2> /dev/null
 while read line; do
 	idx=$(indexOf "$javaPrefix" "$line")
 	if [ $idx -ne -1 ]; then
-		echo "${line:7}" >> $outFile
+		echo "${line:7}" >> $subOut/$outFile
 	fi
 done < $tempFile
 cd - > /dev/null

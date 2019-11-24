@@ -34,6 +34,7 @@ test() {
 		### COMPILATION ###
 		# Compiles the program. Uses a common base directory so output is the same.
 		cd $srcdir
+		ant clean > /dev/null 2> /dev/null
 		ant compile > /dev/null 2> /dev/null
 		exitcode=$?
 		cd - > /dev/null
