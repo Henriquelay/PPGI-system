@@ -63,7 +63,10 @@ public String toString() {
     return str;
 }
 
-// Constructor
+/**
+ * Constructor.
+ * @param ano Ano que deve ser avaliado. Deve ser passado para que possa ser serializado junto com o resto do objeto.
+ */
 public SistemaPPGI(int ano) {
     this.regras = new TreeMap<Integer, Regra>();
     this.veiculos = new TreeMap<String, Veiculo>();
@@ -72,7 +75,13 @@ public SistemaPPGI(int ano) {
     this.setAno(ano);
 }
 
-// File ingest
+/**
+ * Lê corretamente o arquivo de docentes.
+ * @param fileName Nome do arquivo.
+ * @throws IOException
+ * @throws IllegalArgumentException
+ * @throws InconsistenciaCodigo
+ */
 private void lerArquivoDocentes(String fileName) throws IOException, IllegalArgumentException, InconsistenciaCodigo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
@@ -104,6 +113,16 @@ private void lerArquivoDocentes(String fileName) throws IOException, IllegalArgu
         scanner.close();
     }
 }
+
+/**
+ * Lê corretamente o arquivo de veículos.
+ * @param fileName Nome do arquivo.
+ * @throws IOException
+ * @throws FileNotFoundException
+ * @throws IllegalArgumentException
+ * @throws InconsistenciaCodigo
+ * @throws InconsistenciaTipo
+ */
 private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaCodigo, InconsistenciaTipo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
@@ -149,6 +168,16 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
         scanner.close();
     }
 }
+
+/**
+ * Lê corretamente o arquivo de publicações.
+ * @param fileName Nome do arquivo
+ * @throws IOException
+ * @throws FileNotFoundException
+ * @throws IllegalArgumentException
+ * @throws InconsistenciaSiglaVeiculoPublicacao
+ * @throws InconsistenciaDocentePublicacao
+ */
 private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaDocentePublicacao {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
@@ -206,6 +235,17 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
         scanner.close();
     }
 }
+
+/**
+ * Lê corretamente o arquivo de qualis.
+ * @param fileName Nome do arquivo.
+ * @throws IOException
+ * @throws FileNotFoundException
+ * @throws IllegalArgumentException
+ * @throws InconsistenciaSiglaVeiculoQualis
+ * @throws InconsistenciaSiglaVeiculoPublicacao
+ * @throws InconsistenciaQualisVeiculo
+ */
 private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoQualis, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaQualisVeiculo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
@@ -237,6 +277,15 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
         scanner.close();
     }
 }
+
+/**
+ * Lê corretamente o arquivo de regras.
+ * @param fileName Nome do arquivo.
+ * @throws IOException
+ * @throws FileNotFoundException
+ * @throws IllegalArgumentException
+ * @throws InconsistenciaQualisRegra
+ */
 private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaQualisRegra {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
@@ -280,7 +329,18 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
     }
 }
 
-// Força a chamada das leituras na ordem correta.
+/**
+ * Lê corretamente todos os arquivos que o programa precisa. Tudo nessa única função para garantir que não há arquivo faltando e que tudo seja feito na ordem correta.
+ * @param fileDocentes Arquivo de docentes.
+ * @param fileVeiculos Arquivo de veículos.
+ * @param filePublicacoes Arquivo de publicacoes.
+ * @param fileQualis Arquivo de qualis.
+ * @param fileRegras Arquivo de regras.
+ * @throws IOException
+ * @throws FileNotFoundException
+ * @throws IllegalArgumentException
+ * @throws Inconsistencia
+ */
 public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException, Inconsistencia {
     this.lerArquivoDocentes(fileDocentes);
     this.lerArquivoVeiculos(fileVeiculos);
@@ -289,14 +349,19 @@ public void lerArquivos(String fileDocentes, String fileVeiculos, String filePub
     this.lerArquivoRegras(fileRegras);
 }
 
-// Reports
+/**
+ * Printa o arquivo de recredenciamento.
+ * @param fileName Nome do arquivo de recredenciamento.
+ * @throws IOException
+ */
 public void printarRelatorioRecredenciamento(String fileName) throws IOException {
     FileWriter fw = new FileWriter(fileName);
 
-LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
+    LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
     lld.sort(Docente.ComparadorDocente);
 
     fw.append("Docente;Pontuação;Recredenciado?\n");
+
     for(Docente doc : lld) {
         fw.append(doc.getNome() + ";");
 
@@ -305,13 +370,15 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         Regra regra = this.selectRegra(this.getAno());
         if(regra != null) {
             for(Publicacao pub : doc.getPublicacoes().values()) {
-                if(pub.getAno() < this.getAno() - regra.getAnosAvaliados() || pub.getAno() >= this.getAno()) continue;
-
+                if(pub.getAno() < this.getAno() - regra.getAnosAvaliados() || pub.getAno() >= this.getAno()) {
+                    continue;
+                }
                 Map.Entry<Integer,String> entradaQualis = pub.getVeiculo().getQualis().floorEntry(this.getAno());
-                if(entradaQualis == null) continue;
+                if(entradaQualis == null) {
+                    continue;
+                }
                 String qualis = entradaQualis.getValue();
                 double pontospub = regra.getPontos().floorEntry(qualis).getValue();
-
                 if(pub.getTipo() == 'P') {
                     pontospub *= regra.getMultPeriodicos();
                 }
@@ -319,182 +386,199 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             }
             String pontos = String.format("%.1f", pontosdoc);
             fw.append(pontos.replace(".", ",") + ";");
-        
             // } Pontos
             // Resultado {
-                if(doc.getIsCoodenador()) {
-                    fw.append("Coordenador\n");
+            if(doc.getIsCoodenador()) {
+                fw.append("Coordenador\n");
+            } else {
+                if(this.getAno() - doc.getDataIngresso().get(MyCalendar.YEAR) <= 3) {
+                    fw.append("PPJ\n");
                 } else {
-                    if(this.getAno() - doc.getDataIngresso().get(MyCalendar.YEAR) <= 3) {
-                        fw.append("PPJ\n");
+                    if(this.getAno() - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {
+                        fw.append("PPS\n");
                     } else {
-                        if(this.getAno() - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {
-                            fw.append("PPS\n");
+                        if(pontosdoc >= regra.getPontuacaoMinima()) {
+                            fw.append("Sim\n");
                         } else {
-                            if(pontosdoc >= regra.getPontuacaoMinima()) {
-                                fw.append("Sim\n");
-                            } else {
-                            fw.append("Não\n");
-                            }
+                        fw.append("Não\n");
                         }
                     }
                 }
+            }
             // }Resultado;
+        }
+    }
+    fw.close();
+}
+
+/**
+ * Printa o arquivo de publicações.
+ * @param fileName Nome do arquivo de publicações.
+ * @throws IOException
+ */
+public void printarRelatorioPublicacoes(String fileName) throws IOException {
+    FileWriter fw = new FileWriter(fileName);
+    LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+    fw.append("Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n");
+
+    for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet()) {
+        ll.add(e.getValue());
+    }
+    ll.sort(Publicacao.ComparadorPublicacao);
+    for(Publicacao p : ll) {
+        fw.append(p.toCSV(this.getAno()));
+    }
+    fw.close();
+}
+
+/**
+ * Printa o arquivo de estatísticas.
+ * @param fileName Nome do arquivo de estatísticas.
+ * @throws IOException
+ */
+public void printarEstatisticas(String fileName) throws IOException {
+    FileWriter fw = new FileWriter(fileName);
+
+    TreeMap<String,LinkedList<Publicacao>> data = new TreeMap<String,LinkedList<Publicacao>>();
+    // <Qualis,<Publicacao>>
+
+    fw.append("Qualis;Qtd. Artigos;Média Artigos / Docente\n");
+    // Data structure filling
+    for(Map.Entry<String,Veiculo> eV : this.getVeiculos().entrySet()) {
+        for(Map.Entry<Integer,String> eQ : eV.getValue().getQualis().entrySet()) {
+            LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
+            ll.addAll(eV.getValue().getPublicacoes().values());
+            if(data.containsKey(eQ.getValue())) {
+                data.get(eQ.getValue()).addAll(ll);
+            } else {
+                data.put(eQ.getValue(), ll);
             }
         }
-        fw.close();
     }
 
-    public void printarRelatorioPublicacoes(String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
-        LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
-        fw.append("Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n");
-
-        for(Map.Entry<String,Publicacao> e : this.getPublicacoes().entrySet()) {
-            ll.add(e.getValue());
+    // Poderia navegar o TreeMap, mas a key que não existir (caso nenhuma publicação tenha esse valor) ficaria vazia.
+    String[] qualises = {"A1", "A2", "B1", "B2", "B3", "B4", "B5", "C"};
+    // Print
+    for(String q : qualises) {
+        if(!data.containsKey(q)) {
+            fw.append(q + ";0;0,00\n"); // Sempre vai ser igual quando n tiver publicações com o qualis analizado
+            continue;
         }
-
-        ll.sort(Publicacao.ComparadorPublicacao);
-        
-        for(Publicacao p : ll) {
-            fw.append(p.toCSV(this.getAno()));
+        LinkedList<Publicacao> llP = data.get(q);
+        int qtdArtigos = llP.size();
+        fw.append(q + ";" + qtdArtigos + ";");
+        double artigosPorDocente = 0;
+        for(Publicacao p : llP) {
+            artigosPorDocente += (double) 1 / (double) p.getDocentes().size();
         }
-
-        fw.close();
+        fw.append(String.format("%.2f", artigosPorDocente).replace(".", ",") + "\n");
     }
+    
+    fw.close();
+}
 
-    public void printarEstatisticas(String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+/**
+ * Macro para printar todos os arquivos.
+ * @param fileNameRecred Nome do arquivo de recredenciamento.
+ * @param fileNamePub Nome do arquivo de publicações.
+ * @param fileNameEst Nome do arquivo de estatísticas.
+ * @throws IOException
+ */
+public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst) throws IOException {
+    this.printarRelatorioRecredenciamento(fileNameRecred);
+    this.printarRelatorioPublicacoes(fileNamePub);
+    this.printarEstatisticas(fileNameEst);
+}
 
-        TreeMap<String,LinkedList<Publicacao>> data = new TreeMap<String,LinkedList<Publicacao>>();
-        // <Qualis,<Publicacao>>
+/**
+ * Macro para printar todos os arquivos.
+ * Chamar sem argumento faz o programa usar os nomes definidos no relatório para a saída.
+ * @param outFolder Diretório de saída. Incluir o '/' no final.
+ * @throws IOException
+ */
+public void printarTodosArquivos (String outFolder) throws IOException {
+    this.printarTodosArquivos(outFolder + "1-recredenciamento.csv", outFolder + "2-publicacoes.csv", outFolder + "3-estatisticas.csv");
+}
 
-        fw.append("Qualis;Qtd. Artigos;Média Artigos / Docente\n");
-        // Data structure filling
-        for(Map.Entry<String,Veiculo> eV : this.getVeiculos().entrySet()) {
-            for(Map.Entry<Integer,String> eQ : eV.getValue().getQualis().entrySet()) {
-                LinkedList<Publicacao> ll = new LinkedList<Publicacao>();
-                ll.addAll(eV.getValue().getPublicacoes().values());
-                if(data.containsKey(eQ.getValue())) {
-                    data.get(eQ.getValue()).addAll(ll);
-                } else {
-                    data.put(eQ.getValue(), ll);
-                }
-            }
-        }
-
-        String[] qualises = {"A1", "A2", "B1", "B2", "B3", "B4", "B5", "C"};
-        // Print
-        for(String q : qualises) {
-            if(!data.containsKey(q)) {
-                fw.append(q + ";0;0,00\n"); // Sempre vai ser igual quando n tiver publicações com o qualis analizado
-                continue;
-            }
-            LinkedList<Publicacao> llP = data.get(q);
-            int qtdArtigos = llP.size();
-            fw.append(q + ";" + qtdArtigos + ";");
-            double artigosPorDocente = 0;
-            for(Publicacao p : llP) {
-                artigosPorDocente += (double) 1 / (double) p.getDocentes().size();
-            }
-            fw.append(String.format("%.2f", artigosPorDocente).replace(".", ",") + "\n");
-        }
-        
-        fw.close();
+/**
+ * Acabou que nem reutilizei muito essa função né
+ * @param s Qualis
+ * @return Se o Qualis 's' é um dos tipos de Qualis reconhecido
+ */
+private static boolean isValidQualis(String s) {
+    switch(s){
+        case "A1":
+        case "A2":
+        case "B1":
+        case "B2":
+        case "B3":
+        case "B4":
+        case "B5":
+        case "C":
+        return true;
+        default:
+        return false;
     }
+}
 
-    public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst) throws IOException {
-        this.printarRelatorioRecredenciamento(fileNameRecred);
-        this.printarRelatorioPublicacoes(fileNamePub);
-        this.printarEstatisticas(fileNameEst);
-    }
-
-    /**
-     * 
-     * @param ano Ano que deve ser calculado
-     * @param opMode
-     * @throws IOException
-     */
-    public void printarTodosArquivos () throws IOException {
-        String outFolder = "out";
-        this.printarTodosArquivos(outFolder + "/1-recredenciamento.csv", outFolder + "/2-publicacoes.csv", outFolder + "/3-estatisticas.csv");
-    }
-
-    /**
-     * Acabou que nem reutilizei muito essa função né
-     * @param s Qualis
-     * @return Se o Qualis 's' é um dos tipos de Qualis reconhecido
-     */
-    private static boolean isValidQualis(String s) {
-        switch(s){
-            case "A1":
-            case "A2":
-            case "B1":
-            case "B2":
-            case "B3":
-            case "B4":
-            case "B5":
-            case "C":
-            return true;
-            default:
-            return false;
+/**
+* Seleciona a Regra em vigência para o ano passado.
+* Considerações:
+* As datas de início e fim da regra são o início e o fim do ano;
+* @param anoInt Ano qual deve ser buscado uma regra pra ele
+* @return Regra selecionada para o ano em questão. 'null' quando não há.
+*/
+private Regra selectRegra(int anoInt) {
+    Regra selected = null;
+    MyCalendar ano = new MyCalendar(anoInt, 1, 1);
+    
+    //NOTE Tentei o usar o TreeMap.floorEntry(ano) mas tava bugando pra desserializar
+    for(Regra r : this.getRegras().values()) {
+        if(r.getDataInicio().compareTo(ano) <= 0 && r.getDataFinal().compareTo(ano) >= 0) {
+            selected = r;
         }
     }
+    if(selected == null) { 
+        return null;
+    }
+    return selected;
+}
 
-    /**
-    * Seleciona a Regra em vigência para o ano passado.
-    * Considerações:
-    * As datas de início e fim da regra são o início e o fim do ano;
-    * @author Henrique Layber
-    * @param anoInt
-    * @return Regra selecionada para o ano em questão
-    */
-    private Regra selectRegra(int anoInt) {
-        Regra selected = null;
-        MyCalendar ano = new MyCalendar(anoInt, 1, 1);
-        
-        //NOTE Tentei o usar o TreeMap.floorEntry(ano) mas tava bugando pra desserializar
-        for(Regra r : this.getRegras().values()) {
-            if(r.getDataInicio().compareTo(ano) <= 0 && r.getDataFinal().compareTo(ano) >= 0) {
-                selected = r;
-            }
-        }
-        if(selected == null) { 
-            return null;
-        }
-        return selected;
+/**
+ * Serializa a classe principal.
+ * @param fileName Arquivo de serialização de deverá ser criado/substituído.
+ * @throws IOException
+ */
+public void serialize(String fileName) throws IOException {
+    // SistemaPPGI;
+    FileOutputStream fos = new FileOutputStream(fileName);
+    ObjectOutputStream out = new ObjectOutputStream(fos);
+    out.writeObject(this);
+    out.close();
+    fos.close();
+}
+
+/**
+ * Desserializa a classe principal
+ * @param fileName Arquivo de serialização para ser carregado.
+ * @return SistemaPPGI que estava armazenado em 'fileName'.
+ * @throws IOException
+ */
+public SistemaPPGI desserialize(String fileName) throws IOException {
+    SistemaPPGI sys = null;
+    try {
+        // SistemaPPGI
+        FileInputStream fis = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(fis);
+        sys = (SistemaPPGI) in.readObject();
+        in.close();
+        fis.close();
+    } catch (ClassNotFoundException c) {
+        System.out.println("Classe não encontada em 'recredenciamento.dat'. Fiz alguma merda muito feia.");
+        System.exit(1);
     }
 
-    public void serialize(String fileName) throws IOException {
-        // SistemaPPGI;
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream out = new ObjectOutputStream(fos);
-        out.writeObject(this);
-        out.close();
-        fos.close();
-    }
-
-    /**
-     * 
-     * @param fileName
-     * @return SistemaPPGI que estava armazenado em 'filename'.
-     * @throws IOException
-     */
-    public SistemaPPGI desserialize(String fileName) throws IOException {
-        SistemaPPGI sys = null;
-        try {
-            // SistemaPPGI
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream in = new ObjectInputStream(fis);
-            sys = (SistemaPPGI) in.readObject();
-            in.close();
-            fis.close();
-        } catch (ClassNotFoundException c) {
-            System.out.println("Classe não encontada em 'recredenciamento.dat'. Fiz alguma merda muito feia.");
-            System.exit(1);
-        }
-
-        return sys;
-    }
+    return sys;
+}
 
 }

@@ -100,7 +100,7 @@ public class Main {
                 sys = sys.desserialize(arqSerialize);
             }
             if(opMode != 1) {
-                sys.printarTodosArquivos();
+                sys.printarTodosArquivos("out/");
             }
             // }Print de relatórios
 
@@ -111,7 +111,6 @@ public class Main {
             System.exit(1);
         } catch(IOException e) {
             System.out.println("ERRO DE I/O");
-            // System.out.println(e.getMessage());
             System.exit(1);
         }
     }
