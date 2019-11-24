@@ -10,4 +10,10 @@ public abstract class Inconsistencia extends Exception {
     Inconsistencia(String message) {
         super(message);
     }
+    Inconsistencia() {
+        super();
+    }
+    Inconsistencia(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
 }

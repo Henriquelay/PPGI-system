@@ -42,6 +42,26 @@
             </classpath>
         </java>
     </target>
+    <!-- Execução dos arquivos gerados em python. -->
+    <target name="run-python" depends="clean,compile" description="Executa o programa principal, em modo normal.">
+        <java classname="${mainClass}">
+            <arg value="-d" />
+            <arg value="docentes_python.csv" />
+            <arg value="-v" />
+            <arg value="veiculos_python.csv" />
+            <arg value="-p" />
+            <arg value="publicacoes_python.csv" />
+            <arg value="-q" />
+            <arg value="qualis_python.csv" />
+            <arg value="-r" />
+            <arg value="regras_python.csv" />
+            <arg value="-a" />
+            <arg value="2017" />
+            <classpath>
+                <pathelement path="${bin}" />
+            </classpath>
+        </java>
+    </target>
     <!-- Execução somente leitura. -->
     <target name="run-read-only" depends="compile,serialize" description="Executa o programa principal, em modo somente leitura.">
     <java classname="${mainClass}">

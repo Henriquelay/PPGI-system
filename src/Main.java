@@ -2,7 +2,6 @@ import sistema.*;
 import sistema.util.inconsistency.Inconsistencia;
 
 import java.io.IOException;
-import java.io.FileNotFoundException;
 
 public class Main {
     /**
@@ -111,6 +110,7 @@ public class Main {
             System.exit(1);
         } catch(IOException e) {
             System.out.println("ERRO DE I/O");
+            // System.out.println(e.getMessage());
             System.exit(1);
         }
     }
