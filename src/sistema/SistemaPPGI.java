@@ -325,7 +325,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
                 if(doc.getIsCoodenador()) {
                     fw.append("Coordenador\n");
                 } else {
-                    if(this.getAno() - doc.getDataIngresso().get(MyCalendar.YEAR) < 3) {
+                    if(this.getAno() - doc.getDataIngresso().get(MyCalendar.YEAR) <= 3) {
                         fw.append("PPJ\n");
                     } else {
                         if(this.getAno() - doc.getDataNascimento().get(MyCalendar.YEAR) >= 60) {

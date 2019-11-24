@@ -3,5 +3,9 @@ bin/*
 out/*
 .vscode/
 
+*.csv
+
+node_modules
+
 # Mac OS X Hidden files
 .DS_Store
