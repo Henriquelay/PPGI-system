@@ -10,6 +10,7 @@
     <target name="init" description="Inicializa as estruturas necessárias.">
         <tstamp/>
         <mkdir dir="${bin}" />
+        <mkdir dir="${out}" />
     </target>
     <!-- Javadoc. -->
     <target name="javadoc" description="Cria os Javadoc atualizados.">
