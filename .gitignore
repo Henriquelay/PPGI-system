@@ -3,3 +3,6 @@ index.html
 bin/*
 out/*
 .vscode
+
+# Mac OS X Hidden files
+.DS_Store
