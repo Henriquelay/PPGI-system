@@ -46,15 +46,15 @@
     <target name="run-python" depends="clean,compile" description="Executa o programa principal, em modo normal.">
         <java classname="${mainClass}">
             <arg value="-d" />
-            <arg value="docentes_python.csv" />
+            <arg value="entradas/python/docentes_python.csv" />
             <arg value="-v" />
-            <arg value="veiculos_python.csv" />
+            <arg value="entradas/python/veiculos_python.csv" />
             <arg value="-p" />
-            <arg value="publicacoes_python.csv" />
+            <arg value="entradas/python/publicacoes_python.csv" />
             <arg value="-q" />
-            <arg value="qualis_python.csv" />
+            <arg value="entradas/python/qualis_python.csv" />
             <arg value="-r" />
-            <arg value="regras_python.csv" />
+            <arg value="entradas/python/regras_python.csv" />
             <arg value="-a" />
             <arg value="2017" />
             <classpath>
