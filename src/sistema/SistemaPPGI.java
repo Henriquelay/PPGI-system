@@ -73,7 +73,7 @@ public SistemaPPGI(int ano) {
 }
 
 // File ingest
-private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaCodigo {
+private void lerArquivoDocentes(String fileName) throws IOException, IllegalArgumentException, InconsistenciaCodigo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -149,7 +149,7 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
         scanner.close();
     }
 }
-private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoPublicacao {
+private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaDocentePublicacao {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -194,6 +194,9 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
             this.getPublicacoes().put(strTok[2], pub);
             vei.getPublicacoes().put(strTok[2], pub);
             for(Map.Entry<Long,Docente> e : docentes.entrySet()) {
+                if(!this.getDocentes().containsKey(e.getKey())) {
+                    throw new InconsistenciaDocentePublicacao(pub.getTitulo(), e.getKey());
+                }
                 e.getValue().getPublicacoes().put(strTok[2], pub);
             }
 
@@ -457,20 +460,22 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         return selected;
     }
 
-    public void serialize(String fileName) {
-        try {
-            // SistemaPPGI;
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-            out.writeObject(this);
-            out.close();
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void serialize(String fileName) throws IOException {
+        // SistemaPPGI;
+        FileOutputStream fos = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(fos);
+        out.writeObject(this);
+        out.close();
+        fos.close();
     }
 
-    public SistemaPPGI desserialize(String fileName) {
+    /**
+     * 
+     * @param fileName
+     * @return SistemaPPGI que estava armazenado em 'filename'.
+     * @throws IOException
+     */
+    public SistemaPPGI desserialize(String fileName) throws IOException {
         SistemaPPGI sys = null;
         try {
             // SistemaPPGI
@@ -479,9 +484,6 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
             sys = (SistemaPPGI) in.readObject();
             in.close();
             fis.close();
-        } catch (IOException e) {
-            System.out.println("ERRO DE I/O");
-            System.exit(1);
         } catch (ClassNotFoundException c) {
             System.out.println("Classe não encontada em 'recredenciamento.dat'. Fiz alguma merda muito feia.");
             System.exit(1);

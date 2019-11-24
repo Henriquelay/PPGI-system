@@ -37,7 +37,7 @@ ant run > $tempFile 2> /dev/null
 exitcode=$?
 
 # Copies to output.txt only the Java output.
-rm $outFile 2> /dev/null
+rm $subOut/$outFile 2> /dev/null
 while read line; do
 	idx=$(indexOf "$javaPrefix" "$line")
 	if [ $idx -ne -1 ]; then

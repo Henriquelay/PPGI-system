@@ -37,7 +37,7 @@ ant run > $tempFile 2> /dev/null
 exitcode=$?
 
 # Copies to output.txt only the Java output.
-rm $outFile 2> /dev/null
+rm $subOut/$outFile 2> /dev/null
 while read line; do
 	idx=$(indexOf "$javaPrefix" "$line")
 	if [ $idx -ne -1 ]; then
@@ -53,12 +53,12 @@ if [ $exitcode = 0 ]; then
 	for output in `ls $testDir/$subOut`; do
 		# Defines where to store the result of the diff.
 		tempfile=$tempDir/${USER}_${dir}_test${testId}_${output}
-	
+
 		# Checks if the output file was even generated.
 		if [ -f  $srcDir/$subOut/$output ]; then
 			# Calculates the diff between the files.
 			${diffCmd} $testDir/$subOut/$output $srcDir/$subOut/$output > $tempfile
-	
+
 			# Checks if there has been error.
 			if [ $? != 0 ]; then
 				# Warns the user and outputs the difference.
@@ -69,7 +69,7 @@ if [ $exitcode = 0 ]; then
 				# Prints an OK message.
 				echo "[I] Testando $dir: teste ${testId}, tudo OK em $output"
 			fi
-		
+
 			# Cleanup (deletes the output file and the diff output file).
 			rm -f $srcDir/${output} $tempfile
 		else

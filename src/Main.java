@@ -104,14 +104,10 @@ public class Main {
             }
             // }Print de relatórios
 
+        } catch (Inconsistencia e) {
+            System.out.println(e.getMessage());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            System.exit(1);
-        }catch (Inconsistencia e) {
-            System.out.println(e.getMessage());
-        } catch(FileNotFoundException e) {
-            System.out.println("ERRO DE I/O");
-            // System.out.println(e.getMessage());
             System.exit(1);
         } catch(IOException e) {
             System.out.println("ERRO DE I/O");

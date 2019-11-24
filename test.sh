@@ -8,14 +8,6 @@ BASE_DIR=$TEMP_DIR/prog3-2019-2-tests-$(whoami)
 SUBDIR_INPUT=in
 SUBDIR_OUTPUT=out
 
-# Procedure to clean outputs and serializing file
-cleanup() {
-	rm -f ${1}/out/1-recredenciamento.csv
-	rm -f ${1}/out/2-publicacoes.csv
-	rm -f ${1}/out/3-estatisticas.csv
-	rm -f ${1}/recredenciamento.dat
-}
-
 # Procedure that tests one assignment.
 test() {
 
@@ -50,7 +42,7 @@ test() {
 				cp -f $TEST_DIR/$subdir/$SUBDIR_INPUT/* $srcdir/
 
 				# Runs the test.
-				$TEST_DIR/$subdir/$TEST_SCRIPT "$subdir" "$dir" "$srcdir" "$TEMP_DIR" "$BASE_DIR" "$TEST_DIR/$subdir" "$SUBDIR_INPUT" "$SUBDIR_OUTPUT" "diff -y --suppress-common-lines -W 480"
+				$TEST_DIR/$subdir/$TEST_SCRIPT "$subdir" "$dir" "$srcdir" "$TEMP_DIR" "$BASE_DIR" "$TEST_DIR/$subdir" "$SUBDIR_INPUT" "$SUBDIR_OUTPUT" "diff -y --suppress-common-lines -W 500"
 
 				# Cleanup (removes all input files).
 				cd $srcdir
@@ -82,7 +74,6 @@ mkdir -p $BASE_DIR
 
 # Checks if a specific folder was specified, otherwise test all assignments.
 if [ "$1" != "" ] && [ -d $1 ]; then
-	cleanup $1
 	# A directory name was given. Process only that directory.
 	test $1
 else

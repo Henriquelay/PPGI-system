@@ -1,8 +1,7 @@
 recredenciamento.dat
-index.html
 bin/*
 out/*
-.vscode
+.vscode/
 
 # Mac OS X Hidden files
 .DS_Store
