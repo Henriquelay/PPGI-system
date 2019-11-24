@@ -1,0 +1,96 @@
+<project name="TrabalhoProg3_2019_2" default="compile" basedir=".">
+    <description>Arquivo de build do trabalho de Prog3, 2019/2.</description>
+    <!-- Propriedades do build. -->
+    <property name="src" location="src" />
+    <property name="bin" location="bin" />
+    <property name="mainClass" value="Main" />
+    <property name="doc" location="doc" />
+    <property name="out" location="out" />
+    <!-- Inicialização. -->
+    <target name="init" description="Inicializa as estruturas necessárias.">
+        <tstamp/>
+        <mkdir dir="${bin}" />
+    </target>
+    <!-- Javadoc. -->
+    <target name="javadoc" description="Cria os Javadoc atualizados.">
+        <mkdir dir="${doc}" />
+        <javadoc sourcepath="${src}" destdir="${doc}">
+        </javadoc>
+    </target>
+    <!-- Compilação. -->
+    <target name="compile" depends="init" description="Compila o código fonte.">
+        <javac includeantruntime="false" srcdir="${src}" destdir="${bin}" debug="true" debuglevel="lines,vars,source" />
+    </target>
+    <!-- Execução normal. -->
+    <target name="run" depends="clean,compile" description="Executa o programa principal, em modo normal.">
+        <java classname="${mainClass}">
+            <arg value="-d" />
+            <arg value="docentes.csv" />
+            <arg value="-v" />
+            <arg value="veiculos.csv" />
+            <arg value="-p" />
+            <arg value="publicacoes.csv" />
+            <arg value="-q" />
+            <arg value="qualis.csv" />
+            <arg value="-r" />
+            <arg value="regras.csv" />
+            <arg value="-a" />
+            <arg value="2017" />
+            <classpath>
+                <pathelement path="${bin}" />
+            </classpath>
+        </java>
+    </target>
+    <!-- Execução somente leitura. -->
+    <target name="run-read-only" depends="compile,serialize" description="Executa o programa principal, em modo somente leitura.">
+    <java classname="${mainClass}">
+        <arg value="-d" />
+        <arg value="docentes.csv" />
+        <arg value="-v" />
+        <arg value="veiculos.csv" />
+        <arg value="-p" />
+        <arg value="publicacoes.csv" />
+        <arg value="-q" />
+        <arg value="qualis.csv" />
+        <arg value="-r" />
+        <arg value="regras.csv" />
+        <arg value="-a" />
+        <arg value="2017" />
+        <arg value="--read-only" />
+        <classpath>
+            <pathelement path="${bin}" />
+        </classpath>
+    </java>
+    </target>
+    <!-- Execução somente escrita. -->
+    <target name="run-write-only" depends="compile" description="Executa o programa principal, em modo somente escrita.">
+        <java classname="${mainClass}">
+            <arg value="--write-only" />
+            <classpath>
+                <pathelement path="${bin}" />
+            </classpath>
+        </java>
+    </target>
+    <!-- Limpeza. -->
+    <target name="clean" description="Limpa o projeto, deixando apenas o código-fonte." >
+        <delete dir="${bin}"/>
+        <delete dir="${doc}"/>
+        <delete file="recredenciamento.dat"/>
+        <delete file="${out}/1-recredenciamento.csv"/>
+        <delete file="${out}/2-publicacoes.csv"/>
+        <delete file="${out}/3-estatisticas.csv"/>
+        <!-- <delete><fileset dir="." includes="*.txt"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.csv"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.dat"/></delete> -->
+    </target>
+    <!-- Limpeza. -->
+    <target name="serialize" description="Limpa o projeto, deixando apenas o código-fonte." >
+        <delete file="recredenciamento.dat"/>
+        <delete file="${out}/1-recredenciamento.csv"/>
+        <delete file="${out}/2-publicacoes.csv"/>
+        <delete file="${out}/3-estatisticas.csv"/>
+        <!-- <delete><fileset dir="." includes="*.txt"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.csv"/></delete> -->
+        <!-- <delete><fileset dir="." includes="*.dat"/></delete> -->
+    </target>
+</project>
