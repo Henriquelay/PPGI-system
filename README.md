@@ -11,7 +11,7 @@
 
 * repositório (contém o .zip):
 
->`entradas/` Contém arquivos de entradas, e um gerador de entrada  
+>`entradas/` Contém arquivos de entradas, e um gerador de entradas em python3.6 feito pelo divo @AtilioA  
 >`testes/` Contém resultados de execução do código do professor, e scripts de comparação de respostas.  
 
 ## Script de testes
@@ -24,7 +24,7 @@ O script de testes (`test.sh`, na raíz do projeto) foi alterado para comparar a
 >`ant run` executa o código com as entradas com nome padrão na raíz do projeto.  
 >`ant run-read-only` executa o código em modo somente leitura com as entradas com nome padrão na raíz do projeto.  
 >`ant run-write-only` executa o código em modo somente escrita.  
->`ant run-python` executa o código com as entradas geradas em python.  
+>`ant run-python` executa o código com as entradas geradas através do gerador python no caminho padrão delas.  
 
 ### Outros comandos do ant
 
