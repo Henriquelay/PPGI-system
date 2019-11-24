@@ -1,4 +1,5 @@
 import sistema.*;
+import sistema.util.inconsistency.Inconsistencia;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -106,6 +107,8 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.exit(1);
+        }catch (Inconsistencia e) {
+            System.out.println(e.getMessage());
         } catch(FileNotFoundException e) {
             System.out.println("ERRO DE I/O");
             // System.out.println(e.getMessage());

@@ -1,6 +1,7 @@
 package sistema;
 
 import sistema.util.*;
+import sistema.util.inconsistency.*;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -72,7 +73,7 @@ public SistemaPPGI(int ano) {
 }
 
 // File ingest
-private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaCodigo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -80,31 +81,27 @@ private void lerArquivoDocentes(String fileName) throws IOException, FileNotFoun
     scanner.nextLine(); // Ignora primeira linha
 
     while(scanner.hasNext()) {
-        try{
-            str = scanner.nextLine();
-            strTok = str.split(";");
-            if(strTok.length != 4 && strTok.length != 5) {
-                throw new IllegalArgumentException("Erro de formatação");
-            }
-            for(int i = 0; i < strTok.length; i++) {
-                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-            }
-
-            long key = Long.parseLong(strTok[0]);
-            if(this.getDocentes().containsKey(key)) {    // If key is already inserted
-                throw new InconsistenciaCodigo("docente", Long.toString(key));
-            }
-
-            Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
-
-            this.getDocentes().put(new Long(key), docente);
-        } catch (InconsistenciaCodigo e) {
-            System.out.println(e.getMessage());
+        str = scanner.nextLine();
+        strTok = str.split(";");
+        if(strTok.length != 4 && strTok.length != 5) {
+            throw new IllegalArgumentException("Erro de formatação");
         }
+        for(int i = 0; i < strTok.length; i++) {
+            strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+        }
+
+        long key = Long.parseLong(strTok[0]);
+        if(this.getDocentes().containsKey(key)) {    // If key is already inserted
+            throw new InconsistenciaCodigo("docente", Long.toString(key));
+        }
+
+        Docente docente = new Docente(strTok[1], key, strTok[2], strTok[3], strTok.length == 5);
+
+        this.getDocentes().put(new Long(key), docente);
     }
     scanner.close();
 }
-private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaCodigo, InconsistenciaTipo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -112,7 +109,6 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
     scanner.nextLine(); // Ignora primeira linha
 
     while(scanner.hasNext()) {
-        try{
             Veiculo vei = null;
             str = scanner.nextLine();
             strTok = str.split(";");
@@ -144,15 +140,10 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
             }
 
             this.getVeiculos().put(strTok[0], vei);
-        } catch (InconsistenciaCodigo e) {
-            System.out.println(e.getMessage());
-        } catch (InconsistenciaTipo e) {
-            System.out.println(e.getMessage());
-        }
     }
     scanner.close();
 }
-private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoPublicacao {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -163,7 +154,6 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
     TreeMap<Long, Docente> docentes;
 
     while(scanner.hasNext()) {
-        try {
             str = scanner.nextLine();
             strTok = str.split(";");
             if(strTok.length != 9) {
@@ -201,13 +191,11 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
             }
 
             strTok = null;
-        } catch (InconsistenciaSiglaVeiculoPublicacao e) {
-            System.out.println(e.getMessage());
-        }
+        
     }
     scanner.close();
 }
-private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoQualis, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaQualisVeiculo {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     TreeMap<String, Veiculo> veiculos = this.getVeiculos();
@@ -216,32 +204,26 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
     scanner.nextLine(); // Ignora primeira linha
 
     while(scanner.hasNext()) {
-        try{
-            str = scanner.nextLine();
-            strTok = str.split(";");
-            if(strTok.length != 3) {
-                throw new IllegalArgumentException("Erro de formatação");
-            }
-
-            for(int i = 0; i < strTok.length; i++) {
-                strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
-            }
-
-            if(!this.getVeiculos().containsKey(strTok[1])) {
-                throw new InconsistenciaSiglaVeiculoQualis(strTok[0], strTok[1]);
-            } if(!isValidQualis(strTok[2])) {
-                throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
-            }
-            veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
-        } catch (InconsistenciaSiglaVeiculoQualis e) {
-            System.out.println(e.getMessage());
-        } catch (InconsistenciaQualisVeiculo e) {
-            System.out.println(e.getMessage());
+        str = scanner.nextLine();
+        strTok = str.split(";");
+        if(strTok.length != 3) {
+            throw new IllegalArgumentException("Erro de formatação");
         }
+
+        for(int i = 0; i < strTok.length; i++) {
+            strTok[i] = strTok[i].trim();   // Remove whitespace from beggining and end. Both spaces and tab will be removed.
+        }
+
+        if(!this.getVeiculos().containsKey(strTok[1])) {
+            throw new InconsistenciaSiglaVeiculoQualis(strTok[0], strTok[1]);
+        } if(!isValidQualis(strTok[2])) {
+            throw new InconsistenciaQualisVeiculo(strTok[1], Integer.parseInt(strTok[0]), strTok[2]);
+        }
+        veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
     }
     scanner.close();
 }
-private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException {
+private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaQualisRegra {
     FileReader fr = new FileReader(fileName);
     Scanner scanner = new Scanner(fr);
     String str = "";
@@ -249,7 +231,6 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
     scanner.nextLine(); // Ignora primeira linha
 
     while(scanner.hasNext()) {
-        try {
             str = scanner.nextLine();
             strTok = str.split(";");
             if(strTok.length != 7) {
@@ -272,20 +253,19 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
                 s = s.trim();
             }
             for(int i = 0; i < qualis.length; i++) {
-                if(!isValidQualis(qualis[i]))
-                throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
+                if(!isValidQualis(qualis[i])) {
+                    throw new InconsistenciaQualisRegra(strTok[0], qualis[i]);
+                }
                 pontos.put(qualis[i], new Integer(Integer.parseInt(valorPontos[i])));
             }
             this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
-        } catch (InconsistenciaQualisRegra e) {
-            System.out.println(e.getMessage());
-        }
+        
     }
     scanner.close();
 }
 
 // Força a chamada das leituras na ordem correta.
-public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException {
+public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException, Inconsistencia {
     this.lerArquivoDocentes(fileDocentes);
     this.lerArquivoVeiculos(fileVeiculos);
     this.lerArquivoPublicacoes(filePublicacoes);

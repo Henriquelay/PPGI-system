@@ -1,4 +1,4 @@
-package sistema.util;
+package sistema.util.inconsistency;
 
 /**
   * Exception customizada para o Sistema PPGI.
@@ -6,7 +6,7 @@ package sistema.util;
  * @author Henrique Layber
  *
  */
-public class InconsistenciaCodigo extends Exception {
+public class InconsistenciaCodigo extends Inconsistencia {
     public InconsistenciaCodigo(String object, String codigo) {
         super("Código repetido para " + object + ": " + codigo + ".");
     }

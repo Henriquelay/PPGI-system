@@ -1,4 +1,4 @@
-package sistema.util;
+package sistema.util.inconsistency;
 
 /**
   * Exception customizada para o Sistema PPGI.
@@ -6,7 +6,7 @@ package sistema.util;
  * @author Henrique Layber
  *
  */
-public class InconsistenciaSiglaVeiculoPublicacao extends Exception {
+public class InconsistenciaSiglaVeiculoPublicacao extends Inconsistencia {
     public InconsistenciaSiglaVeiculoPublicacao(String titulo, String sigla) {
         super("Sigla de veículo não definida usada na publicação não foi definida na planilha de publicação “" + titulo + "”: " + sigla + ".");
     }

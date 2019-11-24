@@ -1,4 +1,4 @@
-package sistema.util;
+package sistema.util.inconsistency;
 
 /**
  * Exception customizada para o Sistema PPGI.
@@ -6,7 +6,7 @@ package sistema.util;
  * @author Henrique Layber
  *
  */
-public class InconsistenciaQualisRegra extends Exception {
+public class InconsistenciaQualisRegra extends Inconsistencia {
     public InconsistenciaQualisRegra(String inicio, String qualis) {
         super("Qualis desconhecido para regras de " + inicio + ": " + qualis + "");
     }
