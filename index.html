@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sistema PPGI</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css"  href="./css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1 class="display-1 text-center">Sistema PPGI</h1>
+      <hr>
+
+      <div class="container mr-5">
+        <form id="formulario" method="POST">
+          <div class="form-group row">
+
+            <!-- Input file Docentes -->
+            <div class="form-group col-6">
+              <label for="fileDocentes">Arquivo de Docentes</label>
+              <input type="file" accept=".csv" class="form-control-file" id="fileDocentes" required>
+            </div>
+
+          <!-- Input file Veiculos -->
+          <div class="form-group col-6">
+            <label for="fileVeiculos">Arquivo de Veiculos</label>
+            <input type="file" accept=".csv" class="form-control-file" id="fileVeiculos" required>
+          </div>
+          
+          <!-- Input file Publicacoes -->
+          <div class="form-group col-6">
+            <label for="filePublicacoes">Arquivo de Publicacoes</label>
+            <input type="file" accept=".csv" class="form-control-file" id="filePublicacoes" required>
+          </div>
+  
+          <!-- Input file Qualis -->
+          <div class="form-group col-6">
+            <label for="fileQualis">Arquivo de Qualis</label>
+            <input type="file" accept=".csv" class="form-control-file" id="fileQualis" required>
+          </div>
+          
+          <!-- Input file Regras -->
+          <div class="form-group col-6">
+            <label for="fileRegras">Arquivo de Regras</label>
+            <input type="file" accept=".csv" class="form-control-file" id="fileRegras" required>
+          </div>
+          
+          <!-- Input ano -->
+          <div class="form-group col-6">
+            <label for="ano">Ano</label>
+            <input type="text" class="form-control" name="ano" placeholder="AAAA" required/>
+          </div>
+          
+          <div class="col-12">
+            <button type="submit" class="btn btn-block btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js" ></script>
+  
+<!--
+            .-"""-.
+           '       \
+          |,.  ,-.  |
+          |()L( ()| |
+          |,'  `".| |
+          |.___.',| `
+         .j `--"' `  `.
+        / '        '   \
+       / /          `   `.
+      / /            `    .
+     / /              l   |
+    . ,               |   |
+    ,"`.             .|   |
+ _.'   ``.          | `..-'l
+|       `.`,        |      `.
+|         `.    __.j         )
+|__        |--""___|      ,-'
+   `"--...,+""""   `._,.-' mh -->
+
+  </body>
+</html>
