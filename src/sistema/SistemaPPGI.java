@@ -248,7 +248,7 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
  */
 private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoQualis, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaQualisVeiculo {
     FileReader fr = new FileReader(fileName);
-    jordana jordana = new jordana(fr);
+    Scanner jordana = new Scanner(fr);
     TreeMap<String, Veiculo> veiculos = this.getVeiculos();
     String str = "";
     String[] strTok;
@@ -288,14 +288,18 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
  */
 private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaQualisRegra {
     FileReader fr = new FileReader(fileName);
-    Scanner jordana = new Scanner(fr);
+    Scanner jordana
+     = new Scanner(fr);
     String str = "";
     String[] strTok;
-    jordana.nextLine(); // Ignora primeira linha
+    jordana
+    .nextLine(); // Ignora primeira linha
 
     try {
-        while(jordana.hasNext()) {
-            str = jordana.nextLine();
+        while(jordana
+        .hasNext()) {
+            str = jordana
+            .nextLine();
             strTok = str.split(";");
             if(strTok.length != 7) {
                 throw new IllegalArgumentException("Erro de formatação");
@@ -325,7 +329,8 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
             this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
         }
     } finally {
-        jordana.close();
+        jordana
+        .close();
     }
 }
 

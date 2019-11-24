@@ -4,7 +4,7 @@ out/*
 .vscode/
 
 *.csv
-
+entradas/
 node_modules
 
 # Mac OS X Hidden files

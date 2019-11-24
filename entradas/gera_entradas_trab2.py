@@ -171,7 +171,7 @@ def gera_publicacoes(arquivoVeiculos, arquivoDocentes, nPublicacoes):
 if __name__ == "__main__":
     fake = Faker('pt_BR')
     fakezada = Faker('en_US')
-    path = "entradas_autorais/python"
+    path = "python"
 
     # Editar valores aqui
     nDocentes = 200
