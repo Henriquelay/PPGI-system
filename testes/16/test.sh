@@ -12,6 +12,7 @@ subIn=$7
 subOut=$8
 diffCmd=$9
 
+rm $subOut/* /dev/null 2> /dev/null
 # Runs the program.
 cd $srcDir
 ant run > /dev/null 2> /dev/null
@@ -42,7 +43,7 @@ if [ $exitcode = 0 ]; then
 			fi
 		
 			# Cleanup (deletes the output file and the diff output file).
-			rm -f $srcDir/${output} $tempfile
+			#rm -f $srcDir/${output} $tempfile
 		else
 			# Reports this error.
 			echo "[E] Testando $dir: teste ${testId}, arquivo de saída não foi criado: $output!"

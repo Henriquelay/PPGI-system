@@ -42,7 +42,7 @@ test() {
 				cp -f $TEST_DIR/$subdir/$SUBDIR_INPUT/* $srcdir/
 
 				# Runs the test.
-				$TEST_DIR/$subdir/$TEST_SCRIPT "$subdir" "$dir" "$srcdir" "$TEMP_DIR" "$BASE_DIR" "$TEST_DIR/$subdir" "$SUBDIR_INPUT" "$SUBDIR_OUTPUT" "diff -y --suppress-common-lines -W 500"
+				$TEST_DIR/$subdir/$TEST_SCRIPT "$subdir" "$dir" "$srcdir" "$TEMP_DIR" "$BASE_DIR" "$TEST_DIR/$subdir" "$SUBDIR_INPUT" "$SUBDIR_OUTPUT" "diff -y --suppress-common-lines -W `tput cols`"
 
 				# Cleanup (removes all input files).
 				cd $srcdir
@@ -65,7 +65,7 @@ test() {
 #########################
 
 
-echo "Script de teste Prog3 2017/1 - Trabalho 1"
+echo "Script de teste Prog3 2019/2 - Trabalho 1"
 echo
 
 

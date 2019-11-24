@@ -305,7 +305,7 @@ LinkedList<Docente> lld = new LinkedList<Docente>(this.getDocentes().values());
         Regra regra = this.selectRegra(this.getAno());
         if(regra != null) {
             for(Publicacao pub : doc.getPublicacoes().values()) {
-                if(pub.getAno() < this.getAno() - 1 - regra.getAnosAvaliados() || pub.getAno() > this.getAno() - 1) continue;
+                if(pub.getAno() < this.getAno() - regra.getAnosAvaliados() || pub.getAno() >= this.getAno()) continue;
 
                 Map.Entry<Integer,String> entradaQualis = pub.getVeiculo().getQualis().floorEntry(this.getAno());
                 if(entradaQualis == null) continue;
