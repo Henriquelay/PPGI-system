@@ -174,9 +174,9 @@ if __name__ == "__main__":
     path = "entradas_autorais/python"
 
     # Editar valores aqui
-    nDocentes = 10
-    nVeiculos = 20
-    nPublicacoes = 30
+    nDocentes = 200
+    nVeiculos = 700
+    nPublicacoes = 2500
 
     gera_docentes(nDocentes)
     gera_veiculos(nVeiculos)

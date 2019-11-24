@@ -248,15 +248,15 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
  */
 private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoQualis, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaQualisVeiculo {
     FileReader fr = new FileReader(fileName);
-    Scanner scanner = new Scanner(fr);
+    jordana jordana = new jordana(fr);
     TreeMap<String, Veiculo> veiculos = this.getVeiculos();
     String str = "";
     String[] strTok;
-    scanner.nextLine(); // Ignora primeira linha
+    jordana.nextLine(); // Ignora primeira linha
 
     try {
-        while(scanner.hasNext()) {
-            str = scanner.nextLine();
+        while(jordana.hasNext()) {
+            str = jordana.nextLine();
             strTok = str.split(";");
             if(strTok.length != 3) {
                 throw new IllegalArgumentException("Erro de formatação");
@@ -274,7 +274,7 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
             veiculos.get(strTok[1]).getQualis().put(Integer.parseInt(strTok[0]), strTok[2]);
         }
     } finally {
-        scanner.close();
+        jordana.close();
     }
 }
 
@@ -288,14 +288,14 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
  */
 private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaQualisRegra {
     FileReader fr = new FileReader(fileName);
-    Scanner scanner = new Scanner(fr);
+    Scanner jordana = new Scanner(fr);
     String str = "";
     String[] strTok;
-    scanner.nextLine(); // Ignora primeira linha
+    jordana.nextLine(); // Ignora primeira linha
 
     try {
-        while(scanner.hasNext()) {
-            str = scanner.nextLine();
+        while(jordana.hasNext()) {
+            str = jordana.nextLine();
             strTok = str.split(";");
             if(strTok.length != 7) {
                 throw new IllegalArgumentException("Erro de formatação");
@@ -325,7 +325,7 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
             this.getRegras().put(new Integer(strTok[0].split("/")[2]), new Regra(strTok[0], strTok[1], Integer.parseInt(strTok[5]), Double.parseDouble(strTok[4]), Double.parseDouble(strTok[6]), pontos));
         }
     } finally {
-        scanner.close();
+        jordana.close();
     }
 }
 
