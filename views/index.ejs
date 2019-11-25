@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sistema PPGI</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+  </head>
+  <body class="bg-dark">
+    <div class="container-fluid">
+      <h1 class="display-1 text-center text-light">Sistema PPGI</h1>
+      <hr>
+
+      <div class="container card bg-primary text-muted p-3">
+
+        <form id="formulario" method="POST" action="/enviar" enctype="multipart/form-data">
+          <div class="form-group row">
+
+            <!-- Input file -->
+            <div class="form-group col-6">
+              <label for="file">Selecione os arquivos do SistemaPPGI</label>
+              <input type="file" accept=".csv" class="form-control-file" id="file" name="file" multiple required>
+              <small>Nomes valídos: docentes.csv, publicacoes.csv, qualis.csv, regras.csv, veiculos.csv</small>
+            </div>
+          
+          <!-- Input ano -->
+          <div class="form-group col-6">
+            <label for="ano">Ano</label>
+            <input type="text" class="form-control" id="ano" name="ano" placeholder="2017" required/>
+          </div>
+          
+          <div class="col-12">
+            <button type="submit" class="btn btn-block btn-light">Enviar</button>
+          </div>
+        </form>
+      </div>
+          <div class="list-group text-center col-12">
+            <h1 class="display-4">Downloads</h2>
+            <small>*Os links estarão quebrados se os arquivos não existirem. Use o aplicativo primeiro.</small>
+            <a href="/downloads/1-recredenciamento.csv" class="btn btn-primary list-group-item list-group-item-action m-1">1-recredenciamento.csv</a>
+            <a href="/downloads/2-publicacoes.csv" class="btn btn-primary list-group-item list-group-item-action m-1">2-publicacoes.csv</a>
+            <a href="/downloads/3-estatisticas.csv" class="btn btn-primary list-group-item list-group-item-action m-1">3-estatisticas.csv</a>
+          </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/javascripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js" ></script>
+  
+<!--
+            .-"""-.
+           '       \
+          |,.  ,-.  |
+          |()L( ()| |
+          |,'  `".| |
+          |.___.',| `
+         .j `--"' `  `.
+        / '        '   \
+       / /          `   `.
+      / /            `    .
+     / /              l   |
+    . ,               |   |
+    ,"`.             .|   |
+ _.'   ``.          | `..-'l
+|       `.`,        |      `.
+|         `.    __.j         )
+|__        |--""___|      ,-'
+   `"--...,+""""   `._,.-' mh -->
+
+  </body>
+</html>
