@@ -1,6 +1,7 @@
-var express = require('express');
-var formidable = require('formidable')
-var exec = require('child_process').exec;
+const express = require('express');
+const formidable = require('formidable')
+const exec = require('child_process').exec;
+const execFile = require('child_process').execFile;
 
 var router = express.Router();
 
@@ -40,11 +41,14 @@ router.post('/', function(req, res, next) {
     console.log('Campo ' + ano);
   });
 
-  const command = 'cd ' + __dirname + '/../bin && (java Main -d ../uploads/docentes.csv -r ../uploads/regras.csv -p ../uploads/publicacoes.csv -q ../uploads/qualis.csv -v ../uploads/veiculos.csv -a ' + ano + ') > ../out/output.txt';
+  form.on('end', function() {
+    execFile('./run.sh', [ano], {cwd: __dirname + '/../bin'}, (stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+    });
+  });
 
-  console.log('$ ' + command);
-  exec(command);
-  return res.sendStatus(200);
+  return res.send(200);
 
 });
 
