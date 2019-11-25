@@ -1,6 +1,5 @@
 const express = require('express');
 const formidable = require('formidable')
-const exec = require('child_process').exec;
 const execFile = require('child_process').execFile;
 
 var router = express.Router();
@@ -43,8 +42,8 @@ router.post('/', function(req, res, next) {
 
   form.on('end', function() {
     execFile('./run.sh', [ano], {cwd: __dirname + '/../bin'}, (stdout, stderr) => {
-        console.log(stdout);
-        console.log(stderr);
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
     });
   });
 
