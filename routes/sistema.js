@@ -13,13 +13,30 @@ router.post('/', function(req, res, next) {
   var form = new formidable.IncomingForm();
 
   form.parse(req);
-
-  form.on('fileBegin', function (name, file){
-    file.path = __dirname + '/..' +'/uploads/' + file.name;
+  var nomesvalidos = ['veiculos.csv', 'docentes.csv', 'regras.csv', 'qualis.csv', 'publicacoes.csv'];
+  form.on('fileBegin', function (name, file) {
+    var contem = false;
+    // Checa se o nome está correto
+    for(var i = 0; i < nomesvalidos.length; i++) {
+      if(nomesvalidos[i] == file.name)
+        contem = true;
+    }
+    if(contem) {
+      file.path = __dirname + '/..' +'/uploads/' + file.name;
+      console.log('Arquivo movido. \'' + file.name + '\' é um nome VÁLIDO.');
+    } else {
+      console.log('Arquivo \'' + file.name + '\' é um nome INVÁLIDO.');
+    }
   });
 
-  form.on('file', function (name, file){
-      console.log('Uploaded ' + file.name);
+  form.on('file', function (name, file) {
+      console.log('Arquivo processado ' + file.name);
+  });
+
+  var ano;
+  form.on('field', function(name, field) {
+    ano = field;
+    console.log('Campo ' + ano);
   });
 
   return res.sendStatus(200, 'Enviado');
