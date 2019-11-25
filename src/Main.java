@@ -66,14 +66,15 @@ public class Main {
                         opMode = 1;
                     break;
                     default:
-                            throw new IllegalArgumentException(args[i]);
+                        System.out.println("Exemplo de execução:\n• -d <arquivo>: planilha de docentes;\n                        • -v <arquivo>: planilha de veículos;\n                        • -p <arquivo>: planilha de publicações;\n                        • -q <arquivo>: planilha de qualificações;\n                        • -r <arquivo>: planilha de regras de pontuação;\n                        • -a <ano>: ano de recredenciamento.");
+                        System.exit(0);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
             System.out.println("Nº argumentos:" + args.length + " | Esperado:12 ou 13");
-            System.out.println(e);
-            System.exit(1);
+            System.out.println("Exemplo de execução:\n• -d <arquivo>: planilha de docentes;\n                        • -v <arquivo>: planilha de veículos;\n                        • -p <arquivo>: planilha de publicações;\n                        • -q <arquivo>: planilha de qualificações;\n                        • -r <arquivo>: planilha de regras de pontuação;\n                        • -a <ano>: ano de recredenciamento.");
+            System.exit(0);
         } catch (IllegalArgumentException e) {
             System.out.println("Argumento não identificado:" + e.getMessage());
             System.out.println("Por favor, verifique suas flags e argumentos de entrada.");
