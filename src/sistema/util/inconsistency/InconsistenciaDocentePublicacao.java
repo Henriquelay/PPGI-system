@@ -7,7 +7,7 @@ package sistema.util.inconsistency;
  *
  */
 public class InconsistenciaDocentePublicacao extends Inconsistencia {
-    public InconsistenciaDocentePublicacao(String publicacao, long cod) {
+    public InconsistenciaDocentePublicacao(String publicacao, String cod) {
         super("Código de docente não definido usado na publicação \"" + publicacao + "\": " + cod + ".");
     }
 }
