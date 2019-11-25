@@ -1,4 +1,6 @@
-FROM node:12.13.1-alpine
+FROM ubuntu:18.04
+# LTS NA VEIA NEGAO
+RUN apt-get update && apt-get install -y openjdk-8-jdk curl && curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && sudo apt-get install -y nodejs
 
 # Create app directory
 WORKDIR /usr/app

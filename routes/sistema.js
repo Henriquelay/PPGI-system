@@ -1,5 +1,6 @@
 var express = require('express');
 var formidable = require('formidable')
+var exec = require('child_process').exec;
 
 var router = express.Router();
 
@@ -22,7 +23,7 @@ router.post('/', function(req, res, next) {
         contem = true;
     }
     if(contem) {
-      file.path = __dirname + '/..' +'/uploads/' + file.name;
+      file.path = __dirname + '/../uploads/' + file.name;
       console.log('Arquivo movido. \'' + file.name + '\' é um nome VÁLIDO.');
     } else {
       console.log('Arquivo \'' + file.name + '\' é um nome INVÁLIDO.');
@@ -39,7 +40,11 @@ router.post('/', function(req, res, next) {
     console.log('Campo ' + ano);
   });
 
-  return res.sendStatus(200, 'Enviado');
+  const command = 'cd ' + __dirname + '/../bin && (java Main -d ../uploads/docentes.csv -r ../uploads/regras.csv -p ../uploads/publicacoes.csv -q ../uploads/qualis.csv -v ../uploads/veiculos.csv -a ' + ano + ') > ../out/output.txt';
+
+  console.log('$ ' + command);
+  exec(command);
+  return res.sendStatus(200);
 
 });
 
