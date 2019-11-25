@@ -224,7 +224,7 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
             vei.getPublicacoes().put(strTok[2], pub);
             for(Map.Entry<Long,Docente> e : docentes.entrySet()) {
                 if(!this.getDocentes().containsKey(e.getKey())) {
-                    throw new InconsistenciaDocentePublicacao(pub.getTitulo(), e.getKey());
+                    throw new InconsistenciaDocentePublicacao(pub.getTitulo(), vei.getSigla());
                 }
                 e.getValue().getPublicacoes().put(strTok[2], pub);
             }
