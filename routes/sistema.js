@@ -10,8 +10,19 @@ router.get('/', function(err, req, res, next) {
 
 /* POST users listing. */
 router.post('/', function(req, res, next) {
-  res.send('Olá Marilene...');
+  var form = new formidable.IncomingForm();
 
+  form.parse(req);
+
+  form.on('fileBegin', function (name, file){
+    file.path = __dirname + '/..' +'/uploads/' + file.name;
+  });
+
+  form.on('file', function (name, file){
+      console.log('Uploaded ' + file.name);
+  });
+
+  return res.sendStatus(200, 'Enviado');
 
 });
 
