@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
     execFile('./run.sh', [ano], {cwd: __dirname + '/../bin'}, (stdout, stderr) => {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
-        console.log('nice');
+        // console.log('nice');
     });
   });
 
