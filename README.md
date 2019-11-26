@@ -8,6 +8,9 @@
 Para parar:  
 >`sudo docker-compose down`
 
+Caso não esteja rodando, certifique que a sua pasta é visível para o root. Mete uns 777 aí sei lá.  
+Principalmente em todo o caminho até a raiz do projeto, public/, public/downloads/, e uploads/ (caso essa pasta não exista, crie-a).
+
 ## Portainer
 
 ```
