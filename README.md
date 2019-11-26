@@ -17,7 +17,7 @@
 ## Script de testes
 
 O script de testes (`test.sh`, na raíz do projeto) foi alterado para comparar as saídas no local correto de saídas, obedecendo a estrutura de pastas do projeto (`out/`, saída padrão do programa), entre outras alterações menores, majoritáriamente por preferência pessoal.  
-Caso deseje alterar o diretório de saída do programa, altere `/sistema/Main.java` e, na função `sys.printarTodosArquivos(String)`, aproximadamente linha 103, você pode escolher o diretório de saída com a string passada, que por padrão é `out/`. Inclua uma `/` após o nome do diretório.
+Caso deseje alterar o diretório de saída do programa, altere `/sistema/Main.java` e, na função `sys.printarTodosArquivos(String)`, aproximadamente linha 103, você pode escolher o diretório de saída com a string passada, que por padrão é `out/`. Inclua uma `/` após o nome do diretório, e recompile o projeto usando o `ant compile`.
 
 ## Compilação e execução com o ant
 
