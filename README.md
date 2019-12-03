@@ -31,3 +31,7 @@ Caso deseje alterar o diretório de saída do programa, altere `/sistema/Main.ja
 
 >`ant javadoc` gera os javadoc atualizados.  
 >`ant clean` limpa o projeto. Remove a pasta `bin/`,
+
+
+for local: 
+https://github.com/Henriquelay/TC2-PROG3
