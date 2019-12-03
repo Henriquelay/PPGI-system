@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * Classe abstrata para implementação dos veículos de publicações
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public abstract class Veiculo implements Serializable {
     protected String titulo;

@@ -21,7 +21,7 @@ import java.io.ObjectInputStream;
 * Classe para implementação do sistema de controle PPGI.
 * É aqui que o pau quebra, o espaguete acontece, o compilador chora e mãe não vê.
 * @author Henrique Layber
-* 
+* @author Ezequiel Schneider Reinholtz
 */
 public class SistemaPPGI implements Serializable {
 // Relations
@@ -78,9 +78,9 @@ public SistemaPPGI(int ano) {
 /**
  * Lê corretamente o arquivo de docentes.
  * @param fileName Nome do arquivo.
- * @throws IOException
- * @throws IllegalArgumentException
- * @throws InconsistenciaCodigo
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.Codigo Existencia de dois códigos iguais (docente ou veículo)
  */
 private void lerArquivoDocentes(String fileName) throws IOException, IllegalArgumentException, InconsistenciaCodigo {
     FileReader fr = new FileReader(fileName);
@@ -117,11 +117,11 @@ private void lerArquivoDocentes(String fileName) throws IOException, IllegalArgu
 /**
  * Lê corretamente o arquivo de veículos.
  * @param fileName Nome do arquivo.
- * @throws IOException
- * @throws FileNotFoundException
- * @throws IllegalArgumentException
- * @throws InconsistenciaCodigo
- * @throws InconsistenciaTipo
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws FileNotFoundException Arquivo não encontrado.
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.Codigo Existencia de dois códigos iguais (docente ou veículo)
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.Tipo Tipo de veículo inexistente
  */
 private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaCodigo, InconsistenciaTipo {
     FileReader fr = new FileReader(fileName);
@@ -172,11 +172,11 @@ private void lerArquivoVeiculos(String fileName) throws IOException, FileNotFoun
 /**
  * Lê corretamente o arquivo de publicações.
  * @param fileName Nome do arquivo
- * @throws IOException
- * @throws FileNotFoundException
- * @throws IllegalArgumentException
- * @throws InconsistenciaSiglaVeiculoPublicacao
- * @throws InconsistenciaDocentePublicacao
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws FileNotFoundException Arquivo não encontrado.
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.SiglaVeiculoPublicacao Sigla de veículo especificada para uma qualificação não foi definida na planilha de veículos.
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.DocentePublicacao
  */
 private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaDocentePublicacao {
     FileReader fr = new FileReader(fileName);
@@ -239,12 +239,12 @@ private void lerArquivoPublicacoes(String fileName) throws IOException, FileNotF
 /**
  * Lê corretamente o arquivo de qualis.
  * @param fileName Nome do arquivo.
- * @throws IOException
- * @throws FileNotFoundException
- * @throws IllegalArgumentException
- * @throws InconsistenciaSiglaVeiculoQualis
- * @throws InconsistenciaSiglaVeiculoPublicacao
- * @throws InconsistenciaQualisVeiculo
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws FileNotFoundException Arquivo não encontrado.
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.SiglaVeiculoQualis Qualis especificado para uma qualificação de veículo não é nenhuma das categorias existentes: A1, A2, B1, B2, B3, B4, B5 ou C.
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.SiglaVeiculoPublicacao Sigla de veículo especificada para uma qualificação não foi definida na planilha de veículos.
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.QualisVeiculo
  */
 private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaSiglaVeiculoQualis, InconsistenciaSiglaVeiculoPublicacao, InconsistenciaQualisVeiculo {
     FileReader fr = new FileReader(fileName);
@@ -281,10 +281,10 @@ private void lerArquivoQualis(String fileName) throws IOException, FileNotFoundE
 /**
  * Lê corretamente o arquivo de regras.
  * @param fileName Nome do arquivo.
- * @throws IOException
- * @throws FileNotFoundException
- * @throws IllegalArgumentException
- * @throws InconsistenciaQualisRegra
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws FileNotFoundException Arquivo não encontrado.
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.QualisRegra
  */
 private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundException, IllegalArgumentException, InconsistenciaQualisRegra {
     FileReader fr = new FileReader(fileName);
@@ -341,10 +341,10 @@ private void lerArquivoRegras(String fileName) throws IOException, FileNotFoundE
  * @param filePublicacoes Arquivo de publicacoes.
  * @param fileQualis Arquivo de qualis.
  * @param fileRegras Arquivo de regras.
- * @throws IOException
- * @throws FileNotFoundException
- * @throws IllegalArgumentException
- * @throws Inconsistencia
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
+ * @throws FileNotFoundException Arquivo não encontrado.
+ * @throws IllegalArgumentException Erro de parsing
+ * @throws Inconsistencia Classe mãe abstrata das inconsistências do trabalho.
  */
 public void lerArquivos(String fileDocentes, String fileVeiculos, String filePublicacoes, String fileQualis, String fileRegras) throws IOException, FileNotFoundException, IllegalArgumentException, Inconsistencia {
     this.lerArquivoDocentes(fileDocentes);
@@ -357,7 +357,7 @@ public void lerArquivos(String fileDocentes, String fileVeiculos, String filePub
 /**
  * Printa o arquivo de recredenciamento.
  * @param fileName Nome do arquivo de recredenciamento.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void printarRelatorioRecredenciamento(String fileName) throws IOException {
     FileWriter fw = new FileWriter(fileName);
@@ -419,7 +419,7 @@ public void printarRelatorioRecredenciamento(String fileName) throws IOException
 /**
  * Printa o arquivo de publicações.
  * @param fileName Nome do arquivo de publicações.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void printarRelatorioPublicacoes(String fileName) throws IOException {
     FileWriter fw = new FileWriter(fileName);
@@ -439,7 +439,7 @@ public void printarRelatorioPublicacoes(String fileName) throws IOException {
 /**
  * Printa o arquivo de estatísticas.
  * @param fileName Nome do arquivo de estatísticas.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void printarEstatisticas(String fileName) throws IOException {
     FileWriter fw = new FileWriter(fileName);
@@ -487,7 +487,7 @@ public void printarEstatisticas(String fileName) throws IOException {
  * @param fileNameRecred Nome do arquivo de recredenciamento.
  * @param fileNamePub Nome do arquivo de publicações.
  * @param fileNameEst Nome do arquivo de estatísticas.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void printarTodosArquivos(String fileNameRecred, String fileNamePub, String fileNameEst) throws IOException {
     this.printarRelatorioRecredenciamento(fileNameRecred);
@@ -499,7 +499,7 @@ public void printarTodosArquivos(String fileNameRecred, String fileNamePub, Stri
  * Macro para printar todos os arquivos.
  * Chamar sem argumento faz o programa usar os nomes definidos no relatório para a saída.
  * @param outFolder Diretório de saída. Incluir o '/' no final.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void printarTodosArquivos (String outFolder) throws IOException {
     this.printarTodosArquivos(outFolder + "1-recredenciamento.csv", outFolder + "2-publicacoes.csv", outFolder + "3-estatisticas.csv");
@@ -552,7 +552,7 @@ private Regra selectRegra(int anoInt) {
 /**
  * Serializa a classe principal.
  * @param fileName Arquivo de serialização de deverá ser criado/substituído.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public void serialize(String fileName) throws IOException {
     // SistemaPPGI;
@@ -567,7 +567,7 @@ public void serialize(String fileName) throws IOException {
  * Desserializa a classe principal
  * @param fileName Arquivo de serialização para ser carregado.
  * @return SistemaPPGI que estava armazenado em 'fileName'.
- * @throws IOException
+ * @throws IOException Arquivo inexistente ou sem permissão de acesso
  */
 public SistemaPPGI desserialize(String fileName) throws IOException {
     SistemaPPGI sys = null;

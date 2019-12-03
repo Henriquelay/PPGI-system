@@ -5,7 +5,7 @@ import sistema.Veiculo;
 /**
  * Classe para implementação dos veículos tipo periódicos
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public class Periodico extends Veiculo {
     private String issn;

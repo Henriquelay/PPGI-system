@@ -9,7 +9,7 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das Regras de avaliação PPGI
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public class Regra implements Serializable {
     private int anosAvaliados;
@@ -91,7 +91,7 @@ public class Regra implements Serializable {
      * @param anosAvaliados int
      * @param multPeriodicos double
      * @param pontuacaoMinima double
-     * @param pontos TreeMap<String, Integer>
+     * @param pontos TreeMap(String, Integer)
      */
     public Regra(String dataInicio, String dataFinal, int anosAvaliados, double multPeriodicos, double pontuacaoMinima, TreeMap<String, Integer> pontos) {
         this.setDataInicio(dataInicio);

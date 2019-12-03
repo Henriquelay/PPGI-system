@@ -2,6 +2,7 @@ recredenciamento.dat
 bin/*
 out/*
 .vscode/
+doc/*
 
 *.csv
 entradas/

@@ -6,7 +6,7 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das publicação em conferência de docentes
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public class PubConferencia extends Publicacao {
     private String local;

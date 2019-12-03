@@ -10,7 +10,7 @@ import java.util.Comparator;
 /**
  * Classe para implementação das publicação de docentes
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public abstract class Publicacao implements Comparable<Publicacao>, Serializable {
     private int ano;

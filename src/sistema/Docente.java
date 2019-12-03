@@ -10,7 +10,7 @@ import java.util.Comparator;
 /**
  * Classe para implementação dos docentes PPGI
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public class Docente implements Comparable<Docente>, Serializable {
     private String nome;

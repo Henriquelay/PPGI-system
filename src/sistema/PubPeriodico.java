@@ -6,7 +6,7 @@ import java.util.TreeMap;
 /**
  * Classe para implementação das publicação em periódicos de docentes
  * @author Henrique Layber
- *
+ * @author Ezequiel Schneider Reinholtz
  */
 public class PubPeriodico extends Publicacao {
     int volume;
