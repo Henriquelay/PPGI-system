@@ -6,7 +6,7 @@ from faker import Faker
 #Acertar o gerador de regras para começar sempre com A1
 
 def gera_docentes(nDocentes):
-    with open(f"{path}/docentes_python.csv", "w+", encoding="utf8") as file:
+    with open(f"{path}/docentes.csv", "w+", encoding="utf8") as file:
         file.write("Código;Nome;Data Nascimento;Data Ingresso;Coodernador?\n")
 
         cods = list()
@@ -37,7 +37,7 @@ def gera_docentes(nDocentes):
 
 def gera_veiculos(nVeiculos):
     tipos = ['P', 'C']
-    with open(f"{path}/veiculos_python.csv", "w+", encoding="utf8") as file:
+    with open(f"{path}/veiculos.csv", "w+", encoding="utf8") as file:
         file.write("Sigla;Nome;Tipo;Impacto;ISSN\n")
 
         siglasUtilizadas = list()
@@ -70,7 +70,7 @@ def gera_veiculos(nVeiculos):
 
 
 def gera_qualis(arquivoVeiculos):
-    with open(f"{path}/qualis_python.csv", "w+", encoding="utf8") as file:
+    with open(f"{path}/qualis.csv", "w+", encoding="utf8") as file:
         file.write("Ano;Veículo;Qualis\n")
         veiculosCSV = pd.read_csv(f"{path}/{arquivoVeiculos}", sep=';')
         for i in range(random.randrange(1, 3)):
@@ -85,7 +85,7 @@ def gera_qualis(arquivoVeiculos):
 
 
 def gera_regras():
-    with open(f"{path}/regras_python.csv", "w+", encoding="utf8") as file:
+    with open(f"{path}/regras.csv", "w+", encoding="utf8") as file:
         file.write(
             "Início Vigência;Fim Vigência;Qualis;Pontos;Multiplicador;Anos;Mínimo Pontos\n")
 
@@ -122,7 +122,7 @@ def gera_regras():
 def gera_publicacoes(arquivoVeiculos, arquivoDocentes, nPublicacoes):
     docentesCSV = pd.read_csv(f"{path}/{arquivoDocentes}", sep=';')
     docentesCSV = docentesCSV["Código"].tolist()
-    with open(f"{path}/publicacoes_python.csv", "w+", encoding="utf8") as file:
+    with open(f"{path}/publicacoes.csv", "w+", encoding="utf8") as file:
         file.write(
             "Ano;Veículo;Título;Autores;Número;Volume;Local;Página Inicial;Página Final\n")
         for i in range(nPublicacoes):
@@ -180,7 +180,7 @@ if __name__ == "__main__":
 
     gera_docentes(nDocentes)
     gera_veiculos(nVeiculos)
-    gera_qualis("veiculos_python.csv")
+    gera_qualis("veiculos.csv")
     gera_regras()
-    gera_publicacoes("veiculos_python.csv",
-                     "docentes_python.csv", nPublicacoes)
+    gera_publicacoes("veiculos.csv",
+                     "docentes.csv", nPublicacoes)
