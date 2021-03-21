@@ -34,4 +34,4 @@ Caso deseje alterar o diretório de saída do programa, altere `/sistema/Main.ja
 
 
 for local: 
-https://github.com/Henriquelay/TC2-PROG3
+https://github.com/Henriquelay/PPGI-system
